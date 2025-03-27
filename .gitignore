@@ -1,0 +1,23 @@
+# Archivos auxiliares de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Archivos temporales del sistema
+.DS_Store
+
+# Carpetas de respaldo o temporales
+*.bak
+*.blg
+*.bbl
+*.lof
+*.lot
+*.nav
+*.snm
+
+# NO ignores el PDF (queremos incluirlo en Git)
+# *.pdf ← NO lo pongas
