@@ -1,0 +1,59 @@
+\documentclass{beamer}
+\usetheme{Darmstadt}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}    % Para escribir acentos y caracteres especiales
+\usepackage{graphicx}          % Para insertar imágenes
+\usepackage{booktabs}          % Para tablas más bonitas
+\usepackage{amsmath}           % Para escribir ecuaciones
+\usepackage{tikz}              % Para gráficos vectoriales
+\usetikzlibrary{calc}          % Para coordenadas calculadas con TikZ
+\usepackage{pgfplots}          % Para gráficos matemáticos
+\pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
+
+\title{Ejemplo completo en Beamer}
+\author{Tu Nombre Mateo}
+\institute{Tu Institución Udp}
+\date{\today}
+
+\begin{document}
+
+% Portada
+\begin{frame}
+  \titlepage
+  %\centering \includegraphics[width=3cm]{imagenes/logo.png}
+  \end{frame}
+
+% Tabla de contenidos
+\begin{frame}
+  \frametitle{Contenido}
+  \tableofcontents
+\end{frame}
+
+\section{Ecuaciones}
+
+%ejemplo ecuaciones
+\begin{frame}
+  \frametitle{Ecuación simple}
+  Una fórmula conocida:
+  \[
+    E = mc^2
+  \]
+
+  Otra ecuación inline: \( a^2 + b^2 = c^2 \)
+\end{frame}
+% Gráfico Sin(x)
+\begin{frame}
+    \frametitle{Gráfico PGFPlots}
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=6.5cm, scale=0.85, clip=true,
+        xlabel={$x$},
+        ylabel={$f(x)$},
+        title={Ejemplo: $f(x)=\sin(x)$},
+        grid=major,
+      ]
+        \addplot[blue, thick] {sin(deg(x))};
+      \end{axis}
+    \end{tikzpicture}
+  \end{frame}
+\end{document}
