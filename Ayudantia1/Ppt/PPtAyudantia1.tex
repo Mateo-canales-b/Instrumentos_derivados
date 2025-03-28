@@ -10,14 +10,15 @@
 \usepackage{pgfplots}          % Para gráficos matemáticos
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
 
-\title{Ayudantía 1 \\ Bonos}
+\title{Ayudantía 1 \\ Bonos \\ \large\textit{Instrumentos Derivados}}
 \author{
   \texorpdfstring{
     \textbf{Profesor:} Francisco Rantul \\[0.3em]
     \textbf{Ayudante:} Mateo Canales
   }{Profesor: Francisco Rantul, Ayudante: Mateo Canales}
 }
-\institute{instrumentos Derivados}
+\subject{Instrumentos Derivados}
+\institute{Universidad Diego Portales}
 \date{31 De Marzo, 2025}
 
 \begin{document}
@@ -35,6 +36,10 @@
 \end{frame}
 
 \section{Materia}
+  \begin{frame}
+
+  \sectionpage   
+  \end{frame}  
 
 %ejemplo ecuaciones
 \begin{frame}
@@ -45,21 +50,39 @@
         \]
         
         Otra ecuación inline: \( a^2 + b^2 = c^2 \)
-    \end{frame}
-    % Gráfico Sin(x)
-    \begin{frame}
-        \frametitle{Gráfico PGFPlots}
-        \begin{tikzpicture}
-            \begin{axis}[
-                width=6.5cm, scale=0.85, clip=true,
-                xlabel={$x$},
-                ylabel={$f(x)$},
-                title={Ejemplo: $f(x)=\sin(x)$},
-                grid=major,
-                ]
-                \addplot[blue, thick] {sin(deg(x))};
-            \end{axis}
-        \end{tikzpicture}
-    \end{frame}
-    \end{document}
+\end{frame}
+% Gráfico Sin(x)
+\begin{frame}
+  \frametitle{Gráfico PGFPlots}
+  \begin{tikzpicture}
+    \begin{axis}[
+        width=6.5cm, scale=0.85, clip=true,
+        xlabel={$x$},
+        ylabel={$f(x)$},
+        title={Ejemplo: $f(x)=\sin(x)$},
+        grid=major,
+        ]
+        \addplot[blue, thick] {sin(deg(x))};
+    \end{axis}
+  \end{tikzpicture}
+  \end{frame}
 \section{Ejercicios}
+\begin{frame}
+    \centering
+    \Huge \insertsection
+\end{frame}
+\begin{frame}
+  \frametitle{Gráfico PGFPlots}
+  \begin{tikzpicture}
+    \begin{axis}[
+        width=6.5cm, scale=0.85, clip=true,
+        xlabel={$x$},
+        ylabel={$f(x)$},
+        title={Ejemplo: $f(x)=\sin(x)$},
+        grid=major,
+        ]
+        \addplot[blue, thick] {sin(deg(x))};
+    \end{axis}
+  \end{tikzpicture}
+  \end{frame}
+\end{document}
