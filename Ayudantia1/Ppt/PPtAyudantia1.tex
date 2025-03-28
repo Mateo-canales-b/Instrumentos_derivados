@@ -38,12 +38,10 @@
     \centering
     \includegraphics[width=2.3118cm]{../imagenes/logo.png}
   \end{frame}
-  \begin{frame}
-    \frametitle{Contenido}
-    \tableofcontents
-  \end{frame}
-  \begin{frame}
+% Caso
 \section{Caso}
+  \begin{frame}
+    
   \frametitle{Caso}
 
   Los precios de los pagarés descontables del Banco Central de Chile (PDBC)
@@ -53,111 +51,201 @@
   \$4 cada 6 meses tiene un precio de \$94{,}84. Un BCP a 2 años que paga
   cupón de \$5 cada 6 meses tiene un precio de \$97{,}12.
 
-\end{frame}
-\section{Pregunta \text{a)}}
-  \begin{frame} 
-  
-\begin{enumerate}[label=\textbf{\alph*)}]
-  \footnotesize
-  \item Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años.
-   Utilice capitalización continua.
-   \vspace{4pt}
-   
-   \item Grafique la curva cero y comente (sin realizar cálculos) si 
-   la pendiente de la curva de los bonos del BCCh (con cupones) es 
-   positiva o negativa. ¿Qué factor explica el \textit{spread} entre 
-   ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?
-   \vspace{4pt}
-   
-   \item Comente cuál es la interpretación económica detrás de la 
-   pendiente observada en la curva cero. ¿Qué nos dice respecto a 
-   la probabilidad de recesión?
-   
-   \vspace{4pt}
-   \item Considerando que usted tiene la información de la curva cero, 
-   la curva \textit{forward} y la curva de las \textit{yields} de los 
-   bonos de gobierno. Señale qué curva usaría para calcular el valor 
-   presente de las ganancias o pérdidas de los contratos \textit{forward}.
-   \vspace{4pt}
-   
-   \item ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, 
-   ¿qué rol juega la condición de no arbitraje?
-   \vspace{4pt}
-  
-  \item Calcule el punto a$)$ utilizando matrices en Excel/R/Phyton.
-\end{enumerate}
-
-  \end{frame}  
-
-%Pregunta a parte 1
+  \end{frame}
+  % Contenido
 \begin{frame}
-      \frametitle{Pregunta \text{a)} parte 1}
-      \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
-  
+  \frametitle{Contenido}
+  \tableofcontents
+\end{frame}
+  % Pregunta a)
+\section{Pregunta \text{a)}}
+  \begin{frame}
+    \frametitle{Preguntas}
+    \begin{itemize}
       \footnotesize
-      \textbf{Dato:} Precio del PDBC a 6 meses = \$94
+      \item {\Large\textcolor{blue}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+      \vspace{3pt}
+      \item {\textcolor{white}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
+      \vspace{3pt}
+      \item {\textcolor{white}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+      \vspace{3pt}
+      \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+      \vspace{3pt}
+      \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
+      \vspace{3pt}
+      \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+      \vspace{3pt}
+    \end{itemize}
+  \end{frame}
+\subsection{Parte 1}
+% Pregunta a parte 1
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 1}
+  \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
   
-      \pausa
+  \footnotesize
+  \textbf{Dato:} Precio del PDBC a 6 meses = \$94
   
-      \textbf{Fórmula (capitalización continua):}
-      \[
-      F = P \cdot e^{-rt}
-      \]
+  \pausa
   
-      \pausa
-  
-      Como $F = 100$, entonces:
-      \[
+  \textbf{Fórmula (capitalización continua):}
+  \[
+    F = P \cdot e^{-rt}
+    \]
+    
+    \pausa
+    
+    Como $F = 100$, entonces:
+    \[
       100 = 94 \cdot e^{-r \cdot 0.5}
       \]
-  
+      
       \pausa
-  
+      
       \textbf{Despejando $r$:}
       \[
-      r = -\frac{1}{0.5} \cdot \ln\left(\frac{100}{94}\right) \approx 0.126
-      \]
-  
-      \pausa
-  
-      \textbf{Resultado:} la tasa cero a 6 meses es aproximadamente 12.6\%
-\end{frame}
-%Pregunta a parte 2
-\begin{frame}
-      \frametitle{Pregunta \text{a)} parte 2}
-      \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
-  
-      \footnotesize
-      \textbf{Dato:} Precio del PDBC a 1 año = \$89
-  
-      \pausa
-  
-      \textbf{Fórmula (capitalización continua):}
-      \[
-      F = P \cdot e^{-rt}
-      \]
-  
-      \pausa
-  
-      Como $F = 100$, entonces:
-      \[
-      100 = 89 \cdot e^{-r \cdot 1}
-      \]
-  
-      \pausa
-  
-      \textbf{Despejando $r$:}
-      \[
-      r = -\ln\left(\frac{100}{89}\right) \approx 0.117
-      \]
-  
-      \pausa
-  
-      \textbf{Resultado:} la tasa cero a 1 año es aproximadamente 11.7gi\%
-\end{frame}
+        r = -\frac{1}{0.5} \cdot \ln\left(\frac{100}{94}\right) \approx 0.126
+        \]
+        
+        \pausa
+        
+        \textbf{Resultado:} la tasa cero a 6 meses es aproximadamente 12.6\%
+      \end{frame}
+\subsection{Parte 2}
+% Pregunta a parte 2
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 2}
+    \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
+    
+    \footnotesize
+    \textbf{Dato:} Precio del PDBC a 1 año = \$89
+    
+    \pausa
+    
+  \textbf{Fórmula (capitalización continua):}
+  \[
+  F = P \cdot e^{-rt}
+  \]
+
+  \pausa
+
+  Como $F = 100$, entonces:
+  \[
+  100 = 89 \cdot e^{-r \cdot 1}
+  \]
+
+  \pausa
+
+  \textbf{Despejando $r$:}
+  \[
+  r = -\ln\left(\frac{100}{89}\right) \approx 0.117
+  \]
+
+  \pausa
+
+  \textbf{Resultado:} la tasa cero a 1 año es aproximadamente 11.7\%
+  \end{frame}
+
 \section{Pregunta \text{b)}}
+% Pregunta b)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \footnotesize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
 \section{Pregunta \text{c)}}
+% Pregunta c)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \footnotesize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
 \section{Pregunta \text{d)}}
+% Pregunta d)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \footnotesize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
 \section{Pregunta \text{e)}}
+% Pregunta e)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \footnotesize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
 \section{Pregunta \text{f)}}
+% Pregunta f)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \footnotesize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
 \end{document}
