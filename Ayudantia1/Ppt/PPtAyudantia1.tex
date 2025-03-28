@@ -47,7 +47,7 @@
   cupón de \$5 cada 6 meses tiene un precio de \$97{,}12.
 
 \end{frame}
-\section{Pregunta a$)$}
+\section{Pregunta \text{a)}}
   \begin{frame} 
   
 \begin{enumerate}[label=\textbf{\alph*)}]
@@ -84,46 +84,68 @@
 
 %Pregunta a parte 1
 \begin{frame}
-
-    \frametitle{Pregunta a$)$ parte 1}
-    \LARGE {\underbar{Calcule la curva cero de 6 meses}}\\[1em]
-    Datos: \footnotesize {Tiempo = 6 meses; Tasa = Desconocida; Precio futuro = \$94}
-    \footnote{\textbf{Fórmula a utilizar:} Capitalización contínua
-    \textcolor{blue}{$F = P \cdot e^{-rt}$}}
-
+      \frametitle{Pregunta \text{a)} parte 1}
+      \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
+  
+      \footnotesize
+      \textbf{Dato:} Precio del PDBC a 6 meses = \$94
+  
+      \pause
+  
+      \textbf{Fórmula (capitalización continua):}
+      \[
+      F = P \cdot e^{-rt}
+      \]
+  
+      \pause
+  
+      Como $F = 100$, entonces:
+      \[
+      100 = 94 \cdot e^{-r \cdot 0.5}
+      \]
+  
+      \pause
+  
+      \textbf{Despejando $r$:}
+      \[
+      r = -\frac{1}{0.5} \cdot \ln\left(\frac{100}{94}\right) \approx 0.126
+      \]
+  
+      \pause
+  
+      \textbf{Resultado:} la tasa cero a 6 meses es aproximadamente 12.6\%
 \end{frame}
-% Gráfico Sin(x)
+%Pregunta a parte 2
 \begin{frame}
-  \frametitle{Gráfico PGFPlots}
-  \begin{tikzpicture}
-    \begin{axis}[
-        width=6.5cm, scale=0.85, clip=true,
-        xlabel={$x$},
-        ylabel={$f(x)$},
-        title={Ejemplo: $f(x)=\sin(x)$},
-        grid=major,
-        ]
-        \addplot[blue, thick] {sin(deg(x))};
-    \end{axis}
-  \end{tikzpicture}
-  \end{frame}
-\section{Ejercicios}
-\begin{frame}
-    \centering
-    \Huge \insertsection
+      \frametitle{Pregunta \text{a)} parte 2}
+      \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
+  
+      \footnotesize
+      \textbf{Dato:} Precio del PDBC a 1 año = \$89
+  
+      \pause
+  
+      \textbf{Fórmula (capitalización continua):}
+      \[
+      F = P \cdot e^{-rt}
+      \]
+  
+      \pause
+  
+      Como $F = 100$, entonces:
+      \[
+      100 = 89 \cdot e^{-r \cdot 1}
+      \]
+  
+      \pause
+  
+      \textbf{Despejando $r$:}
+      \[
+      r = -\ln\left(\frac{100}{89}\right) \approx 0.117
+      \]
+  
+      \pause
+  
+      \textbf{Resultado:} la tasa cero a 1 año es aproximadamente 11.7\%
 \end{frame}
-\begin{frame}
-  \frametitle{Ejercicio 1 A$)$}
-  \begin{tikzpicture}
-    \begin{axis}[
-        width=6.5cm, scale=0.85, clip=true,
-        xlabel={$x$},
-        ylabel={$f(x)$},
-        title={Ejemplo: $f(x)=\sin(x)$},
-        grid=major,
-        ]
-        \addplot[blue, thick] {sin(deg(x))};
-    \end{axis}
-  \end{tikzpicture}
-  \end{frame}
 \end{document}
