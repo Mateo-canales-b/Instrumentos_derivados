@@ -11,6 +11,13 @@
 \usepackage{pgfplots}          % Para gráficos matemáticos
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
 
+\newif\ifpresentacion
+%\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
+\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+
+\usepackage{ifthen}
+\newcommand{\pausa}{\ifpresentacion\pause\fi}
+
 \title{Ayudantía 1 \\ Bonos \\ \large\textit{Instrumentos Derivados}}
 \author{
   \texorpdfstring{
@@ -90,28 +97,28 @@
       \footnotesize
       \textbf{Dato:} Precio del PDBC a 6 meses = \$94
   
-      \pause
+      \pausa
   
       \textbf{Fórmula (capitalización continua):}
       \[
       F = P \cdot e^{-rt}
       \]
   
-      \pause
+      \pausa
   
       Como $F = 100$, entonces:
       \[
       100 = 94 \cdot e^{-r \cdot 0.5}
       \]
   
-      \pause
+      \pausa
   
       \textbf{Despejando $r$:}
       \[
       r = -\frac{1}{0.5} \cdot \ln\left(\frac{100}{94}\right) \approx 0.126
       \]
   
-      \pause
+      \pausa
   
       \textbf{Resultado:} la tasa cero a 6 meses es aproximadamente 12.6\%
 \end{frame}
@@ -123,29 +130,34 @@
       \footnotesize
       \textbf{Dato:} Precio del PDBC a 1 año = \$89
   
-      \pause
+      \pausa
   
       \textbf{Fórmula (capitalización continua):}
       \[
       F = P \cdot e^{-rt}
       \]
   
-      \pause
+      \pausa
   
       Como $F = 100$, entonces:
       \[
       100 = 89 \cdot e^{-r \cdot 1}
       \]
   
-      \pause
+      \pausa
   
       \textbf{Despejando $r$:}
       \[
       r = -\ln\left(\frac{100}{89}\right) \approx 0.117
       \]
   
-      \pause
+      \pausa
   
       \textbf{Resultado:} la tasa cero a 1 año es aproximadamente 11.7gi\%
 \end{frame}
+\section{Pregunta \text{b)}}
+\section{Pregunta \text{c)}}
+\section{Pregunta \text{d)}}
+\section{Pregunta \text{e)}}
+\section{Pregunta \text{f)}}
 \end{document}
