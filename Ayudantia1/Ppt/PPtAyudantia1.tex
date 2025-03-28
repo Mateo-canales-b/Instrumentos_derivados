@@ -11,9 +11,34 @@
 \usepackage{pgfplots}          % Para gráficos matemáticos
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
 
+% Tasas cero en formato porcentaje (para mostrar en texto)
+\newcommand{\taseis}{12.4\%}
+\newcommand{\taunio}{11.7\%}
+\newcommand{\taaunoCinco}{11.2\%}
+\newcommand{\tados}{10.9\%}
+
+% Tasas cero en formato decimal (para usar en fórmulas)
+\newcommand{\rtaseis}{0.124}
+\newcommand{\rtaunio}{0.117}
+\newcommand{\rtaaunoCinco}{0.112}
+\newcommand{\rtados}{0.109}
+
+% Precios de instrumentos
+\newcommand{\Pseis}{100}    % Precio actual para PDBC 6 meses
+\newcommand{\Puno}{100}     % Precio actual para PDBC 1 año
+\newcommand{\Fseis}{94}     % Valor nominal recibido en 6 meses
+\newcommand{\Funo}{89}      % Valor nominal recibido en 1 año
+
+\newcommand{\PunoCinco}{94.84}  % Precio BCP 1.5 años
+\newcommand{\Pdos}{97.12}       % Precio BCP 2 años
+
+% Flujos de cupones
+\newcommand{\CunoCinco}{4}  % Cupón semestral BCP 1.5 años
+\newcommand{\Cdos}{5}       % Cupón semestral BCP 2 años
+
 \newif\ifpresentacion
-%\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
-\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
+%\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
 
 \usepackage{ifthen}
 \newcommand{\pausa}{\ifpresentacion\pause\fi}
@@ -45,24 +70,24 @@
   \frametitle{Caso}
 
   Los precios de los pagarés descontables del Banco Central de Chile (PDBC)
-  a 6 meses y a 1 año son de \$94 y \$89 respectivamente. 
+  a 6 meses y a 1 año son de \$\Fseis y \$\Funo respectivamente. 
   
   Un bono del Banco Central de Chile en pesos (BCP) a 1,5 años que paga cupón de 
-  \$4 cada 6 meses tiene un precio de \$94{,}84. Un BCP a 2 años que paga
-  cupón de \$5 cada 6 meses tiene un precio de \$97{,}12.
+  \$\CunoCinco cada 6 meses tiene un precio de \$\PunoCinco. Un BCP a 2 años que paga
+  cupón de \$\Cdos cada 6 meses tiene un precio de \$\Pdos.
 
   \end{frame}
   % Contenido
 \begin{frame}
-  \frametitle{Contenido}
-  \tableofcontents
+    \frametitle{Contenido}
+    \tableofcontents
 \end{frame}
   % Pregunta a)
 \section{Pregunta \text{a)}}
   \begin{frame}
     \frametitle{Preguntas}
     \begin{itemize}
-      \footnotesize
+      \scriptsize
       \item {\Large\textcolor{blue}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
       \vspace{3pt}
       \item {\textcolor{white}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
@@ -84,7 +109,7 @@
   \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
   
   \footnotesize
-  \textbf{Dato:} Precio del PDBC a 6 meses = \$94
+  \textbf{Dato:} Valor nominal (F) = \$\Fseis, Precio actual (P) = \$\Pseis
   
   \pausa
   
@@ -95,21 +120,21 @@
     
     \pausa
     
-    Como $F = 100$, entonces:
+    Como $F = \Pseis$, entonces:
     \[
-      100 = 94 \cdot e^{-r \cdot 0.5}
+      \Fseis = \Pseis \cdot e^{-r \cdot 0.5}
       \]
       
       \pausa
       
       \textbf{Despejando $r$:}
       \[
-        r = -\frac{1}{0.5} \cdot \ln\left(\frac{100}{94}\right) \approx 0.126
+        r = -\frac{1}{0.5} \cdot \ln\left(\frac{\Fseis}{\Pseis}\right) \approx 0.126
         \]
         
         \pausa
         
-        \textbf{Resultado:} la tasa cero a 6 meses es aproximadamente 12.6\%
+        \textbf{Resultado:} la tasa cero a 6 meses es aproximadamente \taseis
       \end{frame}
 \subsection{Parte 2}
 % Pregunta a parte 2
@@ -118,7 +143,7 @@
     \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
     
     \footnotesize
-    \textbf{Dato:} Precio del PDBC a 1 año = \$89
+    \textbf{Dato:} Valor nominal (F) = \$\Funo, Precio actual (P) = \$\Puno
     
     \pausa
     
@@ -129,29 +154,95 @@
 
   \pausa
 
-  Como $F = 100$, entonces:
+  Como $F = \Puno$, entonces:
   \[
-  100 = 89 \cdot e^{-r \cdot 1}
+  \Funo = \Puno \cdot e^{-r \cdot 1}
   \]
 
   \pausa
 
   \textbf{Despejando $r$:}
   \[
-  r = -\ln\left(\frac{100}{89}\right) \approx 0.117
+  r = -\ln\left(\frac{\Funo}{\Puno}\right) \approx 0.117
   \]
 
   \pausa
 
-  \textbf{Resultado:} la tasa cero a 1 año es aproximadamente 11.7\%
+  \textbf{Resultado:} la tasa cero a 1 año es aproximadamente \taunio
   \end{frame}
+
+\subsection{Parte 3}
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 3}
+  \LARGE \underbar{Calcule la curva cero de 1.5 años} \\[1em]
+
+  \footnotesize
+  \textbf{Dato:} Precio del BCP a 1.5 años = \$\PunoCinco, con cupón de \$\CunoCinco cada 6 meses
+
+  \pausa
+
+  \textbf{Flujos:}
+  \[
+  \text{Flujos en } 0.5, 1.0, 1.5 \text{ años: } \CunoCinco,\ \CunoCinco,\ 104
+  \]
+
+  \pausa
+
+  \textbf{Cálculo:}
+  \[
+  \PunoCinco = \CunoCinco \cdot e^{-\rtaseis \cdot 0.5} + \CunoCinco \cdot e^{-\rtaunio \cdot 1.0} + 104 \cdot e^{-r \cdot 1.5}
+  \]
+
+  \pausa
+
+  \textbf{Despejando $r$:}
+  \[
+  r = -\frac{1}{1.5} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{-\rtaseis \cdot 0.5} - \CunoCinco e^{-\rtaunio \cdot 1.0}}{104} \right)
+  \]
+  \pausa
+
+  \textbf{Resultado:} \( r \approx \rtaaunoCinco \) → la tasa cero a 1.5 años es aproximadamente \taaunoCinco
+\end{frame}
+
+\subsection{Parte 4}
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 4}
+  \LARGE \underbar{Calcule la curva cero de 2 años} \\[1em]
+
+  \footnotesize
+  \textbf{Dato:} Precio del BCP a 2 años = \$\Pdos, con cupón de \$\Cdos cada 6 meses
+
+  \pausa
+
+  \textbf{Flujos:}
+  \[
+  \text{Flujos en } 0.5, 1.0, 1.5, 2.0 \text{ años: } \Cdos,\ \Cdos,\ \Cdos,\ 105
+  \]
+
+  \pausa
+
+  \textbf{Cálculo:}
+  \[
+  \Pdos = \Cdos \cdot e^{-\rtaseis \cdot 0.5} + \Cdos \cdot e^{-\rtaunio \cdot 1.0} + \Cdos \cdot e^{-\rtaaunoCinco \cdot 1.5} + 105 \cdot e^{-r \cdot 2.0}
+  \]
+
+  \pausa
+
+  \textbf{Despejando $r$:}
+  \[
+  r = -\frac{1}{2.0} \cdot \ln\left( \frac{\Pdos - \Cdos e^{-\rtaseis \cdot 0.5} - \Cdos e^{-\rtaunio \cdot 1.0} - \Cdos e^{-\rtaaunoCinco \cdot 1.5}}{105} \right)
+  \]
+  \pausa
+
+  \textbf{Resultado:} \( r \approx \rtados \) → la tasa cero a 2 años es aproximadamente \tados
+\end{frame}
 
 \section{Pregunta \text{b)}}
 % Pregunta b)
 \begin{frame}
   \frametitle{Preguntas}
   \begin{itemize}
-    \footnotesize
+    \scriptsize
     \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
     \vspace{3pt}
     \item {\Large\textcolor{blue}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
@@ -171,7 +262,7 @@
 \begin{frame}
   \frametitle{Preguntas}
   \begin{itemize}
-    \footnotesize
+    \scriptsize
     \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
     \vspace{3pt}
     \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
@@ -192,7 +283,7 @@
 \begin{frame}
   \frametitle{Preguntas}
   \begin{itemize}
-    \footnotesize
+    \scriptsize
     \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
     \vspace{3pt}
     \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
@@ -213,7 +304,7 @@
 \begin{frame}
   \frametitle{Preguntas}
   \begin{itemize}
-    \footnotesize
+    \scriptsize
     \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
     \vspace{3pt}
     \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
@@ -233,7 +324,7 @@
 \begin{frame}
   \frametitle{Preguntas}
   \begin{itemize}
-    \footnotesize
+    \scriptsize
     \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
     \vspace{3pt}
     \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
