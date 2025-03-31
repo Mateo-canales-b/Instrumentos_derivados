@@ -10,22 +10,39 @@
 \usetikzlibrary{calc}          % Para coordenadas calculadas con TikZ
 \usepackage{pgfplots}          % Para gráficos matemáticos
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
+\usepackage{hyperref}
+\usepackage{pgf}
+\newif\ifpresentacion
+\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
+%\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
 
-% Tasas cero en formato porcentaje (para mostrar en texto)
-\newcommand{\taseis}{12.4\%}
-\newcommand{\taunio}{11.7\%}
-\newcommand{\taaunoCinco}{11.2\%}
-\newcommand{\tados}{10.9\%}
+\usepackage{ifthen}
+\newcommand{\pausa}{\ifpresentacion\pause\fi}
+% #region Título
+\title{Ayudantía 1 \\ Bonos \\ \large\textit{Instrumentos Derivados}}
+\author{
+  \texorpdfstring{
+    \textbf{Profesor:} Francisco Rantul \\[0.3em]
+    \textbf{Ayudante:} Mateo Canales
+  }{Profesor: Francisco Rantul, Ayudante: Mateo Canales}
+}
+\subject{Instrumentos Derivados}
+\institute{Universidad Diego Portales}
+\date{02 De Abril, 2025}
+% #endregion 
+\begin{document}
 
-% Tasas cero en formato decimal (para usar en fórmulas)
-\newcommand{\rtaseis}{0.124}
-\newcommand{\rtaunio}{0.117}
-\newcommand{\rtaaunoCinco}{0.112}
-\newcommand{\rtados}{0.109}
-
+% Portada
+\begin{frame}
+    \titlepage
+    \vfill
+    \centering
+    \includegraphics[width=2.3118cm]{../imagenes/logo.png}
+  \end{frame}
+%
 % Precios de instrumentos
-\newcommand{\Pseis}{100}    % Precio actual para PDBC 6 meses
-\newcommand{\Puno}{100}     % Precio actual para PDBC 1 año
+% #region Variables de instrumentos financieros
+\newcommand{\Nominal}{100}    % Precio actual para PDBC 6 meses
 \newcommand{\Fseis}{94}     % Valor nominal recibido en 6 meses
 \newcommand{\Funo}{89}      % Valor nominal recibido en 1 año
 
@@ -36,45 +53,46 @@
 \newcommand{\CunoCinco}{4}  % Cupón semestral BCP 1.5 años
 \newcommand{\Cdos}{5}       % Cupón semestral BCP 2 años
 
-\newif\ifpresentacion
-\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
-%\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+% Tiempos
+\newcommand{\Tseis}{0.5}
+\newcommand{\Tuno}{1.0}
+\newcommand{\TunoCinco}{1.5}
+\newcommand{\Tdos}{2.0}
 
-\usepackage{ifthen}
-\newcommand{\pausa}{\ifpresentacion\pause\fi}
+% Flujo final común en bonos con cupón
+\newcommand{\Ffinal}{104}
+\newcommand{\FfinalDos}{105}
+% Tasas cero en formato porcentaje (para mostrar en texto)
+\newcommand{\taunio}{11.7\%}
+\newcommand{\taaunoCinco}{11.2\%}
+\newcommand{\tados}{10.9\%}
 
-\title{Ayudantía 1 \\ Bonos \\ \large\textit{Instrumentos Derivados}}
-\author{
-  \texorpdfstring{
-    \textbf{Profesor:} Francisco Rantul \\[0.3em]
-    \textbf{Ayudante:} Mateo Canales
-  }{Profesor: Francisco Rantul, Ayudante: Mateo Canales}
-}
-\subject{Instrumentos Derivados}
-\institute{Universidad Diego Portales}
-\date{31 De Marzo, 2025}
+% Tasas cero en formato decimal (para usar en fórmulas)
+\newcommand{\rtaseis}{0.124}
+\newcommand{\rtaunio}{0.117}
+\newcommand{\rtaaunoCinco}{0.112}
+\newcommand{\rtados}{0.109}
 
-\begin{document}
-
-% Portada
-\begin{frame}
-    \titlepage
-    \vfill
-    \centering
-    \includegraphics[width=2.3118cm]{../imagenes/logo.png}
-  \end{frame}
+% #endregion
 % Caso
 \section{Caso}
   \begin{frame}
     
   \frametitle{Caso}
 
-  Los precios de los pagarés descontables del Banco Central de Chile (PDBC)
-  a 6 meses y a 1 año son de \$\Fseis y \$\Funo respectivamente. 
+  Los precios de los pagarés descontables del Banco Central de Chile (PDBC)\footnote{\textit{Para 
+  más información sobre el PDBC, consulte la página 21 del documento del Banco Central de Chile:}}
+  a 6 meses y a 1 año son de \$\Fseis\ y \$\Funo\, respectivamente, los cuales pagan \$\Nominal.
+  \vspace{0.5em}
   
-  Un bono del Banco Central de Chile en pesos (BCP) a 1,5 años que paga cupón de 
-  \$\CunoCinco cada 6 meses tiene un precio de \$\PunoCinco. Un BCP a 2 años que paga
-  cupón de \$\Cdos cada 6 meses tiene un precio de \$\Pdos.
+  
+  Un bono del Banco Central de Chile en pesos (BCP) \footnote{\textit{Para más información sobre el BCP, 
+  consulte la página 45 del documento del Banco Central de Chile:}\\
+  \tiny{\href{https://www.bcentral.cl/contenido/-/detalle/caracteristicas-de-los-instrumentos-del-mercado-financiero-nacional-3}
+  {\texttt{www.bcentral.cl - Características de los instrumentos}}}}
+  a 1,5 años que paga cupón de  \$\CunoCinco\  cada 6 meses tiene un precio de \$\PunoCinco. 
+  Un BCP a 2 años que paga
+  cupón de \$\Cdos\ cada 6 meses tiene un precio de \$\Pdos.
 
   \end{frame}
   % Contenido
@@ -84,6 +102,7 @@
 \end{frame}
   % Pregunta a)
 \section{Pregunta \text{a)}}
+% Pregunta a)
   \begin{frame}
     \frametitle{Preguntas}
     \begin{itemize}
@@ -98,145 +117,173 @@
       \vspace{3pt}
       \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
       \vspace{3pt}
-      \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+      \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
       \vspace{3pt}
     \end{itemize}
   \end{frame}
+
+% #region variable pa1
+\newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
+\newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
+\newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
+\newcommand{\porcentaje}[1]{%
+  \pgfmathsetmacro{\temp}{#1*100}%
+  \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
+}\newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
+\newcommand{\capcontinua}{F = \sum_{i=1}^{n} \frac{C_i}{e^{r_i t_i}} + \frac{P}{e^{r_n t_n}}}
+\pgfmathsetmacro{\pai}{-(1/\Tseis)*ln(\Fseis/\Nominal)}
+% #endregion
 \subsection{Parte 1}
 % Pregunta a parte 1
+
 \begin{frame}
   \frametitle{Pregunta \text{a)} parte 1}
   \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
-  
   \footnotesize
-  \textbf{Dato:} Valor nominal (F) = \$\Fseis, Precio actual (P) = \$\Pseis
-  
+  \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio actual (F) = \$\Fseis, Tiempo final (T)=\Tseis. \\
+  \pausa 
+  \textbf{Fórmula capitalización continua:}
+  \[\capcontinua\]
   \pausa
-  
-  \textbf{Fórmula (capitalización continua):}
-  \[
-    F = P \cdot e^{-rt}
-    \]
-    
-    \pausa
-    
-    Como $F = \Pseis$, entonces:
-    \[
-      \Fseis = \Pseis \cdot e^{-r \cdot 0.5}
-      \]
-      
-      \pausa
-      
-      \textbf{Despejando $r$:}
-      \[
-        r = -\frac{1}{0.5} \cdot \ln\left(\frac{\Fseis}{\Pseis}\right) \approx 0.126
-        \]
-        
-        \pausa
-        
-        \textbf{Resultado:} la tasa cero a 6 meses es aproximadamente \taseis
-      \end{frame}
+  Dado C=0
+  \[\capcontinuacero\]
+  \pausa
+  Reemplazamos con los datos:
+  \[\Fseis = \Nominal \cdot e^{-r \cdot \Tseis}\] \pausa
+  \textbf{Despejando $r$:}
+  \[r = -\frac{1}{\Tseis} \cdot \ln\left(\frac{\Fseis}{\Nominal}\right) \pausa \approx \decimalx{\pai}  \]
+  \pausa
+  \textbf{Resultado:} La tasa cero a 6 meses es aproximadamente \porcentaje{\pai}
+\end{frame}
+
 \subsection{Parte 2}
+\pgfmathsetmacro{\paii}{-(1/\Tuno)*ln(\Funo/\Nominal)}
 % Pregunta a parte 2
   \begin{frame}
     \frametitle{Pregunta \text{a)} parte 2}
     \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
-    
     \footnotesize
-    \textbf{Dato:} Valor nominal (F) = \$\Funo, Precio actual (P) = \$\Puno
-    
+    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Funo,Tiempo final (T)=\Tuno.\\
     \pausa
-    
-  \textbf{Fórmula (capitalización continua):}
-  \[
-  F = P \cdot e^{-rt}
-  \]
-
-  \pausa
-
-  Como $F = \Puno$, entonces:
-  \[
-  \Funo = \Puno \cdot e^{-r \cdot 1}
-  \]
-
-  \pausa
-
-  \textbf{Despejando $r$:}
-  \[
-  r = -\ln\left(\frac{\Funo}{\Puno}\right) \approx 0.117
-  \]
-
-  \pausa
-
-  \textbf{Resultado:} la tasa cero a 1 año es aproximadamente \taunio
+    \textbf{Fórmula capitalización continua:}
+    \[\capcontinua\]
+    \pausa
+    Dado C=0
+    \[\capcontinuacero\]
+    \pausa
+    Reemplazamos con los datos:
+    \pausa
+    \textbf{Despejando $r$:}
+   \[r = -\ln\left(\frac{\Funo}{\Nominal}\right) \pausa \approx \decimalx{\paii}\]
+    \pausa
+   \textbf{Resultado:} La tasa cero a 1 año es aproximadamente \porcentaje{\paii}
   \end{frame}
 
 \subsection{Parte 3}
+
+% #region Variables pa3
+\pgfmathsetmacro{\fluno}{\CunoCinco* exp(-\pai*\Tseis)}
+\pgfmathsetmacro{\fldos}{\CunoCinco* exp(-\paii*\Tuno)}
+\pgfmathsetmacro{\flplus}{\fluno + \fldos}
+\pgfmathsetmacro{\flmenos}{\PunoCinco - \flplus}
+\pgfmathsetmacro{\paiii}{-(1/\TunoCinco)*ln(\flmenos/\Ffinal)}
+% #endregion
+
+% Pregunta a parte 3
 \begin{frame}
   \frametitle{Pregunta \text{a)} parte 3}
   \LARGE \underbar{Calcule la curva cero de 1.5 años} \\[1em]
-
   \footnotesize
-  \textbf{Dato:} Precio del BCP a 1.5 años = \$\PunoCinco, con cupón de \$\CunoCinco cada 6 meses
-
+  \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio del BCP a 1.5 años = \$\PunoCinco, con cupón de \$\CunoCinco\ cada 6 meses, 
+  Tiempo Final = \TunoCinco.\\
   \pausa
-
-  \textbf{Flujos:}
-  \[
-  \text{Flujos en } 0.5, 1.0, 1.5 \text{ años: } \CunoCinco,\ \CunoCinco,\ 104
-  \]
-
+  \textbf{Fórmula capitalización continua:}
+  \[\capcontinua\]
   \pausa
-
   \textbf{Cálculo:}
-  \[
-  \PunoCinco = \CunoCinco \cdot e^{-\rtaseis \cdot 0.5} + \CunoCinco \cdot e^{-\rtaunio \cdot 1.0} + 104 \cdot e^{-r \cdot 1.5}
-  \]
-
+  \[ \PunoCinco = \CunoCinco \cdot e^{\decimalx{-\pai} \cdot \Tseis} + \CunoCinco \cdot e^{\decimalx{-\paii} \cdot \Tuno} + \Ffinal \cdot e^{-r \cdot \TunoCinco}\]
   \pausa
-
   \textbf{Despejando $r$:}
   \[
-  r = -\frac{1}{1.5} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{-\rtaseis \cdot 0.5} - \CunoCinco e^{-\rtaunio \cdot 1.0}}{104} \right)
+  r = -\frac{1}{\TunoCinco} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{\decimalx{-\pai}\cdot \Tseis} - \CunoCinco e^{\decimalx{-\paii}  \cdot \Tuno}}{\Ffinal} \right)
   \]
-  \pausa
+\end{frame}
 
-  \textbf{Resultado:} \( r \approx \rtaaunoCinco \) → la tasa cero a 1.5 años es aproximadamente \taaunoCinco
+% Pregunta a parte 3 (continuación)
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 3 (continuación)}
+  \footnotesize
+  \textbf{Despejando $r$:}
+  \[
+    r = -\frac{1}{\TunoCinco} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{\decimalx{-\pai} \cdot \Tseis} - \CunoCinco e^{\decimalx{-\paii}  \cdot \Tuno}}{\Ffinal} \right)
+    \]
+  \[
+   r=-\frac{1}{\TunoCinco} \cdot \ln\left(\frac{\PunoCinco - \decimalx{\flplus}}{\Ffinal} \right)
+   \]
+  \pausa
+  \[
+   r=-\frac{1}{\TunoCinco} \cdot \ln\left(\frac{\decimalx{\flmenos}}{\Ffinal} \right)
+   \pausa \approx \decimalx{\paiii}
+   \]
+   
+  \textbf{Resultado:} \( r \approx \rtaaunoCinco \) La tasa cero a 1.5 años es aproximadamente \porcentaje{\paiii}
 \end{frame}
 
 \subsection{Parte 4}
+% #region Variables 4
+\pgfmathsetmacro{\fliuno}{\Cdos* exp(-\pai*\Tseis)}
+\pgfmathsetmacro{\flidos}{\Cdos* exp(-\paii*\Tuno)}
+\pgfmathsetmacro{\flitres}{\Cdos* exp(-\paii*\TunoCinco)}
+\pgfmathsetmacro{\fliplus}{\fliuno+\flidos+\flitres}
+\pgfmathsetmacro{\flimenos}{\Pdos-\fliplus}
+\pgfmathsetmacro{\paiv}{-(1/\Tdos)*ln(\flimenos/\FfinalDos)}
+
+% end region
+% Pregunta a parte 4
 \begin{frame}
   \frametitle{Pregunta \text{a)} parte 4}
   \LARGE \underbar{Calcule la curva cero de 2 años} \\[1em]
 
   \footnotesize
-  \textbf{Dato:} Precio del BCP a 2 años = \$\Pdos, con cupón de \$\Cdos cada 6 meses
-
+  \textbf{Datos:}  Valor nominal (P) = \$\Nominal, Precio del BCP a 2 años = \$\Pdos, 
+  con cupón de \$\Cdos\ cada 6 meses, Tiempo Final (T) = \Tdos.
   \pausa
-
-  \textbf{Flujos:}
-  \[
-  \text{Flujos en } 0.5, 1.0, 1.5, 2.0 \text{ años: } \Cdos,\ \Cdos,\ \Cdos,\ 105
-  \]
-
+  \textbf{Fórmula capitalización continua:}
+  \[\capcontinua\]
   \pausa
-
   \textbf{Cálculo:}
   \[
-  \Pdos = \Cdos \cdot e^{-\rtaseis \cdot 0.5} + \Cdos \cdot e^{-\rtaunio \cdot 1.0} + \Cdos \cdot e^{-\rtaaunoCinco \cdot 1.5} + 105 \cdot e^{-r \cdot 2.0}
+  \Pdos = \Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} + \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} + \Cdos \cdot e^{-\paiii \cdot \TunoCinco} + \FfinalDos \cdot e^{-r \cdot \Tdos}
   \]
-
   \pausa
-
   \textbf{Despejando $r$:}
   \[
-  r = -\frac{1}{2.0} \cdot \ln\left( \frac{\Pdos - \Cdos e^{-\rtaseis \cdot 0.5} - \Cdos e^{-\rtaunio \cdot 1.0} - \Cdos e^{-\rtaaunoCinco \cdot 1.5}}{105} \right)
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} - \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} - \Cdos \cdot e^{-\paiii \cdot \TunoCinco}}{\FfinalDos} \right)
+  \]
+
+\end{frame}
+% Pregunta a parte 4 (continuación)
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 4 (continuación)}
+  \footnotesize
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} - \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} - \Cdos \cdot e^{\decimalx{-\paiii} \cdot \TunoCinco}}{\FfinalDos} \right)
   \]
   \pausa
-
-  \textbf{Resultado:} \( r \approx \rtados \) → la tasa cero a 2 años es aproximadamente \tados
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\decimalx{\fliuno} - \decimalx{\flidos} - \decimalx{\flitres}}{\FfinalDos} \right)
+  \]
+  \pausa
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
+  \]
+  \pausa
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
+  \pausa \approx \decimal{\paiv}
+  \]
+  \textbf{Resultado:} \( r \approx \rtados \) La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}
 \end{frame}
-
 \section{Pregunta \text{b)}}
 % Pregunta b)
 \begin{frame}
@@ -253,9 +300,35 @@
     \vspace{3pt}
     \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
+\end{frame}
+%Grafico
+\begin{frame}
+  \frametitle{Curva cero (tasa spot)}
+  \begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+        width=10cm,
+        height=6cm,
+        xlabel={Plazo (años)},
+        ylabel={Tasa cero},
+        grid=both,
+        ymin=0.08, ymax=0.14,
+        yticklabel style={/pgf/number format/.cd, fixed, fixed zerofill, precision=2},
+        xtick={0.5,1,1.5,2},
+        ytick={0.08,0.10,...,0.14}
+      ]
+      \addplot+[mark=*] coordinates {
+        (\Tseis, 0.124)
+        (\Tuno, 0.117)
+        (\TunoCinco, 0.112)
+        (\Tdos, 0.109)
+      };
+    \end{axis}
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 \section{Pregunta \text{c)}}
 % Pregunta c)
@@ -273,7 +346,7 @@
     \vspace{3pt}
     \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
@@ -294,7 +367,7 @@
     \vspace{3pt}
     \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
@@ -315,7 +388,7 @@
     \vspace{3pt}
     \item {\Large\textcolor{blue}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
@@ -335,7 +408,7 @@
     \vspace{3pt}
     \item {\textcolor{black}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\Large\textcolor{blue}{f) Calcule el punto a) utilizando matrices en Excel/R/Phyton.}}
+    \item {\Large\textcolor{blue}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
