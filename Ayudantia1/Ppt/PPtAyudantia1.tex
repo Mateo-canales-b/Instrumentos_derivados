@@ -12,6 +12,7 @@
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
 \usepackage{hyperref}
 \usepackage{pgf}
+
 \newif\ifpresentacion
 \presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
 %\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
@@ -39,8 +40,7 @@
     \centering
     \includegraphics[width=2.3118cm]{../imagenes/logo.png}
   \end{frame}
-%
-% Precios de instrumentos
+
 % #region Variables de instrumentos financieros
 \newcommand{\Nominal}{100}    % Precio actual para PDBC 6 meses
 \newcommand{\Fseis}{94}     % Valor nominal recibido en 6 meses
@@ -63,6 +63,15 @@
 \newcommand{\Ffinal}{104}
 \newcommand{\FfinalDos}{105}
 
+% Formateo de números 
+\newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
+\newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
+\newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
+\newcommand{\decimalxx}[1]{\pgfmathprintnumber[fixed, precision=4]{#1}}
+\newcommand{\porcentaje}[1]{%
+  \pgfmathsetmacro{\temp}{#1*100}%
+  \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
+  }
 
 % #endregion
 % Caso
@@ -91,7 +100,9 @@
     \frametitle{Contenido}
     \tableofcontents
 \end{frame}
+
   % Pregunta a)
+
 \section{Pregunta \text{a)}}
 % Pregunta a)
   \begin{frame}
@@ -113,20 +124,14 @@
     \end{itemize}
   \end{frame}
 
+\subsection{Parte 1}
 % #region variable pa1
-\newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
-\newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
-\newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
-\newcommand{\decimalxx}[1]{\pgfmathprintnumber[fixed, precision=4]{#1}}
-\newcommand{\porcentaje}[1]{%
-  \pgfmathsetmacro{\temp}{#1*100}%
-  \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
-  }
+
 \newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
 \newcommand{\capcontinua}{F = \sum_{i=1}^{n} \frac{C_i}{e^{r_i t_i}} + \frac{P}{e^{r_n t_n}}}
 \pgfmathsetmacro{\pai}{-(1/\Tseis)*ln(\Fseis/\Nominal)}
 % #endregion
-\subsection{Parte 1}
+
 % Pregunta a parte 1
 
 \begin{frame}
@@ -223,6 +228,7 @@
 \end{frame}
 
 \subsection{Parte 4}
+
 % #region Variables 4
 \pgfmathsetmacro{\fliuno}{\Cdos* exp(-\pai*\Tseis)}
 \pgfmathsetmacro{\flidos}{\Cdos* exp(-\paii*\Tuno)}
@@ -230,8 +236,8 @@
 \pgfmathsetmacro{\fliplus}{\fliuno+\flidos+\flitres}
 \pgfmathsetmacro{\flimenos}{\Pdos-\fliplus}
 \pgfmathsetmacro{\paiv}{-(1/\Tdos)*ln(\flimenos/\FfinalDos)}
+% endregion
 
-% end region
 % Pregunta a parte 4
 \begin{frame}
   \frametitle{Pregunta \text{a)} parte 4}
@@ -255,6 +261,7 @@
   \]
 
 \end{frame}
+
 % Pregunta a parte 4 (continuación)
 \begin{frame}
   \frametitle{Pregunta \text{a)} parte 4 (continuación)}
@@ -277,6 +284,7 @@
   \]
   \textbf{Resultado:} La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}
 \end{frame}
+
 \section{Pregunta \text{b)}}
 % Pregunta b)
 \begin{frame}
@@ -285,7 +293,10 @@
     \scriptsize
     \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
     \vspace{3pt}
-    \item {\Large\textcolor{blue}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} aumenta a mayor madurez?}}
+    \item {\Large\textcolor{blue}{b) Grafique la curva cero y comente (sin realizar cálculos) 
+    si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. 
+    ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿por qué el \textit{spread} 
+    aumenta a mayor madurez?}}
     \vspace{3pt}
     \item {\textcolor{white}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
     \vspace{3pt}
@@ -300,29 +311,54 @@
 %Grafico
 \begin{frame}
   \frametitle{Curva cero (tasa spot)}
-  \begin{center}
-  \begin{tikzpicture}
-    \begin{axis}[
-        width=10cm,
-        height=6cm,
-        xlabel={Plazo (años)},
-        ylabel={Tasa cero},
-        grid=both,
-        ymin=0.08, ymax=0.14,
-        yticklabel style={/pgf/number format/.cd, fixed, fixed zerofill, precision=2},
-        xtick={0.5,1,1.5,2},
-        ytick={0.08,0.10,...,0.14}
-      ]
-      \addplot+[mark=*] coordinates {
-        (\Tseis, 0.124)
-        (\Tuno, 0.117)
-        (\TunoCinco, 0.112)
-        (\Tdos, 0.109)
-      };
-    \end{axis}
-  \end{tikzpicture}
-  \end{center}
+
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{axis}[
+            width=8cm,
+            height=5cm,
+            xlabel={Tiempo (años)},
+            ylabel={Tasa cero},
+            grid=both,
+            xmin=0,
+            ymin=0.08, ymax=0.14,
+            yticklabel style={/pgf/number format/.cd, fixed, fixed zerofill, precision=2},
+            xtick={0,0.5,1,1.5,2,2.5},
+            ytick={0.08,0.10,...,0.14}
+          ]
+          \addplot+[mark=*] coordinates {
+            (0,\pai)
+            (\Tseis, \pai)
+            (\Tuno, \paii)
+            (\TunoCinco, \paiii)
+            (\Tdos, \paiv)
+            (2.5,\paiv)
+          };
+        \end{axis}
+      \end{tikzpicture}
+      \end{center}
 \end{frame}
+\begin{frame}
+  \frametitle{Relación entre curva cero y curva de bonos}
+
+  \begin{itemize}
+    \pausa
+    \item La \textbf{curva cero} muestra las tasas spot: tasas exactas para distintos plazos, sin considerar 
+    cupones. Se pagan los intereses y el principal al final del período.
+    \pausa
+    \item La \textbf{curva de bonos} muestra la \textit{yield to maturity}, que es una tasa promedio ponderada considerando cupones y valor nominal.
+    \pausa
+    \item Ambas curvas suelen tener pendiente similar, ya que responden a las mismas condiciones de mercado.
+    \pausa
+    \item La curva de bonos es más suave debido a la dispersión de flujos en el tiempo.
+    \pausa
+    \item En este caso, ambas curvas tienen \textbf{pendiente negativa}, lo que indica expectativas de tasas más bajas en el futuro.
+    \pausa
+  \end{itemize}
+
+  \vspace{1em}
+\end{frame}
+
 \section{Pregunta \text{c)}}
 % Pregunta c)
 \begin{frame}
@@ -385,6 +421,7 @@
     \vspace{3pt}
   \end{itemize}
 \end{frame}
+
 \section{Pregunta \text{f)}}
 % Pregunta f)
 \begin{frame}
