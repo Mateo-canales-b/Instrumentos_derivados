@@ -62,16 +62,7 @@
 % Flujo final común en bonos con cupón
 \newcommand{\Ffinal}{104}
 \newcommand{\FfinalDos}{105}
-% Tasas cero en formato porcentaje (para mostrar en texto)
-\newcommand{\taunio}{11.7\%}
-\newcommand{\taaunoCinco}{11.2\%}
-\newcommand{\tados}{10.9\%}
 
-% Tasas cero en formato decimal (para usar en fórmulas)
-\newcommand{\rtaseis}{0.124}
-\newcommand{\rtaunio}{0.117}
-\newcommand{\rtaaunoCinco}{0.112}
-\newcommand{\rtados}{0.109}
 
 % #endregion
 % Caso
@@ -126,10 +117,12 @@
 \newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
 \newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
 \newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
+\newcommand{\decimalxx}[1]{\pgfmathprintnumber[fixed, precision=4]{#1}}
 \newcommand{\porcentaje}[1]{%
   \pgfmathsetmacro{\temp}{#1*100}%
   \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
-}\newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
+  }
+\newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
 \newcommand{\capcontinua}{F = \sum_{i=1}^{n} \frac{C_i}{e^{r_i t_i}} + \frac{P}{e^{r_n t_n}}}
 \pgfmathsetmacro{\pai}{-(1/\Tseis)*ln(\Fseis/\Nominal)}
 % #endregion
@@ -223,10 +216,10 @@
   \pausa
   \[
    r=-\frac{1}{\TunoCinco} \cdot \ln\left(\frac{\decimalx{\flmenos}}{\Ffinal} \right)
-   \pausa \approx \decimalx{\paiii}
+   \pausa \approx \decimalxx{\paiii}
    \]
    
-  \textbf{Resultado:} \( r \approx \rtaaunoCinco \) La tasa cero a 1.5 años es aproximadamente \porcentaje{\paiii}
+  \textbf{Resultado:} La tasa cero a 1.5 años es aproximadamente \porcentaje{\paiii}
 \end{frame}
 
 \subsection{Parte 4}
@@ -280,9 +273,9 @@
   \pausa
   \[
   r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
-  \pausa \approx \decimal{\paiv}
+  \pausa \approx \decimalx{\paiv}
   \]
-  \textbf{Resultado:} \( r \approx \rtados \) La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}
+  \textbf{Resultado:} La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}
 \end{frame}
 \section{Pregunta \text{b)}}
 % Pregunta b)
