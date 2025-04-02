@@ -345,23 +345,17 @@
             (\Tdos, \paiv)
             (2.5,\paiv)
           };
-          \addlegendentry{Spot}
+          \addlegendentry{Tasa cero }
 
           \addplot+[mark=triangle*, dash dot, thick, purple] coordinates {
-            (0,\fwdseisuno)
+            (0,\pai)
             (\Tseis, \fwdseisuno)
             (\Tuno, \fwdunounocinco)
             (\TunoCinco, \fwdunocincoDos)
             (2.5,\fwdunocincoDos)
           };
           \addlegendentry{Tasa forward}
-          \addplot+[mark=* , orange] coordinates {
-            (\Tuno, \tirunoCinco)
-            (\TunoCinco, \tirunoCinco)
-            (\Tdos, \tirdos)
-            (2.5, \tirdos)
-          };
-          \addlegendentry{(TIR)}
+
         \end{axis}
       \end{tikzpicture}
       \end{center}
@@ -372,7 +366,7 @@
   \frametitle{Relación entre curva cero y curva de bonos}
   \begin{itemize}
     \item La \textbf{curva cero} muestra las tasas spot: tasas exactas para distintos plazos, sin considerar 
-    cupones. Se pagan los intereses y el principal al final del período.
+    cupones. Solamente paga el principal al final del período.
     \pausa
     \item La \textbf{curva de bonos} muestra la \textit{yield to maturity}, que es una tasa promedio ponderada considerando cupones y valor nominal.
     \pausa
@@ -436,12 +430,15 @@
 \begin{frame}
   \frametitle{Respuestas \text{c)}}
   \begin{block}{Interpretación económica detrás de la pendiente observada en la curva cero}
+    \pausa
     Si la pendiente de la curva es negativa, se espera un escenario de bajo crecimiento
     económico, por lo tanto, las tasas de interés serán más bajas que las observadas
     actualmente.
   \end{block}
+  \pausa
   \begin{block}{¿Qué nos dice respecto a la probabilidad de recesión?}
-    A menor tasa, la probabilidad de recesión es mayor, \textcolor{red}{causalidad, correlacion?} 
+    \pausa
+  A menor tasa, la probabilidad de recesión es mayor. 
   \end{block}
 \end{frame}
 
@@ -470,7 +467,7 @@
 % Respuestas d)
 \begin{frame}
   \frametitle{Respuestas \text{d)}}
-  \begin{block}{ ¿Qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.?}
+  \begin{block}{ ¿Qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}?.}
     \pausa
     Para calcular el valor presente de las ganancias o pérdidas de los contratos forward o
     futuros, se debe utilizar la curva cero. Es decir, las tasas de los bonos de gobierno sin el
@@ -505,12 +502,16 @@
   \frametitle{Respuestas \text{e)}}
   \begin{block}{¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?}
     \pausa
-    Para calcular el valor presente de las ganancias o pérdidas de los contratos forward o
-    futuros, se debe utilizar la curva cero. Es decir, las tasas de los bonos de gobierno sin el
-    efecto de los cupones (bootstrapping).
-  \end{block}
+    El rol de las probabilidades neutrales al riesgo en los instrumentos financieros
+    es calcular el valor presente de estos sin importar las preferencias individuales.
+    El retorno esperado de los instrumentos es la tasa libre de riesgo, bajo la medida neutral al riesgo: 
+    \( E^q\left(\frac{S_{t+1}}{S_t}\right)=1 +r_f \). es por ello que se descuentan los flujos a la tasa libre de riesgo.
+
+    \end{block}
+  \pausa
   \begin{block}{¿Qué rol juega la condición de no arbitraje?}
-    
+    Con la finalidad de tener probabilidades neutrales al riesgo, no debe haber oportunidades de arbitraje, 
+    cumpliendo el escenario primordial, en  donde \( \frac{S^-}{S} < 1 + r_f < \frac{S^+}{S}\)
   \end{block}
 \end{frame}
 
@@ -534,5 +535,17 @@
     \item {\Large\textcolor{blue}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Cálculo utilizando matrices}
+  \Huge
+  \centering
+  Tarea con décimas para la prueba.\\
+
+
+  Fecha límite : \\
+  07/04/2025 \\
+  \textbf{ 21:00}
+
 \end{frame}
 \end{document}
