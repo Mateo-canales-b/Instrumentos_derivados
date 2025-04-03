@@ -1,0 +1,131 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titling}
+\geometry{letterpaper, margin=1in}
+\fancypagestyle{firststyle}{
+    \fancyhf{}
+    \lhead{\includegraphics[height=5cm]{../imagenes/logo.png}}
+    \renewcommand{\headrulewidth}{0pt}
+}
+\pagestyle{plain}
+
+\definecolor{rojoudp}{RGB}{210,35,42}
+\newcommand{\subrayadoRojo}[1]{{\color{rojoudp}\underline{\textcolor{black}{#1}}}}
+\newcommand{\formulasection}[2]{%
+    \vspace{1em}
+    \noindent
+    {\large\bfseries\color{blue}#1}\\[-4em]
+    \begin{center}
+        \large
+      \[
+      #2
+      \]
+    \end{center}
+    \vspace{1em}
+}
+\setlength{\droptitle}{-3em}
+\begin{document}
+\begin{figure}
+    \vspace{-5em}    
+    \flushright
+    \includegraphics[height=4cm]{../imagenes/logo.png}\\[-3em]
+\end{figure}
+\begin{center}
+    {\LARGE \textbf{Ayudantía Nº2: Valoración de Futuros y Forwards}}\\[0.5em]
+    Curso: Instrumentos Derivados\\
+    Profesor: Francisco Rantul\\
+    Ayudante: Mateo Canales\\
+    \date{31/03/2025}
+\end{center}
+\vspace{1pt}
+{\color{rojoudp}\hrule height 2pt}
+\vspace{10pt}
+
+\section*{\subrayadoRojo{Pregunta 1}}
+Suponga que la acción A tiene un precio de \$28 y sus flujos de caja esperados en el próximo periodo 
+es de \$35,448 en el escenario bueno y de \$24,511 en el escenario malo. La acción B tiene un valor de 
+\$12,019 y posee flujos esperados de \$14,788 en el escenario bueno y flujos de \$10,949 en el escenario malo. 
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+\item   Asumiendo que no existen oportunidades de arbitraje, calcule cual sería la tasa libre de riesgo.
+\textbf{HINT}: Asuma que las probabilidades neutrales al riesgo son de $\pi=0,5$ en cada escenario. 
+
+\item   Comente intuitivamente qué cambia respecto de lo utilizado en el punto a) cuando hay oportunidades de arbitraje. 
+
+\end{enumerate}
+
+\section*{\subrayadoRojo{Pregunta 2}}
+Se espera que una acción pague dividendos equivalentes a \$1 por acción en 4 meses y en 10 meses.
+El precio de la acción hoy es de \$28, y la tasa cero libre de riesgo es de 0,07 anual (compuesta continua).
+Un inversionista ha tomado una posición corta en un contrato forward sobre la acción a 12 meses.
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+\item   ¿Cuál es el precio del forward y el valor del contrato inicial?
+\item   9 meses después, el precio de la acción es de \$30 y la tasa libre de riesgo sigue siendo la misma.
+ ¿Cuál es el precio del forward y el valor del contrato?
+\item   En pandemia las empresas decidieron distribuir un alto porcentaje de sus utilidades como dividendos 
+debido a las pocas oportunidades de inversión en nuevos proyectos. ¿Como influyó este shock en los precios 
+forward acciones? ¿en base a lo anterior, de qué forma usted anticiparía una recuperación de la economía?
+\end{enumerate}
+
+\section*{\subrayadoRojo{Pregunta 3}}
+Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
+para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+\item Determine el precio forward a 360 días utilizando la siguiente información de curvas cero cupón:
+\begin{table}[h!]
+    \centering
+    \caption{Curvas cero cupón al 25-08-2022}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Curva} & \textbf{1 Día} & \textbf{30 Días} & \textbf{60 Días} & \textbf{90 Días} & \textbf{180 Días} & \textbf{1 Año} & \textbf{2 Años} \\
+    \hline
+    CLP & 2{,}81\% & 3{,}01\% & 3{,}11\% & 3{,}16\% & 3{,}25\% & 3{,}56\% & 4{,}18\% \\
+    UF  & 2{,}93\% & 3{,}10\% & 1{,}99\% & 1{,}18\% & 0{,}42\% & 0{,}89\% & 1{,}26\% \\
+    USD & 2{,}66\% & 2{,}75\% & 2{,}84\% & 2{,}95\% & 3{,}26\% & 3{,}96\% & 5{,}35\% \\
+    \hline
+    \end{tabular}
+\end{table}
+\item	Suponga que 10 meses después el tipo de cambio se encuentra en \$708 y la firma quiere ver
+la posibilidad de vender el contrato, ¿cuál sería el precio justo de venta de dicho contrato?
+\begin{table}[h!]
+    \centering
+    \caption{Curvas cero cupón al 25-08-2023}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Curva} & \textbf{1 Día} & \textbf{30 Días} & \textbf{60 Días} & \textbf{90 Días} & \textbf{180 Días} & \textbf{1 Año} & \textbf{2 Años} \\
+    \hline
+    CLP & 1{,}64\% & 2{,}09\% & 2{,}64\% & 2{,}90\% & 3{,}01\% & 3{,}15\% & 3{,}77\% \\
+    UF  & 1{,}20\% & 1{,}71\% & 1{,}80\% & 1{,}95\% & 2{,}05\% & 1{,}98\% & 1{,}79\% \\
+    USD & 0{,}50\% & 0{,}88\% & 1{,}00\% & 1{,}32\% & 1{,}50\% & 2{,}00\% & 3{,}55\% \\
+    \hline
+    \end{tabular}
+\end{table}
+\item Calcule las ganancias o pérdidas(contable) 10 meses despuésde firmado el contrato en el 
+    punto a). \textbf{HINT}: use las tasasde la tabla b
+\end{enumerate}
+
+\section*{\subrayadoRojo{Pregunta 4}}
+Suponga que el precio spot del commodity de plata es actualmente igual a \$18,8 dólares  
+la onza. Los costos de almacenamiento son iguales a \$0,4 por año la onza, pagaderos por
+ trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+ de riesgo del 4\% anual compuesto continuo.
+ \begin{enumerate}[label=\textbf{\alph*)}]
+    \item   Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
+    \item 	Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
+     efectivamente observado en el mercado es de \$19,8 dólares la onza.
+    \item suma que existe una baja demanda por el commodity de plata, por lo tanto,
+     las empresas están almacenando altos niveles de inventarios. 
+     Explique qué ocurre con el rendimiento de conveniencia.
+
+\end{enumerate}
+
+
+\end{document}
