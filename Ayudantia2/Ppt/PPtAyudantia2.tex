@@ -1,0 +1,551 @@
+\documentclass{beamer}
+\usetheme{Darmstadt}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}    % Para escribir acentos y caracteres especiales
+\usepackage{graphicx}          % Para insertar imágenes
+\usepackage{booktabs}          % Para tablas más bonitas
+\usepackage{enumitem}
+\usepackage{amsmath}           % Para escribir ecuaciones
+\usepackage{tikz}              % Para gráficos vectoriales
+\usetikzlibrary{calc}          % Para coordenadas calculadas con TikZ
+\usepackage{pgfplots}          % Para gráficos matemáticos
+\pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
+\usepackage{hyperref}
+\usepackage{pgf}
+
+\newif\ifpresentacion
+\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
+%\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+
+\usepackage{ifthen}
+\newcommand{\pausa}{\ifpresentacion\pause\fi}
+% #region Título
+\title{Ayudantía 1 \\ Bonos \\ \large\textit{Instrumentos Derivados}}
+\author{
+  \texorpdfstring{
+    \textbf{Profesor:} Francisco Rantul \\[0.3em]
+    \textbf{Ayudante:} Mateo Canales
+  }{Profesor: Francisco Rantul, Ayudante: Mateo Canales}
+}
+\subject{Instrumentos Derivados}
+\institute{Universidad Diego Portales}
+\date{02 De Abril, 2025}
+% #endregion 
+\begin{document}
+
+% Portada
+\begin{frame}
+    \titlepage
+    \vfill
+    \centering
+    \includegraphics[width=2.3118cm]{../imagenes/logo.png}
+  \end{frame}
+
+% #region Variables de instrumentos financieros
+\newcommand{\Nominal}{100}    % Precio actual para PDBC 6 meses
+\newcommand{\Fseis}{94}     % Valor nominal recibido en 6 meses
+\newcommand{\Funo}{89}      % Valor nominal recibido en 1 año
+
+\newcommand{\PunoCinco}{94.84}  % Precio BCP 1.5 años
+\newcommand{\Pdos}{97.12}       % Precio BCP 2 años
+
+% Flujos de cupones
+\newcommand{\CunoCinco}{4}  % Cupón semestral BCP 1.5 años
+\newcommand{\Cdos}{5}       % Cupón semestral BCP 2 años
+
+% Tiempos
+\newcommand{\Tseis}{0.5}
+\newcommand{\Tuno}{1.0}
+\newcommand{\TunoCinco}{1.5}
+\newcommand{\Tdos}{2.0}
+
+% Flujo final común en bonos con cupón
+\newcommand{\Ffinal}{104}
+\newcommand{\FfinalDos}{105}
+
+% Formateo de números 
+\newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
+\newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
+\newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
+\newcommand{\decimalxx}[1]{\pgfmathprintnumber[fixed, precision=4]{#1}}
+\newcommand{\porcentaje}[1]{%
+  \pgfmathsetmacro{\temp}{#1*100}%
+  \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
+  }
+
+% #endregion
+% Caso
+\section{Caso}
+  \begin{frame}
+    
+  \frametitle{Caso}
+
+  Los precios de los pagarés descontables del Banco Central de Chile (PDBC)\footnote{\textit{Para 
+  más información sobre el PDBC, consulte la página 21 del documento del Banco Central de Chile:}}
+  a 6 meses y a 1 año son de \$\Fseis\ y \$\Funo\, respectivamente, los cuales pagan \$\Nominal.
+  \vspace{0.5em}
+  
+  
+  Un bono del Banco Central de Chile en pesos (BCP) \footnote{\textit{Para más información sobre el BCP, 
+  consulte la página 45 del documento del Banco Central de Chile:}\\
+  \tiny{\href{https://www.bcentral.cl/contenido/-/detalle/caracteristicas-de-los-instrumentos-del-mercado-financiero-nacional-3}
+  {\texttt{www.bcentral.cl - Características de los instrumentos}}}}
+  a 1,5 años que paga cupón de  \$\CunoCinco\  cada 6 meses tiene un precio de \$\PunoCinco. 
+  Un BCP a 2 años que paga
+  cupón de \$\Cdos\ cada 6 meses tiene un precio de \$\Pdos.
+
+  \end{frame}
+  % Contenido
+\begin{frame}
+    \frametitle{Contenido}
+    \tableofcontents
+\end{frame}
+
+  % Pregunta a)
+
+\section{Pregunta \text{a)}}
+
+% Pregunta a)
+  \begin{frame}
+    \frametitle{Preguntas}
+    \begin{itemize}
+      \scriptsize
+      \item {\Large\textcolor{blue}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+      \vspace{3pt}
+      \item {\textcolor{white}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
+      \vspace{3pt}
+      \item {\textcolor{white}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+      \vspace{3pt}
+      \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+      \vspace{3pt}
+      \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
+      \vspace{3pt}
+      \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+      \vspace{3pt}
+    \end{itemize}
+  \end{frame}
+
+\subsection{Parte 1}
+% #region variable pa1
+
+\newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
+\newcommand{\capcontinua}{F = \sum_{i=1}^{n} \frac{C_i}{e^{r_i t_i}} + \frac{P}{e^{r_n t_n}}}
+\pgfmathsetmacro{\pai}{-(1/\Tseis)*ln(\Fseis/\Nominal)}
+% #endregion
+
+% Pregunta a parte 1
+
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 1}
+  \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
+  \footnotesize
+  \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio actual (F) = \$\Fseis, Tiempo final (T)=\Tseis. \\
+  \pausa 
+  \textbf{Fórmula capitalización continua:}
+  \[\capcontinua\]
+  \pausa
+  Dado C=0
+  \[\capcontinuacero\]
+  \pausa
+  Reemplazamos con los datos:
+  \[\Fseis = \Nominal \cdot e^{-r \cdot \Tseis}\] \pausa
+  \textbf{Despejando $r$:}
+  \[r = -\frac{1}{\Tseis} \cdot \ln\left(\frac{\Fseis}{\Nominal}\right) \pausa \approx \decimalx{\pai}  \]
+  \pausa
+  \textbf{Resultado:} La tasa cero a 6 meses es aproximadamente \porcentaje{\pai}
+\end{frame}
+
+\subsection{Parte 2}
+\pgfmathsetmacro{\paii}{-(1/\Tuno)*ln(\Funo/\Nominal)}
+% Pregunta a parte 2
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 2}
+    \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
+    \footnotesize
+    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Funo,Tiempo final (T)=\Tuno.\\
+    \pausa
+    \textbf{Fórmula capitalización continua:}
+    \[\capcontinua\]
+    \pausa
+    Dado C=0
+    \[\capcontinuacero\]
+    \pausa
+    Reemplazamos con los datos:
+    \pausa
+    \textbf{Despejando $r$:}
+   \[r = -\ln\left(\frac{\Funo}{\Nominal}\right) \pausa \approx \decimalx{\paii}\]
+    \pausa
+   \textbf{Resultado:} La tasa cero a 1 año es aproximadamente \porcentaje{\paii}
+  \end{frame}
+
+\subsection{Parte 3}
+
+% #region Variables pa3
+\pgfmathsetmacro{\fluno}{\CunoCinco* exp(-\pai*\Tseis)}
+\pgfmathsetmacro{\fldos}{\CunoCinco* exp(-\paii*\Tuno)}
+\pgfmathsetmacro{\flplus}{\fluno + \fldos}
+\pgfmathsetmacro{\flmenos}{\PunoCinco - \flplus}
+\pgfmathsetmacro{\paiii}{-(1/\TunoCinco)*ln(\flmenos/\Ffinal)}
+% #endregion
+
+% Pregunta a parte 3
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 3}
+  \LARGE \underbar{Calcule la curva cero de 1.5 años} \\[1em]
+  \footnotesize
+  \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio del BCP a 1.5 años = \$\PunoCinco, con cupón de \$\CunoCinco\ cada 6 meses, 
+  Tiempo Final = \TunoCinco.\\
+  \pausa
+  \textbf{Fórmula capitalización continua:}
+  \[\capcontinua\]
+  \pausa
+  \textbf{Cálculo:}
+  \[ \PunoCinco = \CunoCinco \cdot e^{\decimalx{-\pai} \cdot \Tseis} + \CunoCinco \cdot e^{\decimalx{-\paii} \cdot \Tuno} + \Ffinal \cdot e^{-r \cdot \TunoCinco}\]
+  \pausa
+  \textbf{Despejando $r$:}
+  \[
+  r = -\frac{1}{\TunoCinco} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{\decimalx{-\pai}\cdot \Tseis} - \CunoCinco e^{\decimalx{-\paii}  \cdot \Tuno}}{\Ffinal} \right)
+  \]
+\end{frame}
+
+% Pregunta a parte 3 (continuación)
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 3 (continuación)}
+  \footnotesize
+  \textbf{Despejando $r$:}
+  \[
+    r = -\frac{1}{\TunoCinco} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{\decimalx{-\pai} \cdot \Tseis} - \CunoCinco e^{\decimalx{-\paii}  \cdot \Tuno}}{\Ffinal} \right)
+    \]
+  \[
+   r=-\frac{1}{\TunoCinco} \cdot \ln\left(\frac{\PunoCinco - \decimalx{\flplus}}{\Ffinal} \right)
+   \]
+  \pausa
+  \[
+   r=-\frac{1}{\TunoCinco} \cdot \ln\left(\frac{\decimalx{\flmenos}}{\Ffinal} \right)
+   \pausa \approx \decimalxx{\paiii}
+   \]
+   
+  \textbf{Resultado:} La tasa cero a 1.5 años es aproximadamente \porcentaje{\paiii}
+\end{frame}
+
+\subsection{Parte 4}
+
+% #region Variables 4
+\pgfmathsetmacro{\fliuno}{\Cdos* exp(-\pai*\Tseis)}
+\pgfmathsetmacro{\flidos}{\Cdos* exp(-\paii*\Tuno)}
+\pgfmathsetmacro{\flitres}{\Cdos* exp(-\paii*\TunoCinco)}
+\pgfmathsetmacro{\fliplus}{\fliuno+\flidos+\flitres}
+\pgfmathsetmacro{\flimenos}{\Pdos-\fliplus}
+\pgfmathsetmacro{\paiv}{-(1/\Tdos)*ln(\flimenos/\FfinalDos)}
+% endregion
+
+% Pregunta a parte 4
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 4}
+  \LARGE \underbar{Calcule la curva cero de 2 años} \\[1em]
+
+  \footnotesize
+  \textbf{Datos:}  Valor nominal (P) = \$\Nominal, Precio del BCP a 2 años = \$\Pdos, 
+  con cupón de \$\Cdos\ cada 6 meses, Tiempo Final (T) = \Tdos.
+  \pausa
+  \textbf{Fórmula capitalización continua:}
+  \[\capcontinua\]
+  \pausa
+  \textbf{Cálculo:}
+  \[
+  \Pdos = \Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} + \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} + \Cdos \cdot e^{-\paiii \cdot \TunoCinco} + \FfinalDos \cdot e^{-r \cdot \Tdos}
+  \]
+  \pausa
+  \textbf{Despejando $r$:}
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} - \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} - \Cdos \cdot e^{-\paiii \cdot \TunoCinco}}{\FfinalDos} \right)
+  \]
+
+\end{frame}
+
+% Pregunta a parte 4 (continuación)
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 4 (continuación)}
+  \footnotesize
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} - \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} - \Cdos \cdot e^{\decimalx{-\paiii} \cdot \TunoCinco}}{\FfinalDos} \right)
+  \]
+  \pausa
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\decimalx{\fliuno} - \decimalx{\flidos} - \decimalx{\flitres}}{\FfinalDos} \right)
+  \]
+  \pausa
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
+  \]
+  \pausa
+  \[
+  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
+  \pausa \approx \decimalx{\paiv}
+  \]
+  \textbf{Resultado:} La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}
+\end{frame}
+
+\section{Pregunta \text{b)}}
+
+% Pregunta b)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \scriptsize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{b) Grafique la curva cero y comente (sin realizar cálculos) 
+    si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. 
+    ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} 
+    aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
+% #region Variables de la curvas
+\pgfmathsetmacro{\tirunoCinco}{(\pai+\paii+\paiii)/3} % ejemplo simple
+\pgfmathsetmacro{\tirdos}{(\pai+\paii+\paiii+\paiv)/4} % ejemplo
+\pgfmathsetmacro{\fwdseisuno}{(\paii*\Tuno - \pai*\Tseis)/(\Tuno - \Tseis)}
+\pgfmathsetmacro{\fwdunounocinco}{(\paiii*\TunoCinco - \paii*\Tuno)/(\TunoCinco - \Tuno)}
+\pgfmathsetmacro{\fwdunocincoDos}{(\paiv*\Tdos - \paiii*\TunoCinco)/(\Tdos - \TunoCinco)}
+% #endregion
+
+% Gráfico
+\begin{frame}
+  \frametitle{Curva cero (tasa spot)}
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{axis}[
+            width=8cm,
+            height=5cm,
+            xlabel={Tiempo (años)},
+            ylabel={Tasa cero},
+            grid=both,
+            xmin=0,
+            ymin=0.08, ymax=0.14,
+            yticklabel style={/pgf/number format/.cd, fixed, fixed zerofill, precision=2},
+            xtick={0,0.5,1,1.5,2,2.5},
+            ytick={0.08,0.10,...,0.14},
+            legend style={at={(0,-0.155)}, anchor=north, legend columns=1, font=\tiny},
+          ]
+          \addplot+[mark=,solid, red ] coordinates {
+            (0,\pai)
+            (\Tseis, \pai)
+            (\Tuno, \paii)
+            (\TunoCinco, \paiii)
+            (\Tdos, \paiv)
+            (2.5,\paiv)
+          };
+          \addlegendentry{Tasa cero }
+
+          \addplot+[mark=triangle*, dash dot, thick, purple] coordinates {
+            (0,\pai)
+            (\Tseis, \fwdseisuno)
+            (\Tuno, \fwdunounocinco)
+            (\TunoCinco, \fwdunocincoDos)
+            (2.5,\fwdunocincoDos)
+          };
+          \addlegendentry{Tasa forward}
+
+        \end{axis}
+      \end{tikzpicture}
+      \end{center}
+\end{frame}
+
+% Relación entre curvas
+\begin{frame}
+  \frametitle{Relación entre curva cero y curva de bonos}
+  \begin{itemize}
+    \item La \textbf{curva cero} muestra las tasas spot: tasas exactas para distintos plazos, sin considerar 
+    cupones. Solamente paga el principal al final del período.
+    \pausa
+    \item La \textbf{curva de bonos} muestra la \textit{yield to maturity}, que es una tasa promedio ponderada considerando cupones y valor nominal.
+    \pausa
+    \item Ambas curvas suelen tener pendiente similar, ya que responden a las mismas condiciones de mercado.
+    \pausa
+    \item La curva de bonos es más suave debido a la dispersión de flujos en el tiempo.
+  \end{itemize}
+  \vspace{1em}
+\end{frame}
+
+% Respuesta B
+\begin{frame}
+  \frametitle{Respuestas \text{b)}}
+  \begin{block}{¿La pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa?}
+    \pausa
+    \textit{En este caso, ambas curvas tienen pendiente negativa.}
+    \pausa
+  \end{block}
+  
+  \begin{block}{¿Qué factor explica el \textit{spread} entre ambas curvas?}
+    \pausa
+    \textit{El \textit{spread} se explica por el hecho de que la curva cero descuenta
+     cada flujo con su propia tasa spot, mientras que la curva de bonos (yield) aplica 
+     una tasa promedio a todos los flujos.}
+    \pausa
+  \end{block} 
+  
+  \begin{block}{¿Por qué el \textit{spread} aumenta a mayor madurez?}
+    \pausa
+    \textit{El factor que explica las diferencias de \textit{spread} entre ambas 
+    curvas a mayor tiempo o madurez se debe al impacto que tienen los cupones al momento de traerlos a valor presente.}
+    \pausa
+  \end{block}
+
+\end{frame}
+
+\section{Pregunta \text{c)}}
+
+% Pregunta c)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \scriptsize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. 
+    ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
+% Respuestas c)
+\begin{frame}
+  \frametitle{Respuestas \text{c)}}
+  \begin{block}{Interpretación económica detrás de la pendiente observada en la curva cero}
+    \pausa
+    Si la pendiente de la curva es negativa, se espera un escenario de bajo crecimiento
+    económico, por lo tanto, las tasas de interés serán más bajas que las observadas
+    actualmente.
+  \end{block}
+  \pausa
+  \begin{block}{¿Qué nos dice respecto a la probabilidad de recesión?}
+    \pausa
+  A menor tasa, la probabilidad de recesión es mayor. 
+  \end{block}
+\end{frame}
+
+\section{Pregunta \text{d)}}
+
+% Pregunta d)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \scriptsize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
+% Respuestas d)
+\begin{frame}
+  \frametitle{Respuestas \text{d)}}
+  \begin{block}{ ¿Qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}?.}
+    \pausa
+    Para calcular el valor presente de las ganancias o pérdidas de los contratos forward o
+    futuros, se debe utilizar la curva cero. Es decir, las tasas de los bonos de gobierno sin el
+    efecto de los cupones (bootstrapping).
+  \end{block}
+\end{frame}
+
+\section{Pregunta \text{e)}}
+
+% Pregunta e)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \scriptsize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
+% Respuestas e)
+\begin{frame}
+  \frametitle{Respuestas \text{e)}}
+  \begin{block}{¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?}
+    \pausa
+    El rol de las probabilidades neutrales al riesgo en los instrumentos financieros
+    es calcular el valor presente de estos sin importar las preferencias individuales.
+    El retorno esperado de los instrumentos es la tasa libre de riesgo, bajo la medida neutral al riesgo: 
+    \( E^q\left(\frac{S_{t+1}}{S_t}\right)=1 +r_f \). es por ello que se descuentan los flujos a la tasa libre de riesgo.
+
+    \end{block}
+  \pausa
+  \begin{block}{¿Qué rol juega la condición de no arbitraje?}
+    Con la finalidad de tener probabilidades neutrales al riesgo, no debe haber oportunidades de arbitraje, 
+    cumpliendo el escenario primordial, en  donde \( \frac{S^-}{S} < 1 + r_f < \frac{S^+}{S}\)
+  \end{block}
+\end{frame}
+
+\section{Pregunta \text{f)}}
+
+% Pregunta f)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \scriptsize
+    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
+    \vspace{3pt}
+    \item {\textcolor{black}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
+    \vspace{3pt}
+    \item {\Large\textcolor{blue}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Cálculo utilizando matrices}
+  \Huge
+  \centering
+  Tarea con décimas para la prueba.\\
+
+
+  Fecha límite : \\
+  07/04/2025 \\
+  \textbf{ 21:00}
+
+\end{frame}
+\end{document}
