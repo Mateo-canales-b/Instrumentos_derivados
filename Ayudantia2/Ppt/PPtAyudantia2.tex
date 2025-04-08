@@ -12,6 +12,7 @@
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
 \usepackage{hyperref}
 \usepackage{pgf}
+\usepackage{ragged2e}
 
 \newif\ifpresentacion
 \presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
@@ -20,7 +21,8 @@
 \usepackage{ifthen}
 \newcommand{\pausa}{\ifpresentacion\pause\fi}
 % #region Título
-\title{Ayudantía 1 \\ Bonos \\ \large\textit{Instrumentos Derivados}}
+\title{Ayudantía 2 \\ Valoración de Futuros y
+Forwards \\ \large\textit{Instrumentos Derivados}}
 \author{
   \texorpdfstring{
     \textbf{Profesor:} Francisco Rantul \\[0.3em]
@@ -29,7 +31,7 @@
 }
 \subject{Instrumentos Derivados}
 \institute{Universidad Diego Portales}
-\date{02 De Abril, 2025}
+\date{08 De Abril, 2025}
 % #endregion 
 \begin{document}
 
@@ -42,26 +44,14 @@
   \end{frame}
 
 % #region Variables de instrumentos financieros
-\newcommand{\Nominal}{100}    % Precio actual para PDBC 6 meses
-\newcommand{\Fseis}{94}     % Valor nominal recibido en 6 meses
-\newcommand{\Funo}{89}      % Valor nominal recibido en 1 año
+\newcommand{\PaccionA}{28}    % Precio acción A
+\newcommand{\FlujobuenoA}{35.448}     % Flujo en el escenario bueno de la acción A
+\newcommand{\FlujomaloA}{24.511}     % Flujo en el escenario malo de la acción A
 
-\newcommand{\PunoCinco}{94.84}  % Precio BCP 1.5 años
-\newcommand{\Pdos}{97.12}       % Precio BCP 2 años
+\newcommand{\PaccionB}{12.019}    % Precio acción B
+\newcommand{\FlujobuenoB}{14.788}     % Flujo en el escenario bueno de la acción B
+\newcommand{\FlujomaloB}{10.949}     % Flujo en el escenario malo de la acción B
 
-% Flujos de cupones
-\newcommand{\CunoCinco}{4}  % Cupón semestral BCP 1.5 años
-\newcommand{\Cdos}{5}       % Cupón semestral BCP 2 años
-
-% Tiempos
-\newcommand{\Tseis}{0.5}
-\newcommand{\Tuno}{1.0}
-\newcommand{\TunoCinco}{1.5}
-\newcommand{\Tdos}{2.0}
-
-% Flujo final común en bonos con cupón
-\newcommand{\Ffinal}{104}
-\newcommand{\FfinalDos}{105}
 
 % Formateo de números 
 \newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
@@ -72,480 +62,318 @@
   \pgfmathsetmacro{\temp}{#1*100}%
   \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
   }
+\newcommand{\dinero}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=4]{#1}
+  }
 
 % #endregion
-% Caso
-\section{Caso}
-  \begin{frame}
+
+\justify
+% Pregunta 1)
+
+\section{Pregunta 1}
+
+\begin{frame}
+  \frametitle{Pregunta 1}
+    Suponga que la acción A tiene un precio de \dinero{\PaccionA} y sus flujos de caja esperados en el próximo periodo 
+    es de \dinero{\FlujobuenoA} en el escenario bueno y de \dinero{\FlujomaloA} en el escenario malo. La acción B tiene un valor de 
+    \dinero{\PaccionB} y posee flujos esperados de \dinero{\FlujobuenoB} en el escenario bueno y flujos de \dinero{\FlujomaloB} en el escenario malo. 
     
-  \frametitle{Caso}
 
-  Los precios de los pagarés descontables del Banco Central de Chile (PDBC)\footnote{\textit{Para 
-  más información sobre el PDBC, consulte la página 21 del documento del Banco Central de Chile:}}
-  a 6 meses y a 1 año son de \$\Fseis\ y \$\Funo\, respectivamente, los cuales pagan \$\Nominal.
-  \vspace{0.5em}
-  
-  
-  Un bono del Banco Central de Chile en pesos (BCP) \footnote{\textit{Para más información sobre el BCP, 
-  consulte la página 45 del documento del Banco Central de Chile:}\\
-  \tiny{\href{https://www.bcentral.cl/contenido/-/detalle/caracteristicas-de-los-instrumentos-del-mercado-financiero-nacional-3}
-  {\texttt{www.bcentral.cl - Características de los instrumentos}}}}
-  a 1,5 años que paga cupón de  \$\CunoCinco\  cada 6 meses tiene un precio de \$\PunoCinco. 
-  Un BCP a 2 años que paga
-  cupón de \$\Cdos\ cada 6 meses tiene un precio de \$\Pdos.
-
-  \end{frame}
-  % Contenido
-\begin{frame}
-    \frametitle{Contenido}
-    \tableofcontents
+    \begin{enumerate}[label=\textbf{\alph*)}]
+    \item   Asumiendo que no existen oportunidades de arbitraje, calcule cual sería la tasa libre de riesgo.
+    \textbf{HINT}: Asuma que las probabilidades neutrales al riesgo son de $\pi=0,5$ en cada escenario. 
+    
+    \item   Comente intuitivamente qué cambia respecto de lo utilizado en el punto a) cuando hay oportunidades de arbitraje. 
+    
+    \end{enumerate}
 \end{frame}
 
-  % Pregunta a)
+\subsection{Parte a)}
+\begin{frame}{Preguunta 1 parte a)}
+  Suponga que la acción A tiene un precio de \dinero{\PaccionA} y sus flujos de caja esperados en el próximo periodo 
+  es de \dinero{\FlujobuenoA} en el escenario bueno y de \dinero{\FlujomaloA} en el escenario malo. La acción B tiene un valor de 
+  \dinero{\PaccionB} y posee flujos esperados de \dinero{\FlujobuenoB} en el escenario bueno y flujos de \dinero{\FlujomaloB} en el escenario malo. \\
 
-\section{Pregunta \text{a)}}
 
-% Pregunta a)
-  \begin{frame}
-    \frametitle{Preguntas}
-    \begin{itemize}
-      \scriptsize
-      \item {\Large\textcolor{blue}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
-      \vspace{3pt}
-      \item {\textcolor{white}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
-      \vspace{3pt}
-      \item {\textcolor{white}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
-      \vspace{3pt}
-      \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
-      \vspace{3pt}
-      \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
-      \vspace{3pt}
-      \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
-      \vspace{3pt}
-    \end{itemize}
-  \end{frame}
+  \textbf{a)}   Asumiendo que no existen oportunidades de arbitraje, calcule cual sería la tasa libre de riesgo.
+  \textbf{HINT}: Asuma que las probabilidades neutrales al riesgo son de $\pi=0,5$ en cada escenario.
+\end{frame}
 
-\subsection{Parte 1}
-% #region variable pa1
+\subsection{Parte b)}
+\begin{frame}{Preguunta 1 parte b)}
+  Suponga que la acción A tiene un precio de \dinero{\PaccionA} y sus flujos de caja esperados en el próximo periodo 
+  es de \dinero{\FlujobuenoA} en el escenario bueno y de \dinero{\FlujomaloA} en el escenario malo. La acción B tiene un valor de 
+  \dinero{\PaccionB} y posee flujos esperados de \dinero{\FlujobuenoB} en el escenario bueno y flujos de \dinero{\FlujomaloB} en el escenario malo. \\
 
-\newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
-\newcommand{\capcontinua}{F = \sum_{i=1}^{n} \frac{C_i}{e^{r_i t_i}} + \frac{P}{e^{r_n t_n}}}
-\pgfmathsetmacro{\pai}{-(1/\Tseis)*ln(\Fseis/\Nominal)}
+  
+  \textbf{b)} Comente intuitivamente qué cambia respecto de lo utilizado en el punto a) cuando hay oportunidades de arbitraje. \\
+  
+\end{frame}
+
+\begin{frame}{Pregunta 1 parte b)}
+  \textbf{Respuesta:} En este caso no existirían las probabilidades neutrales al riesgo y los flujos esperados no se podrían descontar 
+  a la tasa libre de riesgo, dado que bajo estar probabilidades todos los activos rentan la tasa libre de riesgo.
+\end{frame}
+
+% Pregunta 2
+% #region Variables pregunta 2
+\newcommand{\dividendo}{1}
 % #endregion
 
-% Pregunta a parte 1
-
+\section{Pregunta 2}
 \begin{frame}
-  \frametitle{Pregunta \text{a)} parte 1}
-  \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
-  \footnotesize
-  \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio actual (F) = \$\Fseis, Tiempo final (T)=\Tseis. \\
-  \pausa 
-  \textbf{Fórmula capitalización continua:}
-  \[\capcontinua\]
-  \pausa
-  Dado C=0
-  \[\capcontinuacero\]
-  \pausa
-  Reemplazamos con los datos:
-  \[\Fseis = \Nominal \cdot e^{-r \cdot \Tseis}\] \pausa
-  \textbf{Despejando $r$:}
-  \[r = -\frac{1}{\Tseis} \cdot \ln\left(\frac{\Fseis}{\Nominal}\right) \pausa \approx \decimalx{\pai}  \]
-  \pausa
-  \textbf{Resultado:} La tasa cero a 6 meses es aproximadamente \porcentaje{\pai}
+
+    \frametitle{Pregunta 2}
+    Se espera que una acción pague dividendos equivalentes a \$1 por acción en 4 meses y en 10 meses.
+    El precio de la acción hoy es de \$28, y la tasa cero libre de riesgo es de 0,07 anual (compuesta continua).
+    Un inversionista ha tomado una posición corta en un contrato forward sobre la acción a 12 meses.
+
+  \begin{enumerate}[label=\textbf{\alph*)}]
+  \item   ¿Cuál es el precio del forward y el valor del contrato inicial?
+  \item   9 meses después, el precio de la acción es de \$30 y la tasa libre de riesgo sigue siendo la misma.
+  ¿Cuál es el precio del forward y el valor del contrato?
+  \item   En pandemia las empresas decidieron distribuir un alto porcentaje de sus utilidades como dividendos 
+  debido a las pocas oportunidades de inversión en nuevos proyectos. ¿Como influyó este shock en los precios 
+  forward acciones? ¿en base a lo anterior, de qué forma usted anticiparía una recuperación de la economía?
+  \end{enumerate}
 \end{frame}
 
-\subsection{Parte 2}
-\pgfmathsetmacro{\paii}{-(1/\Tuno)*ln(\Funo/\Nominal)}
-% Pregunta a parte 2
-  \begin{frame}
-    \frametitle{Pregunta \text{a)} parte 2}
-    \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
-    \footnotesize
-    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Funo,Tiempo final (T)=\Tuno.\\
-    \pausa
-    \textbf{Fórmula capitalización continua:}
-    \[\capcontinua\]
-    \pausa
-    Dado C=0
-    \[\capcontinuacero\]
-    \pausa
-    Reemplazamos con los datos:
-    \pausa
-    \textbf{Despejando $r$:}
-   \[r = -\ln\left(\frac{\Funo}{\Nominal}\right) \pausa \approx \decimalx{\paii}\]
-    \pausa
-   \textbf{Resultado:} La tasa cero a 1 año es aproximadamente \porcentaje{\paii}
+\subsection{Parte a)}
+\begin{frame}{Pregunta 2 parte a)}
+  Se espera que una acción pague dividendos equivalentes a \$1 por acción en 4 meses y en 10 meses.
+  El precio de la acción hoy es de \$28, y la tasa cero libre de riesgo es de 0,07 anual (compuesta continua).
+  Un inversionista ha tomado una posición corta en un contrato forward sobre la acción a 12 meses.\\
+  \textbf{a)} ¿Cuál es el precio del forward y el valor del contrato inicial?  
+\end{frame}
+
+\subsection{Parte b)}
+\begin{frame}{Pregunta 2 parte b)}
+  Se espera que una acción pague dividendos equivalentes a \$1 por acción en 4 meses y en 10 meses.
+  El precio de la acción hoy es de \$28, y la tasa cero libre de riesgo es de 0,07 anual (compuesta continua).
+  Un inversionista ha tomado una posición corta en un contrato forward sobre la acción a 12 meses.\\
+  \textbf{b)} 9 meses después, el precio de la acción es de \$30 y la tasa libre de riesgo sigue siendo la misma.
+  ¿Cuál es el precio del forward y el valor del contrato?
+\end{frame}
+
+\subsection{Parte c)}
+\begin{frame}{Pregunta 2 parte c)}
+  Se espera que una acción pague dividendos equivalentes a \$1 por acción en 4 meses y en 10 meses.
+  El precio de la acción hoy es de \$28, y la tasa cero libre de riesgo es de 0,07 anual (compuesta continua).
+  Un inversionista ha tomado una posición corta en un contrato forward sobre la acción a 12 meses.\\
+  \textbf{c)} En pandemia las empresas decidieron distribuir un alto porcentaje de sus utilidades como dividendos 
+  debido a las pocas oportunidades de inversión en nuevos proyectos. ¿Como influyó este shock en los precios 
+  forward acciones? ¿en base a lo anterior, de qué forma usted anticiparía una recuperación de la economía?
+\end{frame}
+
+\section{Pregunta 3}
+\begin{frame}{Pregunta 3}
+  Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
+para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.\\
+  \begin{enumerate}[label=\textbf{\alph*)}]
+    \item Determine el precio forward a 360 días utilizando la siguiente información de curvas cero cupón.
+
+    \item	Suponga que 10 meses después el tipo de cambio se encuentra en \$708 y la firma quiere ver
+    la posibilidad de vender el contrato, ¿cuál sería el precio justo de venta de dicho contrato?.
+
+    \item Calcule las ganancias o pérdidas(contable) 10 meses despuésde firmado el contrato en el 
+        punto a). \textbf{HINT}: use las tasasde la tabla b.
+      \end{enumerate}
+\end{frame}
+\subsection{Parte a)}
+\begin{frame}{Pregunta 3 parte a)}
+  Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
+para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.\\
+\textbf{a)} Determine el precio forward a 360 días utilizando la siguiente información de curvas cero cupón:
+\begin{table}[h!]
+    \centering
+    \caption{Curvas cero cupón al 25-08-2022}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Curva} & \textbf{1 Día} & \textbf{30 Días} & \textbf{60 Días} & \textbf{90 Días} & \textbf{180 Días} & \textbf{1 Año} & \textbf{2 Años} \\
+    \hline
+    CLP & 2{,}81\% & 3{,}01\% & 3{,}11\% & 3{,}16\% & 3{,}25\% & 3{,}56\% & 4{,}18\% \\
+    UF  & 2{,}93\% & 3{,}10\% & 1{,}99\% & 1{,}18\% & 0{,}42\% & 0{,}89\% & 1{,}26\% \\
+    USD & 2{,}66\% & 2{,}75\% & 2{,}84\% & 2{,}95\% & 3{,}26\% & 3{,}96\% & 5{,}35\% \\
+    \hline
+    \end{tabular}
+\end{table}
+\end{frame}
+
+\subsection{Parte b)}
+\begin{frame}{Pregunta 3 parte b)}
+  Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
+para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.\\
+
+\textbf{b)} Suponga que 10 meses después el tipo de cambio se encuentra en \$708 y la firma quiere ver
+  la posibilidad de vender el contrato, ¿cuál sería el precio justo de venta de dicho contrato?.
+  \begin{table}[h!]
+      \centering
+      \caption{Curvas cero cupón al 25-08-2023}
+      \begin{tabular}{|c|c|c|c|c|c|c|c|}
+      \hline
+      \textbf{Curva} & \textbf{1 Día} & \textbf{30 Días} & \textbf{60 Días} & \textbf{90 Días} & \textbf{180 Días} & \textbf{1 Año} & \textbf{2 Años} \\
+      \hline
+      CLP & 1{,}64\% & 2{,}09\% & 2{,}64\% & 2{,}90\% & 3{,}01\% & 3{,}15\% & 3{,}77\% \\
+      UF  & 1{,}20\% & 1{,}71\% & 1{,}80\% & 1{,}95\% & 2{,}05\% & 1{,}98\% & 1{,}79\% \\
+      USD & 0{,}50\% & 0{,}88\% & 1{,}00\% & 1{,}32\% & 1{,}50\% & 2{,}00\% & 3{,}55\% \\
+      \hline
+      \end{tabular}
+  \end{table}  
+\end{frame}
+
+\subsection{Parte c)}
+\begin{frame}{Pregunta 3 parte c)}
+  Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
+  para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.\\
+  \textbf{c)} Calcule las ganancias o pérdidas(contable) 10 meses despuésde firmado el contrato en el 
+  punto a). \textbf{HINT}: use las tasasde la tabla b.  
+  
+\end{frame}
+
+\section{Pregunta 4}
+\begin{frame}{Pregunta 4}
+  Suponga que el precio spot del commodity de plata es actualmente igual a \$18,8 dólares  
+la onza. Los costos de almacenamiento son iguales a \$0,4 por año la onza, pagaderos por
+ trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+ de riesgo del 4\% anual compuesto continuo.
+  \begin{enumerate}[label=\textbf{\alph*)}]
+      \item   Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
+      \item 	Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
+      efectivamente observado en el mercado es de \$19,8 dólares la onza.
+      \item suma que existe una baja demanda por el commodity de plata, por lo tanto,
+      las empresas están almacenando altos niveles de inventarios. 
+      Explique qué ocurre con el rendimiento de conveniencia.
+
+  \end{enumerate}
+\end{frame}
+
+\subsection{Parte a)}
+\begin{frame}{Pregunta 4 parte a)}
+  Suponga que el precio spot del commodity de plata es actualmente igual a \$18,8 dólares  
+  la onza. Los costos de almacenamiento son iguales a \$0,4 por año la onza, pagaderos por
+   trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+   de riesgo del 4\% anual compuesto continuo.
+  \textbf{a)} Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
+  
+\end{frame}
+
+\subsection{Parte b)}
+\begin{frame}{Pregunta 4 parte b)}
+  Suponga que el precio spot del commodity de plata es actualmente igual a \$18,8 dólares  
+  la onza. Los costos de almacenamiento son iguales a \$0,4 por año la onza, pagaderos por
+   trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+   de riesgo del 4\% anual compuesto continuo.
+  \textbf{b)} Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
+  efectivamente observado en el mercado es de \$19,8 dólares la onza.
+  
+\end{frame}
+
+\subsection{Parte c)}
+\begin{frame}{Pregunta 4 parte c)}
+  Suponga que el precio spot del commodity de plata es actualmente igual a \$18,8 dólares  
+  la onza. Los costos de almacenamiento son iguales a \$0,4 por año la onza, pagaderos por
+   trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+   de riesgo del 4\% anual compuesto continuo.
+  \textbf{c)} Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
+  efectivamente observado en el mercado es de \$19,8 dólares la onza.
+  
+\end{frame}
+
+\section{Pregunta 5}
+\begin{frame}{Pregunta 5}
+  Suponga que LAN está preocupada por las variaciones del precio del petróleo durante los siguientes meses,
+  específicamente los siguientes 6 meses, ya que el combustible que ocupa la flota de aviones ocupa un importante 
+  ítem de costo en el presupuesto de la firma, LAN sabe que necesitara 1.060.000 litros de combustible en 6 meses
+  más para sus operaciones nacionales, el actual precio de combustible para aviones está en USD 65 el barril (159 litros). 
+  El gran problema que posee LAN es que el precio del combustible depende directamente del precio del Barril de Petróleo 
+  en el mercado internacional el cual es actualmente de USD 48,6 y solo existen derivados sobre petróleo y no sobre combustible.
+  
+\end{frame}
+
+\begin{frame}{Pregunta 5}
+  \begin{enumerate}[label=\textbf{\alph*)}]
+    \small
+    \item Calcule el precio teórico de un futuro sobre petróleo a 6 meses si existe un costo trimestral de almacenaje y 
+    envió de USD 0,5 y la tasa libre de riesgo relevante es de 3\% anual (compuesta continua).
+    \item Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD 1.231 y 
+    que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD 1.285, y el coeficiente 
+    de correlación entre estos cambios es de 0.94. Calcule el ratio de cobertura (hedge ratio) óptimo para un contrato a 6 meses 
+    y explique cómo LAN podría ocupar el número calculado.
+    \item Calcule cuantos contratos de petróleo necesitara LAN para la cobertura de combustible si cada contrato es de 150 barriles.
+    \item Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 57,5 el barril y el de combustible de USD 75,5.
+    \item Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 41,5 el barril y el de combustible de USD 58,1.
+  \end{enumerate}
+\end{frame}
+
+
+\subsection{Parte a)}
+  \begin{frame}{Pregunta 5 parte a}
+    \textbf{a)} Calcule el precio teórico de un futuro sobre petróleo a 6 meses si existe un costo trimestral de almacenaje y 
+    envió de USD 0,5 y la tasa libre de riesgo relevante es de 3\% anual (compuesta continua).
+    
   \end{frame}
 
-\subsection{Parte 3}
+\subsection{Parte b)}
+  \begin{frame}{Pregunta 5 parte b}
+    \textbf{b)} Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD 1.231 y 
+    que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD 1.285, y el coeficiente 
+    de correlación entre estos cambios es de 0.94. Calcule el ratio de cobertura (hedge ratio) óptimo para un contrato a 6 meses 
+    y explique cómo LAN podría ocupar el número calculado.
+  \end{frame}
 
-% #region Variables pa3
-\pgfmathsetmacro{\fluno}{\CunoCinco* exp(-\pai*\Tseis)}
-\pgfmathsetmacro{\fldos}{\CunoCinco* exp(-\paii*\Tuno)}
-\pgfmathsetmacro{\flplus}{\fluno + \fldos}
-\pgfmathsetmacro{\flmenos}{\PunoCinco - \flplus}
-\pgfmathsetmacro{\paiii}{-(1/\TunoCinco)*ln(\flmenos/\Ffinal)}
-% #endregion
+\subsection{Parte c)}
+  \begin{frame}{Pregunta 5 parte c}
+    \textbf{c)} Calcule cuantos contratos de petróleo necesitara LAN para la cobertura de combustible si cada contrato es de 150 barriles.
+  \end{frame}
 
-% Pregunta a parte 3
-\begin{frame}
-  \frametitle{Pregunta \text{a)} parte 3}
-  \LARGE \underbar{Calcule la curva cero de 1.5 años} \\[1em]
-  \footnotesize
-  \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio del BCP a 1.5 años = \$\PunoCinco, con cupón de \$\CunoCinco\ cada 6 meses, 
-  Tiempo Final = \TunoCinco.\\
-  \pausa
-  \textbf{Fórmula capitalización continua:}
-  \[\capcontinua\]
-  \pausa
-  \textbf{Cálculo:}
-  \[ \PunoCinco = \CunoCinco \cdot e^{\decimalx{-\pai} \cdot \Tseis} + \CunoCinco \cdot e^{\decimalx{-\paii} \cdot \Tuno} + \Ffinal \cdot e^{-r \cdot \TunoCinco}\]
-  \pausa
-  \textbf{Despejando $r$:}
-  \[
-  r = -\frac{1}{\TunoCinco} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{\decimalx{-\pai}\cdot \Tseis} - \CunoCinco e^{\decimalx{-\paii}  \cdot \Tuno}}{\Ffinal} \right)
-  \]
+\subsection{Parte d)}
+  \begin{frame}{Pregunta 5 parte d}
+    \textbf{d)}  Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 57,5 el barril y el de combustible de USD 75,5.
+  \end{frame}
+
+\subsection{Parte e)}
+  \begin{frame}{Pregunta 5 parte e}
+    \textbf{e)} Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 41,5 el barril y el de combustible de USD 58,1.
+  \end{frame}
+
+\section{Pregunta 6}
+\begin{frame}{Pregunta 6}
+  El gerente de un fondo de inversión en acciones nacionales mantiene una cartera valorada en 18 millones de US\$ con un Beta de 
+1,25 en septiembre del 2022; el gerente está preocupado sobre el comportamiento del mercado durante los próximos once meses y 
+piensa en utilizar contratos de futuro a doce meses sobre el índice IPSA para cubrir el riesgo. El nivel del índice el 01/09/2022 
+es de 4.055 y un contrato de futuros es sobre 250 veces el índice. La tasa de interés libre de riesgo es de 3\% anual, la tasa de 
+rendimiento por dividendos sobre las acciones del índice es de 0.8\% anual y el tipo de cambio de dicho día fue de \$800  Se pide:
 \end{frame}
 
-% Pregunta a parte 3 (continuación)
-\begin{frame}
-  \frametitle{Pregunta \text{a)} parte 3 (continuación)}
-  \footnotesize
-  \textbf{Despejando $r$:}
-  \[
-    r = -\frac{1}{\TunoCinco} \cdot \ln\left( \frac{\PunoCinco - \CunoCinco e^{\decimalx{-\pai} \cdot \Tseis} - \CunoCinco e^{\decimalx{-\paii}  \cdot \Tuno}}{\Ffinal} \right)
-    \]
-  \[
-   r=-\frac{1}{\TunoCinco} \cdot \ln\left(\frac{\PunoCinco - \decimalx{\flplus}}{\Ffinal} \right)
-   \]
-  \pausa
-  \[
-   r=-\frac{1}{\TunoCinco} \cdot \ln\left(\frac{\decimalx{\flmenos}}{\Ffinal} \right)
-   \pausa \approx \decimalxx{\paiii}
-   \]
-   
-  \textbf{Resultado:} La tasa cero a 1.5 años es aproximadamente \porcentaje{\paiii}
+\begin{frame}{Pregunta 6}
+  \begin{enumerate}[label=\textbf{\alph*)}]
+    \item Cuál es el precio teórico del futuro para el contrato de futuros de 12 meses.
+    \item Qué posición en contratos de futuros debe tomar el gerente del Fondo, para realizar una cobertura óptima a lo largo de los próximos 12 meses.
+    \item Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 4.144.
+    \item Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 3.615.
+
+\end{enumerate}
 \end{frame}
 
-\subsection{Parte 4}
+\subsection{Parte a)}
 
-% #region Variables 4
-\pgfmathsetmacro{\fliuno}{\Cdos* exp(-\pai*\Tseis)}
-\pgfmathsetmacro{\flidos}{\Cdos* exp(-\paii*\Tuno)}
-\pgfmathsetmacro{\flitres}{\Cdos* exp(-\paii*\TunoCinco)}
-\pgfmathsetmacro{\fliplus}{\fliuno+\flidos+\flitres}
-\pgfmathsetmacro{\flimenos}{\Pdos-\fliplus}
-\pgfmathsetmacro{\paiv}{-(1/\Tdos)*ln(\flimenos/\FfinalDos)}
-% endregion
-
-% Pregunta a parte 4
-\begin{frame}
-  \frametitle{Pregunta \text{a)} parte 4}
-  \LARGE \underbar{Calcule la curva cero de 2 años} \\[1em]
-
-  \footnotesize
-  \textbf{Datos:}  Valor nominal (P) = \$\Nominal, Precio del BCP a 2 años = \$\Pdos, 
-  con cupón de \$\Cdos\ cada 6 meses, Tiempo Final (T) = \Tdos.
-  \pausa
-  \textbf{Fórmula capitalización continua:}
-  \[\capcontinua\]
-  \pausa
-  \textbf{Cálculo:}
-  \[
-  \Pdos = \Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} + \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} + \Cdos \cdot e^{-\paiii \cdot \TunoCinco} + \FfinalDos \cdot e^{-r \cdot \Tdos}
-  \]
-  \pausa
-  \textbf{Despejando $r$:}
-  \[
-  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} - \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} - \Cdos \cdot e^{-\paiii \cdot \TunoCinco}}{\FfinalDos} \right)
-  \]
-
+\begin{frame}{Pregunta 6 parte a)}
+  \textbf{a)} Cuál es el precio teórico del futuro para el contrato de futuros de 12 meses.
 \end{frame}
 
-% Pregunta a parte 4 (continuación)
-\begin{frame}
-  \frametitle{Pregunta \text{a)} parte 4 (continuación)}
-  \footnotesize
-  \[
-  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\Cdos \cdot e^{\decimalx{-\pai} \cdot \Tseis} - \Cdos \cdot e^{\decimalx{-\paii}  \cdot \Tuno} - \Cdos \cdot e^{\decimalx{-\paiii} \cdot \TunoCinco}}{\FfinalDos} \right)
-  \]
-  \pausa
-  \[
-  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\Pdos-\decimalx{\fliuno} - \decimalx{\flidos} - \decimalx{\flitres}}{\FfinalDos} \right)
-  \]
-  \pausa
-  \[
-  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
-  \]
-  \pausa
-  \[
-  r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
-  \pausa \approx \decimalx{\paiv}
-  \]
-  \textbf{Resultado:} La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}
+\subsection{Parte b)}
+\begin{frame}{Pregunta 6 parte b)}
+  \textbf{b)} Qué posición en contratos de futuros debe tomar el gerente del Fondo, para realizar una cobertura óptima a lo largo de los próximos 12 meses.
 \end{frame}
 
-\section{Pregunta \text{b)}}
-
-% Pregunta b)
-\begin{frame}
-  \frametitle{Preguntas}
-  \begin{itemize}
-    \scriptsize
-    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
-    \vspace{3pt}
-    \item {\Large\textcolor{blue}{b) Grafique la curva cero y comente (sin realizar cálculos) 
-    si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. 
-    ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} 
-    aumenta a mayor madurez?}}
-    \vspace{3pt}
-    \item {\textcolor{white}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
-    \vspace{3pt}
-    \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
-    \vspace{3pt}
-    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
-    \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
-    \vspace{3pt}
-  \end{itemize}
+\subsection{Parte c)}
+\begin{frame}{Pregunta 6 parte c)}
+  \textbf{c)} Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 4.144.
 \end{frame}
 
-% #region Variables de la curvas
-\pgfmathsetmacro{\tirunoCinco}{(\pai+\paii+\paiii)/3} % ejemplo simple
-\pgfmathsetmacro{\tirdos}{(\pai+\paii+\paiii+\paiv)/4} % ejemplo
-\pgfmathsetmacro{\fwdseisuno}{(\paii*\Tuno - \pai*\Tseis)/(\Tuno - \Tseis)}
-\pgfmathsetmacro{\fwdunounocinco}{(\paiii*\TunoCinco - \paii*\Tuno)/(\TunoCinco - \Tuno)}
-\pgfmathsetmacro{\fwdunocincoDos}{(\paiv*\Tdos - \paiii*\TunoCinco)/(\Tdos - \TunoCinco)}
-% #endregion
-
-% Gráfico
-\begin{frame}
-  \frametitle{Curva cero (tasa spot)}
-    \begin{center}
-      \begin{tikzpicture}
-        \begin{axis}[
-            width=8cm,
-            height=5cm,
-            xlabel={Tiempo (años)},
-            ylabel={Tasa cero},
-            grid=both,
-            xmin=0,
-            ymin=0.08, ymax=0.14,
-            yticklabel style={/pgf/number format/.cd, fixed, fixed zerofill, precision=2},
-            xtick={0,0.5,1,1.5,2,2.5},
-            ytick={0.08,0.10,...,0.14},
-            legend style={at={(0,-0.155)}, anchor=north, legend columns=1, font=\tiny},
-          ]
-          \addplot+[mark=,solid, red ] coordinates {
-            (0,\pai)
-            (\Tseis, \pai)
-            (\Tuno, \paii)
-            (\TunoCinco, \paiii)
-            (\Tdos, \paiv)
-            (2.5,\paiv)
-          };
-          \addlegendentry{Tasa cero }
-
-          \addplot+[mark=triangle*, dash dot, thick, purple] coordinates {
-            (0,\pai)
-            (\Tseis, \fwdseisuno)
-            (\Tuno, \fwdunounocinco)
-            (\TunoCinco, \fwdunocincoDos)
-            (2.5,\fwdunocincoDos)
-          };
-          \addlegendentry{Tasa forward}
-
-        \end{axis}
-      \end{tikzpicture}
-      \end{center}
-\end{frame}
-
-% Relación entre curvas
-\begin{frame}
-  \frametitle{Relación entre curva cero y curva de bonos}
-  \begin{itemize}
-    \item La \textbf{curva cero} muestra las tasas spot: tasas exactas para distintos plazos, sin considerar 
-    cupones. Solamente paga el principal al final del período.
-    \pausa
-    \item La \textbf{curva de bonos} muestra la \textit{yield to maturity}, que es una tasa promedio ponderada considerando cupones y valor nominal.
-    \pausa
-    \item Ambas curvas suelen tener pendiente similar, ya que responden a las mismas condiciones de mercado.
-    \pausa
-    \item La curva de bonos es más suave debido a la dispersión de flujos en el tiempo.
-  \end{itemize}
-  \vspace{1em}
-\end{frame}
-
-% Respuesta B
-\begin{frame}
-  \frametitle{Respuestas \text{b)}}
-  \begin{block}{¿La pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa?}
-    \pausa
-    \textit{En este caso, ambas curvas tienen pendiente negativa.}
-    \pausa
-  \end{block}
-  
-  \begin{block}{¿Qué factor explica el \textit{spread} entre ambas curvas?}
-    \pausa
-    \textit{El \textit{spread} se explica por el hecho de que la curva cero descuenta
-     cada flujo con su propia tasa spot, mientras que la curva de bonos (yield) aplica 
-     una tasa promedio a todos los flujos.}
-    \pausa
-  \end{block} 
-  
-  \begin{block}{¿Por qué el \textit{spread} aumenta a mayor madurez?}
-    \pausa
-    \textit{El factor que explica las diferencias de \textit{spread} entre ambas 
-    curvas a mayor tiempo o madurez se debe al impacto que tienen los cupones al momento de traerlos a valor presente.}
-    \pausa
-  \end{block}
-
-\end{frame}
-
-\section{Pregunta \text{c)}}
-
-% Pregunta c)
-\begin{frame}
-  \frametitle{Preguntas}
-  \begin{itemize}
-    \scriptsize
-    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
-    \vspace{3pt}
-    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
-    \vspace{3pt}
-    \item {\Large\textcolor{blue}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. 
-    ¿Qué nos dice respecto a la probabilidad de recesión?}}
-    \vspace{3pt}
-    \item {\textcolor{white}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
-    \vspace{3pt}
-    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
-    \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
-    \vspace{3pt}
-  \end{itemize}
-\end{frame}
-
-% Respuestas c)
-\begin{frame}
-  \frametitle{Respuestas \text{c)}}
-  \begin{block}{Interpretación económica detrás de la pendiente observada en la curva cero}
-    \pausa
-    Si la pendiente de la curva es negativa, se espera un escenario de bajo crecimiento
-    económico, por lo tanto, las tasas de interés serán más bajas que las observadas
-    actualmente.
-  \end{block}
-  \pausa
-  \begin{block}{¿Qué nos dice respecto a la probabilidad de recesión?}
-    \pausa
-  A menor tasa, la probabilidad de recesión es mayor. 
-  \end{block}
-\end{frame}
-
-\section{Pregunta \text{d)}}
-
-% Pregunta d)
-\begin{frame}
-  \frametitle{Preguntas}
-  \begin{itemize}
-    \scriptsize
-    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
-    \vspace{3pt}
-    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
-    \vspace{3pt}
-    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
-    \vspace{3pt}
-    \item {\Large\textcolor{blue}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
-    \vspace{3pt}
-    \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
-    \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
-    \vspace{3pt}
-  \end{itemize}
-\end{frame}
-
-% Respuestas d)
-\begin{frame}
-  \frametitle{Respuestas \text{d)}}
-  \begin{block}{ ¿Qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}?.}
-    \pausa
-    Para calcular el valor presente de las ganancias o pérdidas de los contratos forward o
-    futuros, se debe utilizar la curva cero. Es decir, las tasas de los bonos de gobierno sin el
-    efecto de los cupones (bootstrapping).
-  \end{block}
-\end{frame}
-
-\section{Pregunta \text{e)}}
-
-% Pregunta e)
-\begin{frame}
-  \frametitle{Preguntas}
-  \begin{itemize}
-    \scriptsize
-    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
-    \vspace{3pt}
-    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
-    \vspace{3pt}
-    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
-    \vspace{3pt}
-    \item {\textcolor{black}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
-    \vspace{3pt}
-    \item {\Large\textcolor{blue}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
-    \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
-    \vspace{3pt}
-  \end{itemize}
-\end{frame}
-
-% Respuestas e)
-\begin{frame}
-  \frametitle{Respuestas \text{e)}}
-  \begin{block}{¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?}
-    \pausa
-    El rol de las probabilidades neutrales al riesgo en los instrumentos financieros
-    es calcular el valor presente de estos sin importar las preferencias individuales.
-    El retorno esperado de los instrumentos es la tasa libre de riesgo, bajo la medida neutral al riesgo: 
-    \( E^q\left(\frac{S_{t+1}}{S_t}\right)=1 +r_f \). es por ello que se descuentan los flujos a la tasa libre de riesgo.
-
-    \end{block}
-  \pausa
-  \begin{block}{¿Qué rol juega la condición de no arbitraje?}
-    Con la finalidad de tener probabilidades neutrales al riesgo, no debe haber oportunidades de arbitraje, 
-    cumpliendo el escenario primordial, en  donde \( \frac{S^-}{S} < 1 + r_f < \frac{S^+}{S}\)
-  \end{block}
-\end{frame}
-
-\section{Pregunta \text{f)}}
-
-% Pregunta f)
-\begin{frame}
-  \frametitle{Preguntas}
-  \begin{itemize}
-    \scriptsize
-    \item {\textcolor{black}{a) Calcule la curva cero de 6 meses, 1 año, 1,5 años y 2 años. Utilice capitalización continua.}}
-    \vspace{3pt}
-    \item {\textcolor{black}{b) Grafique la curva cero y comente (sin realizar cálculos) si la pendiente de la curva de los bonos del BCCh (con cupones) es positiva o negativa. ¿Qué factor explica el \textit{spread} entre ambas curvas?, ¿Por qué el \textit{spread} aumenta a mayor madurez?}}
-    \vspace{3pt}
-    \item {\textcolor{black}{c) Comente cuál es la interpretación económica detrás de la pendiente observada en la curva cero. ¿Qué nos dice respecto a la probabilidad de recesión?}}
-    \vspace{3pt}
-    \item {\textcolor{black}{d) Considerando que usted tiene la información de la curva cero, la curva \textit{forward} y la curva de las \textit{yields} de los bonos de gobierno. Señale qué curva usaría para calcular el valor presente de las ganancias o pérdidas de los contratos \textit{forward}.}}
-    \vspace{3pt}
-    \item {\textcolor{black}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
-    \vspace{3pt}
-    \item {\Large\textcolor{blue}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
-    \vspace{3pt}
-  \end{itemize}
-\end{frame}
-\begin{frame}
-  \frametitle{Cálculo utilizando matrices}
-  \Huge
-  \centering
-  Tarea con décimas para la prueba.\\
-
-
-  Fecha límite : \\
-  07/04/2025 \\
-  \textbf{ 21:00}
-
+\subsection{Parte d)}
+\begin{frame}{Pregunta 6 parte d)}
+  \textbf{d)} Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 3.615.
 \end{frame}
 \end{document}
