@@ -15,8 +15,8 @@
 \usepackage{ragged2e}
 
 \newif\ifpresentacion
-%\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
-\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
+%\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
 
 \usepackage{ifthen}
 \newcommand{\pausa}{\ifpresentacion\pause\fi}
@@ -31,7 +31,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 }
 \subject{Instrumentos Derivados}
 \institute{Universidad Diego Portales}
-\date{08 De Abril, 2025}
+\date{09 De Abril, 2025}
 % #endregion 
 \begin{document}
 
@@ -108,6 +108,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 
 %presentacion de preguntas 1 y recopilación de datos
 \subsection{Parte a)}
+
 \begin{frame}{Pregunta 1 parte a)}
 \justify
 
@@ -120,6 +121,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
   \textbf{HINT}: Asuma que las probabilidades neutrales al riesgo son de $\pi=\probescenarioA$ en cada escenario.\\
 
 \end{frame}
+
 \begin{frame}{Desarrollo Acción A}
   Datos acción A: Precio = \dinero{\PaccionA}, Escenario 1 = \dinero{\FlujobuenoA}, Escenario 2 = \dinero{\FlujomaloA}, Probabilidad Escenario 1 = \probescenarioA.\\
   \pausa
@@ -133,7 +135,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 \begin{frame}{Desarrollo Acción A (continuación)}
 
   Se asume T=1\\
-  Reemplando los datos :\\
+  Reemplazando los datos :\\
   $\PaccionA=\left(\probescenarioA \cdot \FlujobuenoA + \left(1-\probescenarioA\right) \cdot 
   \FlujomaloA\right)\cdot{e^{-r \cdot 1}}$\\
   \pausa
@@ -186,6 +188,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 \end{frame}
 
 \subsection{Parte b)}
+
 \begin{frame}{Pregunta 1 parte b)}
   \justify
 
@@ -203,8 +206,11 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
   En caso de existir la posibilidad de arbitraje, esto indicaría que ambos escenariosestaían por sobre o bajo la tasa libre de riesgo por lo 
   cual, el flujo no podría ser descontado a esta tasa, como consecuencia que no existe posibilidad de que un esccenario tenga probabilidad negativa. 
   bajo la siguiente fórmula. Además que no existiría la neutralidad al riesgo.
-  $ 1+r = p \cdot \frac{S^+}{S}+(1-p) \cdot \frac{S^+}{S} $
+  $ 1+r = p \cdot \frac{S^+}{S}+(1-p) \cdot \frac{S^-}{S} $
 \end{frame}
+
+
+\section{Pregunta 2}
 
 % Pregunta 2
 
@@ -236,10 +242,6 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 \newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
 
 % #endregion
-
-
-\section{Pregunta 2}
-
 \begin{frame}{Pregunta 2}
   \justify
   \small
@@ -291,7 +293,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
   \(F_0= (\precioacc-\decimalx{\I}) \cdot e^{\tlr\cdot\T}\)\\
 \end{frame}
 
-\begin{frame}{Desarrollo a (continuación)}
+\begin{frame}{Desarrollo a) (continuación)}
   \textbf{Reemplazamos:}\\
   \(F_0= (\precioacc-\decimalx{\I}) \cdot e^{\tlr\cdot\T}\)\\
   \pausa
@@ -334,6 +336,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
   \(F_0 = (\precioaccb-\decimalx{\Ib}) \cdot e^{\tlr\cdot\Tb}\)\\
   
 \end{frame}
+
 \begin{frame}{Desarrollo b) (continuación)}
   \(F_0 = (\precioaccb-\decimalx{\Ib}) \cdot e^{\tlr\cdot\Tb}\)\\
   \(F_0 = \decimalx{\sceroib} \cdot e^{\tlr\cdot\Tb}\)\\
@@ -346,18 +349,20 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 \end{frame}
 
 \subsection{Parte c)}
+
 \begin{frame}{Pregunta 2 parte c)}
   \justify
 
   Se espera que una acción pague dividendos equivalentes a \dinero{\dividendos} por acción en 4 meses y en 10 meses.
-  El precio de la acción hoy es de \dinero{\precioacc}, y la tasa cero libre de riesgo es de \tlr anual (compuesta continua).
+  El precio de la acción hoy es de \dinero{\precioacc}, y la tasa cero libre de riesgo es de \tlr\ anual (compuesta continua).
   Un inversionista ha tomado una posición corta en un contrato forward sobre la acción a 12 meses.\\
   \vspace{1em}
   \textbf{c)} En pandemia las empresas decidieron distribuir un alto porcentaje de sus utilidades como dividendos 
   debido a las pocas oportunidades de inversión en nuevos proyectos. ¿Como influyó este shock en los precios 
   forward acciones? ¿en base a lo anterior, de qué forma usted anticiparía una recuperación de la economía?
 \end{frame}
-\begin{frame}{Desarrollo C}
+
+\begin{frame}{Desarrollo c)}
   \justify
   \textbf{Respuesta: }\\
   En este caso el valor presente de los dividendos, I, aumenta, por lo tanto, el precio de los forwards de la economía disminuyen.\\
@@ -366,7 +371,34 @@ Una disminución del valor presente de los dividendos podría ser una señal de 
 
   
 \end{frame}
+
 \section{Pregunta 3}
+
+% Pregunta 3
+
+% #region Variables pregunta 3 
+
+\newcommand{\pdolaruno}{683.2}
+\newcommand{\tclpuno}{0.0356}
+\newcommand{\tusduno}{0.0396}
+\newcommand{\pdolardos}{708}
+\newcommand{\tclpdos}{0.0264}
+\newcommand{\tusddos}{0.01}
+\newcommand{\tdos}{\frac{2}{12}}
+\pgfmathsetmacro{\tdosc}{2/12}
+\pgfmathsetmacro{\runo}{\tclpuno-\tusduno}
+\pgfmathsetmacro{\Fmonuno}{\pdolaruno*exp(\runo)}
+\pgfmathsetmacro{\rdos}{\tclpdos-\tusddos}
+\pgfmathsetmacro{\edos}{\rdos*\tdosc}
+\pgfmathsetmacro{\Fmondos}{\pdolardos*exp(\edos)}
+\pgfmathsetmacro{\Ftres}{\Fmondos-\Fmonuno}
+\pgfmathsetmacro{\etres}{\tclpdos*\tdosc}
+\pgfmathsetmacro{\Fmontres}{\Ftres*exp(\etres)}
+
+
+% formulas
+\newcommand{\forwardmonedas}{\ensuremath{F_0 =  S_0 \cdot{e^{\left(r-r_r\right) \cdot T}}}}
+% #endregion
 
 \begin{frame}{Pregunta 3}
   Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
@@ -377,11 +409,13 @@ para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/3
     \item	Suponga que 10 meses después el tipo de cambio se encuentra en \$708 y la firma quiere ver
     la posibilidad de vender el contrato, ¿cuál sería el precio justo de venta de dicho contrato?.
 
-    \item Calcule las ganancias o pérdidas(contable) 10 meses despuésde firmado el contrato en el 
-        punto a). \textbf{HINT}: use las tasasde la tabla b.
+    \item Calcule las ganancias o pérdidas(contable) 10 meses después de firmado el contrato en el 
+        punto a). \textbf{HINT}: use las tasas de la tabla b.
       \end{enumerate}
 \end{frame}
+
 \subsection{Parte a)}
+
 \begin{frame}{Pregunta 3 parte a)}
   Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
 para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.\\
@@ -402,7 +436,23 @@ para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/3
 \end{table}
 \end{frame}
 
+\begin{frame}{Desarrollo a)}
+Datos: $S_0= \pdolaruno$, $ r=\tclpuno$, $r_f=\tusduno$, $T=1$\\
+\pausa
+\vspace{0.5em}
+\textbf{Fórmula:} \textcolor{blue}{\(\forwardmonedas\)}\\
+\pausa
+\textbf{Reemplazamos:}\\
+\(F_0= \pdolaruno \cdot e^{(\tclpuno-\tusduno)\cdot 1}\)\\
+\pausa
+\(F_0= \pdolaruno \cdot e^{\runo}\)\\
+\pausa
+\fcolorbox{black}{green!10}{
+\(F_0= \decimalx{\Fmonuno}\)}
+\end{frame}
+
 \subsection{Parte b)}
+
 \begin{frame}{Pregunta 3 parte b)}
   Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
 para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.\\
@@ -425,15 +475,54 @@ para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/3
   \end{table}  
 \end{frame}
 
+\begin{frame}{Desarrollo b)}
+  Datos: $S_0= \pdolardos$, $ r=\tclpdos$, $r_f=\tusddos$, $T=\tdos$\\
+  \pausa
+  \vspace{0.5em}
+  \textbf{Fórmula:} \textcolor{blue}{\(\forwardmonedas\)}\\
+  \pausa
+  \textbf{Reemplazamos:}\\
+  \(F_0= \pdolardos \cdot e^{(\tclpdos-\tusddos)\cdot \tdos}\)\\
+  \pausa
+  \(F_0= \pdolardos \cdot e^{\rdos\cdot \tdos}\)\\
+  \pausa
+  \(F_0= \pdolardos \cdot e^{\decimalx{\edos}}\)\\
+  \pausa
+  \fcolorbox{black}{green!10}{
+  \(F_0= \decimalx{\Fmondos}\)}
+  \end{frame}
+
 \subsection{Parte c)}
+
 \begin{frame}{Pregunta 3 parte c)}
   Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
   para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.\\
-  \textbf{c)} Calcule las ganancias o pérdidas(contable) 10 meses despuésde firmado el contrato en el 
-  punto a). \textbf{HINT}: use las tasasde la tabla b.  
+  \textbf{c)} Calcule las ganancias o pérdidas(contable) 10 meses después de firmado el contrato en el 
+  punto a). \textbf{HINT}: use las tasas de la tabla b.  
   
 \end{frame}
+\begin{frame}{Desarrollo c)}
+  Según la fórmula:  $\espflujouno$, podemos traer a valor presente el flujo futuro\\
+  \pausa
+  El flujo futuro está determinado por la venta menos el costo, en este caso \(F_0-K\)\\
+  \pausa
+  Con los cambios corespondientes, quedaría como: 
+  \textcolor{blue}{\(f=\left(F_0-K\right)\cdot e^{-r \cdot T}\)}
 
+\end{frame}
+\begin{frame}{Desarrollo c) (continuación)}
+Datos: $F_0= \decimalx{\Fmondos}$,$K=\decimalx{\Fmonuno}$, $r= \tclpdos$, $T=\tdos$ \\
+\textcolor{blue}{\(f=\left(F_0-K\right)\cdot e^{-r \cdot T}\)}\\
+\pausa
+Reemplazando:\\
+\(f =\left(\decimalx{\Fmondos}-\decimalx{\Fmonuno}\right)\cdot e^{\tclpdos \cdot \tdos} \) \\
+\pausa
+\(f=\Ftres \cdot e^{\etres}\)\\
+\pausa
+\fcolorbox{black}{green!10}{
+\(f=\Fmontres\)
+}
+\end{frame}
 \begin{comment}
   
 \section{Pregunta 4}
