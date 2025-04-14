@@ -234,7 +234,21 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
 \newcommand{\tcincounomeses}{6} 
 \newcommand{\tcincouno}{\frac{6}{12}} 
 \pgfmathsetmacro{\tcincounoc}{6/12}
+\newcommand{\ttres}{\frac{3}{12}} 
+\pgfmathsetmacro{\ttresc}{3/12}
 \newcommand{\litros}{1060000}
+\newcommand{\barril}{65}
+\newcommand{\galon}{159}
+\newcommand{\scerobarril}{48.6}
+\newcommand{\almyenv}{0.5}
+\newcommand{\tlrdos}{0.03}
+\pgfmathsetmacro{\fcincouno}{\almyenv*exp(-\tlrdos*\ttresc)}
+\pgfmathsetmacro{\fcincodos}{\almyenv*exp(-\tlrdos*\tcincounoc)}
+\pgfmathsetmacro{\fcinco}{\fcincouno+\fcincodos}
+\pgfmathsetmacro{\fcincotres}{\scerobarril+\fcinco}
+\pgfmathsetmacro{\exxpuno}{\tlrdos*\tcincounoc}
+\pgfmathsetmacro{\fcincocuatro}{\fcincotres*exp(\exxpuno)}
+
 \section{Pregunta 5}
 \begin{frame}{Pregunta 5}
   \justify
@@ -242,18 +256,19 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
   específicamente los siguientes \textbf{\tcincounomeses\ meses}, ya que el combustible que ocupa la flota de aviones ocupa un importante 
   ítem de costo en el presupuesto de la firma, LAN sabe que necesitara \miles{\litros} litros de combustible en \textbf{\tcincounomeses\ meses}
   más para sus operaciones nacionales.\\
-  El actual precio de combustible para aviones está en USD 65 el barril (159 litros). \\
+  El actual precio de combustible para aviones está en USD \barril\ el barril (\galon\ litros). \\
   El gran problema que posee LAN es que el precio del combustible depende directamente del precio del Barril de Petróleo 
-  en el mercado internacional el cual es actualmente de USD 48,6 y solo existen derivados sobre petróleo y no sobre combustible.
+  en el mercado internacional el cual es actualmente de USD \scerobarril\ y solo existen derivados sobre petróleo y no sobre combustible.
   
   \end{frame}
   
-  \begin{comment}
+  
+\begin{comment}
   \begin{frame}{Pregunta 5}
   \begin{enumerate}[label=\textbf{\alph*)}]
   \small
   \item Calcule el precio teórico de un futuro sobre petróleo a 6 meses si existe un costo trimestral de almacenaje y 
-  envió de USD 0,5 y la tasa libre de riesgo relevante es de 3\% anual (compuesta continua).
+  envió de USD \almyenv y la tasa libre de riesgo relevante es de \porcentaje{\tlrdos} anual (compuesta continua).
   \item Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD 1.231 y 
   que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD 1.285, y el coeficiente 
   de correlación entre estos cambios es de 0.94. Calcule el ratio de cobertura (hedge ratio) óptimo para un contrato a 6 meses 
@@ -263,15 +278,41 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
   \item Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 41,5 el barril y el de combustible de USD 58,1.
   \end{enumerate}
   \end{frame}
+\end{comment}
 
-
-  \subsection{Parte a)}
-  \begin{frame}{Pregunta 5 parte a}
+\subsection{Parte a)}
+\begin{frame}{Pregunta 5 parte a}
   \textbf{a)} Calcule el precio teórico de un futuro sobre petróleo a 6 meses si existe un costo trimestral de almacenaje y 
-  envió de USD 0,5 y la tasa libre de riesgo relevante es de 3\% anual (compuesta continua).
+  envió de USD \almyenv y la tasa libre de riesgo relevante es de \porcentaje{\tlrdos} anual (compuesta continua).
+  
+\end{frame}
 
-  \end{frame}
+\begin{frame}{Desarrollo  a)}
+  Datos: \(S_0=\scerobarril\), \(r=\tlrdos\), \(T=\tcincouno\).\\
+  Utilizamos la fórmula \(\forwardalmacenamiento\) y además
+  \(U=Alm_1 + Alm_2 \)\\
+  \pausa
+  \(U= \almyenv \cdot e^{-\tlrdos \cdot \ttres }+\almyenv \cdot e^{-\tlrdos \cdot \tcincouno }\)\\
+  \pausa
+  \(U= \decimalx{\fcincouno}+\decimalx{\fcincodos}\)\\
+  \pausa
+  \fcolorbox{black}{green!10}{
+  \(U= \decimalx{\fcinco}\)
+  }
+\end{frame}
 
+\begin{frame}{Desarrollo a) (continuación)}
+  Datos: \(S_0=\scerobarril\), \(r=\tlrdos\), \(T=\tcincouno\), \(U=\decimalx{\fcinco}\)\\
+  \pausa
+  \(F_0= \left(\scerobarril+\decimalx{\fcinco}\right)\cdot e^{\tlrdos \cdot \tcincouno }\)\\
+  \pausa
+ \(F_0= \decimalx{\fcincotres}\cdot e^{\decimalx{\exxpuno}}\)\\
+ \pausa
+ \fcolorbox{black}{green!10}{
+ \(F_0=\decimalx{\fcincocuatro}\)
+ }
+\end{frame}
+  \begin{comment}
   \subsection{Parte b)}
   \begin{frame}{Pregunta 5 parte b}
   \textbf{b)} Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD 1.231 y 
