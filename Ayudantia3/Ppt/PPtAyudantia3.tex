@@ -1,4 +1,5 @@
 \documentclass{beamer}
+
 \usetheme{Darmstadt}
 \usepackage{comment}
 \usepackage[utf8]{inputenc}    % Para escribir acentos y caracteres especiales
@@ -45,6 +46,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
   \end{frame}
 
 % #region Formateo de números 
+\newcommand{\cajaverde}[1]{\fcolorbox{blue}{green!20}{#1}}
 \newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
 \newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
 \newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
@@ -82,13 +84,13 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 \pgfmathsetmacro{\tcuatroabc}{6/12}
 \newcommand{\tcuatroaa}{\frac{3}{12}}
 \pgfmathsetmacro{\tcuatroaac}{3/12}
-\pgfmathsetmacro{\flujocuatroa}{\almacenamiento*exp{-\tlr*\tcuatroaac}}
-\pgfmathsetmacro{\flujocuatrob}{\almacenamiento*exp{-\tlr*\tcuatroabc}}
-\pgfmathsetmacro{\flujocuatroc}{\almacenamiento*exp{-\tlr*\tcuatroac}}
+\pgfmathsetmacro{\flujocuatroa}{\almacenamiento*exp(-\tlr*\tcuatroaac)}
+\pgfmathsetmacro{\flujocuatrob}{\almacenamiento*exp(-\tlr*\tcuatroabc)}
+\pgfmathsetmacro{\flujocuatroc}{\almacenamiento*exp(-\tlr*\tcuatroac)}
 \pgfmathsetmacro{\flujocuatro}{\flujocuatroa+\flujocuatrob+\flujocuatroc}
 \pgfmathsetmacro{\valoresecero}{\plata+\flujocuatro }
 \pgfmathsetmacro{\expcuatro}{\tlr*\tcuatroac }
-\pgfmathsetmacro{\finalcuatro}{\valoresecero * exp{\expcuatro}}
+\pgfmathsetmacro{\finalcuatro}{\valoresecero * exp(\expcuatro)}
 
 % #endregion
 
@@ -143,7 +145,7 @@ de riesgo del \porcentaje{\tlr} anual compuesto continuo.\\
   \pausa
   \(U = \decimalx{\flujocuatroa} + \decimalx{\flujocuatrob} + \decimalx{\flujocuatroc}\)\\
   \pausa
-  \fcolorbox{black}{green!10}{
+  \cajaverde{
   \(U = \decimalx{\flujocuatro}\)
   } 
 \end{frame}
@@ -158,7 +160,7 @@ de riesgo del \porcentaje{\tlr} anual compuesto continuo.\\
   \pausa
   \(F_0= \left(\decimalx{\valoresecero}\right) \cdot e^{\decimalx{\expcuatro}} \)\\
   \pausa
-  \fcolorbox{black}{green!10}{
+  \cajaverde{
   \(F_0= \decimalx{\finalcuatro}\)
   }
 \end{frame}
@@ -248,8 +250,25 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
 \pgfmathsetmacro{\fcincotres}{\scerobarril+\fcinco}
 \pgfmathsetmacro{\exxpuno}{\tlrdos*\tcincounoc}
 \pgfmathsetmacro{\fcincocuatro}{\fcincotres*exp(\exxpuno)}
+\newcommand{\cobmin}{\ensuremath{h^*=\rho\cdot \frac{\sigma_S}{\sigma_F}}}
+\newcommand{\devsemp}{1231}
+\newcommand{\devsemf}{1285}
+\newcommand{\coefcorr}{0.94}
+\pgfmathsetmacro{\hcincobe}{\coefcorr*\devsemp/\devsemf}
+\newcommand{\contrato}{150}
+\newcommand{\optimocontratos}{\ensuremath{N^*= h^* \cdot\frac{ Q_A}{Q_F}}}
+\newcommand{\qa}{6666.67}
+\pgfmathsetmacro{\qentreq}{\qa/\contrato}
+\pgfmathsetmacro{\nfinal}{\hcincobe*\qentreq}
+
+
+
+
+% #endregion
+
 
 \section{Pregunta 5}
+
 \begin{frame}{Pregunta 5}
   \justify
   Suponga que LAN está preocupada por las variaciones del precio del petróleo durante los siguientes meses,
@@ -261,7 +280,6 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
   en el mercado internacional el cual es actualmente de USD \scerobarril\ y solo existen derivados sobre petróleo y no sobre combustible.
   
   \end{frame}
-  
   
 \begin{comment}
   \begin{frame}{Pregunta 5}
@@ -281,9 +299,10 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
 \end{comment}
 
 \subsection{Parte a)}
+
 \begin{frame}{Pregunta 5 parte a}
   \textbf{a)} Calcule el precio teórico de un futuro sobre petróleo a 6 meses si existe un costo trimestral de almacenaje y 
-  envió de USD \almyenv y la tasa libre de riesgo relevante es de \porcentaje{\tlrdos} anual (compuesta continua).
+  envió de USD \almyenv\ y la tasa libre de riesgo relevante es de \porcentaje{\tlrdos} anual (compuesta continua).
   
 \end{frame}
 
@@ -296,7 +315,7 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
   \pausa
   \(U= \decimalx{\fcincouno}+\decimalx{\fcincodos}\)\\
   \pausa
-  \fcolorbox{black}{green!10}{
+  \cajaverde{
   \(U= \decimalx{\fcinco}\)
   }
 \end{frame}
@@ -308,23 +327,70 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
   \pausa
  \(F_0= \decimalx{\fcincotres}\cdot e^{\decimalx{\exxpuno}}\)\\
  \pausa
- \fcolorbox{black}{green!10}{
+ \cajaverde{
  \(F_0=\decimalx{\fcincocuatro}\)
  }
 \end{frame}
-  \begin{comment}
-  \subsection{Parte b)}
-  \begin{frame}{Pregunta 5 parte b}
-  \textbf{b)} Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD 1.231 y 
-  que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD 1.285, y el coeficiente 
-  de correlación entre estos cambios es de 0.94. Calcule el ratio de cobertura (hedge ratio) óptimo para un contrato a 6 meses 
-  y explique cómo LAN podría ocupar el número calculado.
-  \end{frame}
 
-  \subsection{Parte c)}
-  \begin{frame}{Pregunta 5 parte c}
-  \textbf{c)} Calcule cuantos contratos de petróleo necesitara LAN para la cobertura de combustible si cada contrato es de 150 barriles.
-  \end{frame}
+\subsection{Parte b)}
+\begin{frame}{Pregunta 5 parte b}
+\textbf{b)} Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD \miles{\devsemp} y 
+que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD \miles{\devsemf}, y el coeficiente 
+de correlación entre estos cambios es de \coefcorr\ Calcule el ratio de cobertura (hedge ratio) óptimo para un contrato a 6 meses 
+y explique cómo LAN podría ocupar el número calculado.
+\end{frame}
+ 
+\begin{frame}{Desarrollo b)}
+  \Large
+  Datos: \(\sigma_s= \miles{\devsemp}\),
+   \(\sigma_f= \miles{\devsemf}\),
+   \(\rho= \coefcorr\).\\
+  Usando la fórmula:\\
+  {\textcolor{blue}{\(\cobmin\)}}\\
+  \pausa
+  \(h^*=\coefcorr \cdot \frac{\miles{\devsemp}}{\miles{\devsemf}} \)\\
+  \pausa
+  \cajaverde{
+  \(h^*= \decimalx{\hcincobe}\)
+  }\\
+  \vspace{.5em}
+  El valor de $h^*$ indica el porcentaje de cobertura de los \miles{\litros} litros a comprar en los próximos 6 meses. 
+\end{frame}
+
+\subsection{Parte c)}
+
+\begin{frame}{Pregunta 5 parte c}
+\Large
+  \textbf{c)} Calcule cuántos contratos de petróleo necesitara LAN para la cobertura de 
+combustible si cada contrato es de \contrato\ barriles.
+\end{frame}
+
+\begin{frame}{Desarrollo c)}
+  \large
+Datos: \(h^*=\decimalx{\hcincobe}\),
+\(Q_A=\frac{\miles{\litros}}{\galon }\) \(\rightarrow Q_A=\qa\)
+\(Q_F=\contrato\).\\
+Usando la fórmula: \\
+\textcolor{blue}{\optimocontratos}\\
+\pausa
+\vspace{.5em}
+
+\pausa
+\(N^*=\decimalx{\hcincobe} \cdot \frac{\entero{\qa}}{\contrato}\)\\
+\pausa
+\(N^*=\decimalx{\hcincobe} \cdot \decimalx{\qentreq}\)\\
+\pausa
+\(N^*=\decimalx{\nfinal} \)\\
+\pausa
+Aproximamos\\
+\cajaverde{
+  \(N^*=40 \)
+}
+\end{frame}
+
+
+
+\begin{comment}
 
   \subsection{Parte d)}
   \begin{frame}{Pregunta 5 parte d}
