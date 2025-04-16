@@ -63,6 +63,7 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 \newcommand{\miles}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
 \newcommand{\forward}{\ensuremath{F_0 =  S_0 \cdot{e^{r \cdot T}}}}
 \newcommand{\forwarddividendo}{\ensuremath{F_0 =  \left(S_0-I \right) \cdot{e^{r \cdot T}}}}
+\newcommand{\forwarddividendoper}{\ensuremath{F_0 =  S_0 \cdot{e^{\left(r-q\right)\cdot T}}}}
 \newcommand{\forwardalmacenamiento}{\ensuremath{F_0 =  \left(S_0+U \right) \cdot{e^{r \cdot T}}}}
 \newcommand{\capcontinuacero}{ F = P \cdot e^{-rT}}
 \newcommand{\forwardmonedas}{\ensuremath{F_0 =  S_0 \cdot{e^{\left(r-r_r\right) \cdot T}}}}
@@ -96,141 +97,142 @@ Forwards \\ \large\textit{Instrumentos Derivados}}
 
 \section{Pregunta 4}
 
-\begin{frame}{Pregunta 4}
-  \justify
-  Suponga que el precio spot del commodity de plata es actualmente igual a \dinero{\plata} dólares  
-  la onza. Los costos de almacenamiento son iguales a \dinero{\almacenamiento}por año la onza, pagaderos por
-  trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
-  de riesgo del \porcentaje{\tlr} anual compuesto continuo.
-  \begin{enumerate}[label=\textbf{\alph*)}]
-  \item   Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
-  \item 	Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
-  efectivamente observado en el mercado es de \$19,8 dólares la onza.
-  \item 	Asuma que existe una baja demanda por el commodity de plata, por lo tanto, las empresas están 
-  almacenando altos niveles de inventarios. Explique qué ocurre con el rendimiento de conveniencia.
-  
-\end{enumerate}
-\end{frame}
+  \begin{frame}{Pregunta 4}
+    \justify
+    Suponga que el precio spot del commodity de plata es actualmente igual a \dinero{\plata} dólares  
+    la onza. Los costos de almacenamiento son iguales a \dinero{\almacenamiento}por año la onza, pagaderos por
+    trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+    de riesgo del \porcentaje{\tlr} anual compuesto continuo.
+    \begin{enumerate}[label=\textbf{\alph*)}]
+    \item   Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
+    \item 	Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
+    efectivamente observado en el mercado es de \$19,8 dólares la onza.
+    \item 	Asuma que existe una baja demanda por el commodity de plata, por lo tanto, las empresas están 
+    almacenando altos niveles de inventarios. Explique qué ocurre con el rendimiento de conveniencia.
+    
+  \end{enumerate}
+  \end{frame}
 
-\subsection{Parte a)}
+  \subsection{Parte a)}
 
-\begin{frame}{Pregunta 4 parte a)}
-  \justify
+  \begin{frame}{Pregunta 4 parte a)}
+    \justify
 
-Suponga que el precio spot del commodity de plata es actualmente igual a \dinero{\plata} dólares  
-la onza. Los costos de almacenamiento son iguales a \dinero{\almacenamiento} por año la onza, pagaderos por
-trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
-de riesgo del \porcentaje{\tlr} anual compuesto continuo.\\
-\vspace{.5em}
-\textbf{a)} Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
-
-\end{frame}
-
-\begin{frame}{Desarrollo a)}
-  \justify
-
-  Datos: \(S_0=\plata\), \(almacenamiento=\almacenamiento\), \(r=\tlr\), \(T=\tcuatroa\).\\
-  \pausa
-  Anteriormente usamos una fórmula para dividendos, y que si lo pensamos de cierta manera, 
-  el almacenamiento es lo mismo que un dividendo pero el flujo es contrario.\\
-  \pausa
-  \vspace{.5em}
-  \(\forwarddividendo\  \pausa \rightarrow\ \) \textcolor{blue}{\(\forwardalmacenamiento\)}\\
-  \pausa
-  Siendo U el valor presente del valor de almacenamiento. con la fórmula de valorización continua \footnote{ \(\capcontinuacero\)}.\\
-  \pausa
-  \(U=Alm_1 + Alm_2 + Alm_3\)\\
-  \pausa
-  \(U= \almacenamiento \cdot e^{-\tlr \cdot \tcuatroaa} + \almacenamiento \cdot e^{-\tlr \cdot \tcuatroab} + \almacenamiento \cdot e^{-\tlr \cdot \tcuatroa}\)\\
-  \pausa
-  \(U = \decimalx{\flujocuatroa} + \decimalx{\flujocuatrob} + \decimalx{\flujocuatroc}\)\\
-  \pausa
-  \cajaverde{
-  \(U = \decimalx{\flujocuatro}\)
-  } 
-\end{frame}
-
-\begin{frame}{Desarrollo a) (continuación)}
-  \Large
-  Datos: \(S_0=\plata\), \(r=\tlr\), \(T=\tcuatroa\),  \(U = \decimalx{\flujocuatro}\).\\
-  \textcolor{blue}{\(\forwardalmacenamiento\)}\\
-  \pausa
-  Reemplazando\\
-  \(F_0= \left(\plata + \decimalx{\flujocuatro}\right) \cdot e^{\tlr \cdot \tcuatroa } \)\\
-  \pausa
-  \(F_0= \left(\decimalx{\valoresecero}\right) \cdot e^{\decimalx{\expcuatro}} \)\\
-  \pausa
-  \cajaverde{
-  \(F_0= \decimalx{\finalcuatro}\)
-  }
-\end{frame}
-
-
-\subsection{Parte b)}
-
-\begin{frame}{Pregunta 4 parte b)}
-  \justify
-  \large
-Suponga que el precio spot del commodity de plata es actualmente igual a \dinero{\plata} dólares  
-la onza. Los costos de almacenamiento son iguales a \dinero{\almacenamiento} por año la onza, pagaderos por
-trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
-de riesgo del \porcentaje{\tlr} anual compuesto continuo.\\
-\vspace{.5em}
-\textbf{b)} Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
-efectivamente observado en el mercado es de \$19,8 dólares la onza.
-
-\end{frame}
-
-\begin{frame}{Desarrollo b)}
-\justify
-\Large
-\textbf{Respuesta:}  
-Según la fórmula \(\forwardalmacenamiento\), el valor calculado debería ser igual al valor que está en el mercado,
-por ende, es correcto asumir que existirian posibilidades de arbitraje.
-\end{frame}
-
-\subsection{Parte c)}
-
-\begin{frame}{Pregunta 4 parte c)}
-  \justify
-  \large
   Suponga que el precio spot del commodity de plata es actualmente igual a \dinero{\plata} dólares  
   la onza. Los costos de almacenamiento son iguales a \dinero{\almacenamiento} por año la onza, pagaderos por
   trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
   de riesgo del \porcentaje{\tlr} anual compuesto continuo.\\
   \vspace{.5em}
-  \textbf{c)}	Asuma que existe una baja demanda por el commodity de plata, por lo tanto, 
-  las empresas están almacenando altos niveles de inventarios. 
-  Explique qué ocurre con el rendimiento de conveniencia. 
-\end{frame}
+  \textbf{a)} Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
 
-\begin{frame}{Desarrollo c)}
-  \justify
-  \large
-  Recordando, los rendimiento de conveniencia $(y)$ son los beneficios derivados de la tenencia del activo físico.
-  Es decir, en algunos casos es recomendable mantener el activo como activo de consumo (materia prima) que como activo
-  de inversión (futuro).\\
-  \(F_0 \leq \left(S_0+U\right) \cdot e^{rT} \)\\
-  \pausa
-  Incluyendo el retorno de conveniencia:\\
-  \(F_0 \cdot e^{yT}= \left(S_0+U\right) \cdot e^{rT} \)\\
-  \pausa
-  \(F_0 = \left(S_0+U\right) \cdot \frac{e^{rT}}{e^{yT}}  \)\\
-  \pausa
-  \(F_0 = \left(S_0+U\right) \cdot e^{\left(r-y\right)T} \)\\
-\end{frame}
-  
-\begin{frame}{Desarrollo c) (continuación)}
+  \end{frame}
+
+  \begin{frame}{Desarrollo a)}
+    \justify
+
+    Datos: \(S_0=\plata\), \(almacenamiento=\almacenamiento\), \(r=\tlr\), \(T=\tcuatroa\).\\
+    \pausa
+    Anteriormente usamos una fórmula para dividendos, y que si lo pensamos de cierta manera, 
+    el almacenamiento es lo mismo que un dividendo pero el flujo es contrario.\\
+    \pausa
+    \vspace{.5em}
+    \(\forwarddividendo\  \pausa \rightarrow\ \) \textcolor{blue}{\(\forwardalmacenamiento\)}\\
+    \pausa
+    Siendo U el valor presente del valor de almacenamiento. con la fórmula de valorización continua \footnote{ \(\capcontinuacero\)}.\\
+    \pausa
+    \(U=Alm_1 + Alm_2 + Alm_3\)\\
+    \pausa
+    \(U= \almacenamiento \cdot e^{-\tlr \cdot \tcuatroaa} + \almacenamiento \cdot e^{-\tlr \cdot \tcuatroab} + \almacenamiento \cdot e^{-\tlr \cdot \tcuatroa}\)\\
+    \pausa
+    \(U = \decimalx{\flujocuatroa} + \decimalx{\flujocuatrob} + \decimalx{\flujocuatroc}\)\\
+    \pausa
+    \cajaverde{
+    \(U = \decimalx{\flujocuatro}\)
+    } 
+  \end{frame}
+
+  \begin{frame}{Desarrollo a) (continuación)}
+    \Large
+    Datos: \(S_0=\plata\), \(r=\tlr\), \(T=\tcuatroa\),  \(U = \decimalx{\flujocuatro}\).\\
+    \textcolor{blue}{\(\forwardalmacenamiento\)}\\
+    \pausa
+    Reemplazando\\
+    \(F_0= \left(\plata + \decimalx{\flujocuatro}\right) \cdot e^{\tlr \cdot \tcuatroa } \)\\
+    \pausa
+    \(F_0= \left(\decimalx{\valoresecero}\right) \cdot e^{\decimalx{\expcuatro}} \)\\
+    \pausa
+    \cajaverde{
+    \(F_0= \decimalx{\finalcuatro}\)
+    }
+  \end{frame}
+
+  \subsection{Parte b)}
+
+  \begin{frame}{Pregunta 4 parte b)}
+    \justify
+    \large
+  Suponga que el precio spot del commodity de plata es actualmente igual a \dinero{\plata} dólares  
+  la onza. Los costos de almacenamiento son iguales a \dinero{\almacenamiento} por año la onza, pagaderos por
+  trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+  de riesgo del \porcentaje{\tlr} anual compuesto continuo.\\
+  \vspace{.5em}
+  \textbf{b)} Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
+  efectivamente observado en el mercado es de \$19,8 dólares la onza.
+
+  \end{frame}
+
+  \begin{frame}{Desarrollo b)}
   \justify
   \Large
-  \(F_0 = \left(S_0+U\right) \cdot e^{\left(r-y\right)T} \)\\
- \vspace{1em} 
-  Analizando ésta fórmula y el caso. La demanda cae, por ende el valor de tener el activo físico no es 
-  tan alto (ya que puedo comprarlo en cualquier momento o no tiene plusvalía), es decir $y \rightarrow 0$, 
-  aumentando el valor del forward.
+  \textbf{Respuesta:}  
+  Según la fórmula \(\forwardalmacenamiento\), el valor calculado debería ser igual al valor que está en el mercado,
+  por ende, es correcto asumir que existirian posibilidades de arbitraje.
+  \end{frame}
+
+  \subsection{Parte c)}
+
+  \begin{frame}{Pregunta 4 parte c)}
+    \justify
+    \large
+    Suponga que el precio spot del commodity de plata es actualmente igual a \dinero{\plata} dólares  
+    la onza. Los costos de almacenamiento son iguales a \dinero{\almacenamiento} por año la onza, pagaderos por
+    trimestres vencidos. La estructura de tasas de interés es plana con una tasa cero libre 
+    de riesgo del \porcentaje{\tlr} anual compuesto continuo.\\
+    \vspace{.5em}
+    \textbf{c)}	Asuma que existe una baja demanda por el commodity de plata, por lo tanto, 
+    las empresas están almacenando altos niveles de inventarios. 
+    Explique qué ocurre con el rendimiento de conveniencia. 
+  \end{frame}
+
+  \begin{frame}{Desarrollo c)}
+    \justify
+    \large
+    Recordando, los rendimiento de conveniencia $(y)$ son los beneficios derivados de la tenencia del activo físico.
+    Es decir, en algunos casos es recomendable mantener el activo como activo de consumo (materia prima) que como activo
+    de inversión (futuro).\\
+    \(F_0 \leq \left(S_0+U\right) \cdot e^{rT} \)\\
+    \pausa
+    Incluyendo el retorno de conveniencia:\\
+    \(F_0 \cdot e^{yT}= \left(S_0+U\right) \cdot e^{rT} \)\\
+    \pausa
+    \(F_0 = \left(S_0+U\right) \cdot \frac{e^{rT}}{e^{yT}}  \)\\
+    \pausa
+    \(F_0 = \left(S_0+U\right) \cdot e^{\left(r-y\right)T} \)\\
+  \end{frame}
+    
+  \begin{frame}{Desarrollo c) (continuación)}
+    \justify
+    \Large
+    \(F_0 = \left(S_0+U\right) \cdot e^{\left(r-y\right)T} \)\\
+  \vspace{1em} 
+    Analizando ésta fórmula y el caso. La demanda cae, por ende el valor de tener el activo físico no es 
+    tan alto (ya que puedo comprarlo en cualquier momento o no tiene plusvalía), es decir $y \rightarrow 0$, 
+    aumentando el valor del forward.
 
 
-\end{frame}
+  \end{frame}
+  
+  \section{Pregunta 5}
   
 % #region Variables pregunta 5
 \newcommand{\tcincounomeses}{6} 
@@ -251,8 +253,8 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
 \pgfmathsetmacro{\exxpuno}{\tlrdos*\tcincounoc}
 \pgfmathsetmacro{\fcincocuatro}{\fcincotres*exp(\exxpuno)}
 \newcommand{\cobmin}{\ensuremath{h^*=\rho\cdot \frac{\sigma_S}{\sigma_F}}}
-\newcommand{\devsemp}{1231}
-\newcommand{\devsemf}{1285}
+\newcommand{\devsemp}{1.231}
+\newcommand{\devsemf}{1.285}
 \newcommand{\coefcorr}{0.94}
 \pgfmathsetmacro{\hcincobe}{\coefcorr*\devsemp/\devsemf}
 \newcommand{\contrato}{150}
@@ -260,14 +262,19 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
 \newcommand{\qa}{6666.67}
 \pgfmathsetmacro{\qentreq}{\qa/\contrato}
 \pgfmathsetmacro{\nfinal}{\hcincobe*\qentreq}
-
-
-
+\newcommand{\petroleo}{57.5}
+\newcommand{\combustible}{75.5}
+\newcommand{\ganancia}{{\(\text{Ganacia}  =\left(S_0-K\right)\cdot N^* \cdot \text{tamaño contrato}\)}}
+\pgfmathsetmacro{\petrouno}{\petroleo-\fcincocuatro}
+\pgfmathsetmacro{\contrauno}{\contrato*40}
+\newcommand{\petroleodos}{41.5}
+\newcommand{\combustibledos}{58.1}
+\pgfmathsetmacro{\petrodos}{\petroleodos-\fcincocuatro}
+\pgfmathsetmacro{\petroleodif}{\petroleo-\petroleodos}
+\pgfmathsetmacro{\combustibledif}{\combustible-\combustibledos}
+\pgfmathsetmacro{\contrados}{\contrato*40}
 
 % #endregion
-
-
-\section{Pregunta 5}
 
 \begin{frame}{Pregunta 5}
   \justify
@@ -280,23 +287,6 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
   en el mercado internacional el cual es actualmente de USD \scerobarril\ y solo existen derivados sobre petróleo y no sobre combustible.
   
   \end{frame}
-  
-\begin{comment}
-  \begin{frame}{Pregunta 5}
-  \begin{enumerate}[label=\textbf{\alph*)}]
-  \small
-  \item Calcule el precio teórico de un futuro sobre petróleo a 6 meses si existe un costo trimestral de almacenaje y 
-  envió de USD \almyenv y la tasa libre de riesgo relevante es de \porcentaje{\tlrdos} anual (compuesta continua).
-  \item Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD 1.231 y 
-  que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD 1.285, y el coeficiente 
-  de correlación entre estos cambios es de 0.94. Calcule el ratio de cobertura (hedge ratio) óptimo para un contrato a 6 meses 
-  y explique cómo LAN podría ocupar el número calculado.
-  \item Calcule cuantos contratos de petróleo necesitara LAN para la cobertura de combustible si cada contrato es de 150 barriles.
-  \item Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 57,5 el barril y el de combustible de USD 75,5.
-  \item Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 41,5 el barril y el de combustible de USD 58,1.
-  \end{enumerate}
-  \end{frame}
-\end{comment}
 
 \subsection{Parte a)}
 
@@ -334,21 +324,21 @@ por ende, es correcto asumir que existirian posibilidades de arbitraje.
 
 \subsection{Parte b)}
 \begin{frame}{Pregunta 5 parte b}
-\textbf{b)} Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD \miles{\devsemp} y 
-que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD \miles{\devsemf}, y el coeficiente 
+\textbf{b)} Suponga que la desviación estándar de los cambios semestrales en los precios del combustible es USD \decimalx{\devsemp} y 
+que la desviación estándar de los cambios semestrales en el precio del futuro del petróleo es de USD \decimalx{\devsemf}, y el coeficiente 
 de correlación entre estos cambios es de \coefcorr\ Calcule el ratio de cobertura (hedge ratio) óptimo para un contrato a 6 meses 
 y explique cómo LAN podría ocupar el número calculado.
 \end{frame}
  
 \begin{frame}{Desarrollo b)}
   \Large
-  Datos: \(\sigma_s= \miles{\devsemp}\),
-   \(\sigma_f= \miles{\devsemf}\),
+  Datos: \(\sigma_s= \decimalx{\devsemp}\),
+   \(\sigma_f= \decimalx{\devsemf}\),
    \(\rho= \coefcorr\).\\
   Usando la fórmula:\\
   {\textcolor{blue}{\(\cobmin\)}}\\
   \pausa
-  \(h^*=\coefcorr \cdot \frac{\miles{\devsemp}}{\miles{\devsemf}} \)\\
+  \(h^*=\coefcorr \cdot \frac{\decimalx{\devsemp}}{\decimalx{\devsemf}} \)\\
   \pausa
   \cajaverde{
   \(h^*= \decimalx{\hcincobe}\)
@@ -367,71 +357,208 @@ combustible si cada contrato es de \contrato\ barriles.
 
 \begin{frame}{Desarrollo c)}
   \large
-Datos: \(h^*=\decimalx{\hcincobe}\),
-\(Q_A=\frac{\miles{\litros}}{\galon }\) \(\rightarrow Q_A=\qa\)
-\(Q_F=\contrato\).\\
-Usando la fórmula: \\
-\textcolor{blue}{\optimocontratos}\\
-\pausa
-\vspace{.5em}
-
-\pausa
-\(N^*=\decimalx{\hcincobe} \cdot \frac{\entero{\qa}}{\contrato}\)\\
-\pausa
-\(N^*=\decimalx{\hcincobe} \cdot \decimalx{\qentreq}\)\\
-\pausa
-\(N^*=\decimalx{\nfinal} \)\\
-\pausa
-Aproximamos\\
-\cajaverde{
-  \(N^*=40 \)
+  Datos: \(h^*=\decimalx{\hcincobe}\),
+  \(Q_A=\frac{\miles{\litros}}{\galon }\) \(\rightarrow Q_A=\qa\)
+  \(Q_F=\contrato\).\\
+  Usando la fórmula: \\
+  \textcolor{blue}{\optimocontratos}\\
+  \pausa
+  \vspace{.5em}
+  \pausa
+  \(N^*=\decimalx{\hcincobe} \cdot \frac{\entero{\qa}}{\contrato}\)\\
+  \pausa
+  \(N^*=\decimalx{\hcincobe} \cdot \decimalx{\qentreq}\)\\
+  \pausa
+  \(N^*=\decimalx{\nfinal} \)\\
+  \pausa
+  Aproximamos\\
+  \cajaverde{
+    \(N^*=\entero{\nfinal} \)
 }
 \end{frame}
 
+\subsection{Parte d)}
+\begin{frame}{Pregunta 5 parte d}
+  \textbf{d)}  Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD \petroleo\ el barril y el de combustible USD \combustible.
+\end{frame}
 
-
-\begin{comment}
-
-  \subsection{Parte d)}
-  \begin{frame}{Pregunta 5 parte d}
-  \textbf{d)}  Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 57,5 el barril y el de combustible de USD 75,5.
+\begin{frame}{Desarrollo d)}
+  Datos:
+  \(S_0= \petroleo\),
+  \(K= \decimalx{\fcincocuatro}\),
+  \(N^*=\entero{\nfinal}\), 
+  \(\text{tamaño de contratos} =\contrato\).\\
+  Utilizamos la fórmula: \textcolor{blue}{\ganancia}
+  \(Ganancia= (\petroleo-\decimalx{\fcincocuatro})\cdot \entero{\nfinal}\cdot \contrato\)\\
+  \pausa
+  \(Ganacia= \decimalx{\petrouno} \cdot \entero{\contrauno}\)\\
+  \pausa
+  \cajaverde{
+    \(Ganacia= \dinero{42972}\)
+    }
   \end{frame}
 
-  \subsection{Parte e)}
-  \begin{frame}{Pregunta 5 parte e}
-  \textbf{e)} Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 41,5 el barril y el de combustible de USD 58,1.
-  \end{frame}
+  \begin{frame}{Desarrollo d) (continuación)}
+  Lan debe comprar obligatoriamente los litros de combustible, por ende \\
 
-  \section{Pregunta 6}
-  \begin{frame}{Pregunta 6}
+  Datos: combustible en galones= \(\entero{\qa}\), valor del galón de combustible= \(\combustible\)  \\
+  \pausa
+  \(Compra=\entero{\qa}\cdot \combustible\)\\
+  \pausa
+  \cajaverde{
+    \(Compra= \dinero{503334}\) 
+    }
+    \pausa
+\end{frame}
+    
+\begin{frame}{Desarrollo d) (continuación)}
+  \Large
+  \(Ingreso\ neto= Ganancia-Compra\) \\
+  \pausa
+  \(Ingreso\ neto= \dinero{42972} -\dinero{503334} \) \\
+  \pausa
+  \cajaverde{
+    \(Ingreso\ neto=  -\dinero{460361} \) 
+    }
+
+\end{frame}
+  
+\subsection{Parte e)}
+\begin{frame}{Pregunta 5 parte e}
+  \textbf{e)} Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD \petroleodos\ el barril y el de combustible de USD \combustibledos\ .
+\end{frame}
+  
+  
+\begin{frame}{Desarrollo e)}
+  Datos:
+  \(S_0= \petroleodos\),
+  \(K= \decimalx{\fcincocuatro}\),
+  \(N^*=\entero{\nfinal}\), 
+  \(\text{tamaño de contratos} =\contrato\).\\
+  Utilizamos la fórmula: \textcolor{blue}{\ganancia}
+  \(Ganancia= (\petroleodos-\decimalx{\fcincocuatro})\cdot \entero{\nfinal}\cdot \contrato\)\\
+  \pausa
+  \(Ganacia= \decimalx{\petrodos} \cdot \entero{\contrauno}\)\\
+  \pausa
+  \cajaverde{
+  \(Ganacia= \dinero{-53028}\)
+  }
+\end{frame}
+
+\begin{frame}{Desarrollo e) (continuación)}
+  Lan debe comprar obligatoriamente los litros de combustible, por ende \\
+
+  Datos: combustible en galones= \(\entero{\qa}\), valor del galón de combustible= \(\combustibledos\) \\
+  \pausa 
+  \(Compra=\entero{\qa}\cdot \combustibledos\)\\
+  \pausa
+  \cajaverde{
+ \(Compra= \dinero{387353}\)
+    }
+    \pausa
+\end{frame}
+
+\begin{frame}{Desarrollo e) (continuación)}
+  \Large
+  \(Ingreso\ neto= Ganancia-Compra\) \\
+  \pausa
+  \(Ingreso\ neto= \dinero{-53028} -\dinero{387353} \) \\
+  \pausa
+  \cajaverde{
+  \(Ingreso\ neto=  -\dinero{-440381  } \) 
+  }
+\end{frame}
+
+\begin{frame}{comparacíon d) y e)}
+  \begin{table}[h!]
+    \centering
+    \scriptsize
+    \caption{Balance de LAN}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{ejercicio}&\textbf{petroleo}& \textbf{combustible} & \textbf{ IN con contrato} & \textbf{IN sin contrato} \\
+    \hline
+     d)&\dinero{\petroleo}&\dinero{\combustible}&-\dinero{460361}&-\dinero{503334}\\
+     e)&\dinero{\petroleodos}&\dinero{\combustibledos}&-\dinero{440381}&-\dinero{387353}\\
+     \hline
+     Diferencia&\dinero{\petroleodif}&\dinero{\combustibledif}&\dinero{19980}&\dinero{115981}\\
+
+    \hline
+    \end{tabular}
+  \end{table}  
+
+\end{frame}
+
+\section{Pregunta 6}
+%  #region variables pregunta 6
+
+
+% #endregion
+
+\begin{frame}{Pregunta 6}
   El gerente de un fondo de inversión en acciones nacionales mantiene una cartera valorada en 18 millones de US\$ con un Beta de 
   1,25 en septiembre del 2022; el gerente está preocupado sobre el comportamiento del mercado durante los próximos once meses y 
   piensa en utilizar contratos de futuro a doce meses sobre el índice IPSA para cubrir el riesgo. El nivel del índice el 01/09/2022 
   es de 4.055 y un contrato de futuros es sobre 250 veces el índice. La tasa de interés libre de riesgo es de 3\% anual, la tasa de 
   rendimiento por dividendos sobre las acciones del índice es de 0.8\% anual y el tipo de cambio de dicho día fue de \$800  Se pide:
   \end{frame}
-
+  
   \begin{frame}{Pregunta 6}
-  \begin{enumerate}[label=\textbf{\alph*)}]
-  \item Cuál es el precio teórico del futuro para el contrato de futuros de 12 meses.
-  \item Qué posición en contratos de futuros debe tomar el gerente del Fondo, para realizar una cobertura óptima a lo largo de los próximos 12 meses.
-  \item Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 4.144.
-  \item Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 3.615.
+    \begin{enumerate}[label=\textbf{\alph*)}]
+      \item Cuál es el precio teórico del futuro para el contrato de futuros de 12 meses.
+      \item Qué posición en contratos de futuros debe tomar el gerente del Fondo, para realizar una cobertura óptima a lo largo de los próximos 12 meses.
+      \item Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 4.144.
+      \item Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 3.615.
+      
+    \end{enumerate}
+\end{frame} 
+  
+\subsection{Parte a)}
 
-  \end{enumerate}
-  \end{frame}
-
-  \subsection{Parte a)}
-
-  \begin{frame}{Pregunta 6 parte a)}
+\begin{frame}{Pregunta 6 parte a)}
   \textbf{a)} Cuál es el precio teórico del futuro para el contrato de futuros de 12 meses.
+\end{frame}
+  \begin{frame}{desarrolo a)}
+    Datos: \(S_0=\miles{4055}\), \(r=0.03\), \(q=0.008\), \(T=1\)\\
+    Utilizamos la fórmula \textcolor{blue}{\(\forwarddividendoper\)}\\
+    \pausa
+  \(F_0 =  \miles{4055} \cdot{e^{\left(0.03-0.008\right)\cdot 1}}\)\\
+  \pausa
+  \(F_0 =  \miles{4055} \cdot{e^{0.022}}\)\\
+  \pgfmathsetmacro{\eveintidos}{exp(.022)}
+  \pausa
+  \(F_0 =  \miles{4055} \cdot\decimalx{\eveintidos}\)\\
+  \pgfmathsetmacro{\seisa}{4055*\eveintidos}
+  \pausa
+  \cajaverde{
+    \(F_0 = \miles{\seisa} \)
+    }
   \end{frame}
-
   \subsection{Parte b)}
   \begin{frame}{Pregunta 6 parte b)}
-  \textbf{b)} Qué posición en contratos de futuros debe tomar el gerente del Fondo, para realizar una cobertura óptima a lo largo de los próximos 12 meses.
+    \textbf{b)} Qué posición en contratos de futuros debe tomar el gerente del Fondo, para realizar una cobertura óptima a lo largo de los próximos 12 meses.
   \end{frame}
-
+  \begin{frame}{Desarrollo b)}
+    Datos: valor a invertir=USD \(\miles{18000000}\),
+    tasa de cambio= \(800 CLP/USD\),
+    \(F_0=\miles{4155}\),
+    tamaño del contrato = \(250 * IPSA\), Beta= \(1.25\)
+    \\
+    \textcolor{blue}{\(N^*=\beta \cdot \frac{V_A}{V_F}\)}\\
+    \pausa
+    \(N^*=\beta \cdot \frac{V_A}{\text{Tamaño contrato }\cdot F_0}\)\\
+    \pausa
+    \(N^*=1.25 \cdot \frac{\miles{18000000 }\cdot 800}{250\cdot \miles{4145}}\)\\
+    \pausa
+    \(N^*=1.25 \cdot \frac{\miles{14400000000}}{\miles{60314}}\)\\
+    \pausa
+    \(N^*=1.25 \cdot \miles{13896}\)\\
+    \pausa
+    \cajaverde{
+      \(N^*=\miles{17370}\)
+      }
+  \end{frame}
+  \begin{comment}
   \subsection{Parte c)}
   \begin{frame}{Pregunta 6 parte c)}
   \textbf{c)} Calcule el efecto de su estrategia sobre el rendimiento del Fondo que administra el gerente, si el nivel del mercado en septiembre del 2023 del índice es 4.144.
