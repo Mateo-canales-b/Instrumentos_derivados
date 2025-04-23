@@ -392,7 +392,7 @@ Una disminución del valor presente de los dividendos podría ser una señal de 
 \pgfmathsetmacro{\edos}{\rdos*\tdosc}
 \pgfmathsetmacro{\Fmondos}{\pdolardos*exp(\edos)}
 \pgfmathsetmacro{\Ftres}{\Fmondos-\Fmonuno}
-\pgfmathsetmacro{\etres}{\tclpdos*\tdosc}
+\pgfmathsetmacro{\etres}{-\tclpdos*\tdosc}
 \pgfmathsetmacro{\Fmontres}{\Ftres*exp(\etres)}
 
 
@@ -515,7 +515,7 @@ Datos: $F_0= \decimalx{\Fmondos}$,$K=\decimalx{\Fmonuno}$, $r= \tclpdos$, $T=\td
 \textcolor{blue}{\(f=\left(F_0-K\right)\cdot e^{-r \cdot T}\)}\\
 \pausa
 Reemplazando:\\
-\(f =\left(\decimalx{\Fmondos}-\decimalx{\Fmonuno}\right)\cdot e^{\tclpdos \cdot \tdos} \) \\
+\(f =\left(\decimalx{\Fmondos}-\decimalx{\Fmonuno}\right)\cdot e^{-\tclpdos \cdot \tdos} \) \\
 \pausa
 \(f=\Ftres \cdot e^{\etres}\)\\
 \pausa
