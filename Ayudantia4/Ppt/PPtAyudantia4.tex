@@ -7,6 +7,7 @@
 \usepackage{enumitem}
 \usepackage{amsmath}           % Para escribir ecuaciones
 \usepackage{tikz}              % Para gráficos vectoriales
+\usetikzlibrary{arrows.meta, positioning}
 \usetikzlibrary{calc}          % Para coordenadas calculadas con TikZ
 \usepackage{pgfplots}          % Para gráficos matemáticos
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
@@ -15,8 +16,8 @@
 \usepackage{ragged2e}
 
 \newif\ifpresentacion
-\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
-%\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+%\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
+\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
 
 \usepackage{ifthen}
 \newcommand{\pausa}{\ifpresentacion\pause\fi}
@@ -31,7 +32,7 @@
 }
 \subject{Instrumentos Derivados}
 \institute{Universidad Diego Portales}
-\date{09 De Abril, 2025}
+\date{09 De Junio, 2025}
 % #endregion 
 \begin{document}
 
@@ -44,6 +45,11 @@
   \end{frame}
 
 % #region Formateo de números 
+\newcommand{\cajaverde}[1]{%
+  \fcolorbox{blue}{green!20}{%
+    \parbox{0.9\linewidth}{\justifying #1}%
+  }
+}
 \newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
 \newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
 \newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
@@ -53,7 +59,7 @@
   \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
   }
 \newcommand{\dinero}[1]{%
-  \$\,\pgfmathprintnumber[fixed, precision=3]{#1}
+  \$\,\pgfmathprintnumber[fixed, precision=0]{#1}
   }
 
 % #endregion
@@ -63,107 +69,173 @@
 \section{Pregunta 1}
 
 % #region Variables pregunta 1
-\newcommand{\PaccionA}{28}    % Precio acción A
-\newcommand{\FlujobuenoA}{35.448}     % Flujo en el escenario bueno de la acción A
-\newcommand{\FlujomaloA}{24.511}     % Flujo en el escenario malo de la acción A
+\newcommand{\Kuno}{100}
+\newcommand{\diezp}{0.1}
+\newcommand{\ochop}{0.08}
+\newcommand{\semestre}{0.5}
+\newcommand{\arbol}{$p = \frac{e^{rT}-d}{u-d}$}
+\newcommand{\neutral}{$f = e^{-r \cdot t}\cdot (p \cdot f_u+{1-p} \cdot f_d)$}
+\newcommand{\putcall}{$S_0+p = K \cdot e^{-r \cdot T}+c$}
 
-\newcommand{\PaccionB}{12.019}    % Precio acción B
-\newcommand{\FlujobuenoB}{14.788}     % Flujo en el escenario bueno de la acción B
-\newcommand{\FlujomaloB}{10.949}     % Flujo en el escenario malo de la acción B
+\newcommand{\Preguno}{ El precio de una acción es de \dinero{\Kuno}. En 6 meses más se espera que suba o baje un \porcentaje{\diezp}. La tasa libre de riesgo es del \porcentaje{\ochop} anual continua. } 
+\newcommand{\Pregunoa}{¿Cuál es el valor de una opción call europea de 1 año con strike Price $ K = \dinero{\Kuno} $?}
+\newcommand{\Pregunob}{¿Cuál es el valor de una opción put europea de 1 año con strike Price $ K = \dinero{\Kuno} $?}
+\newcommand{\Pregunoc}{Verifique que se cumple la paridad Put-Call}
+\newcommand{\Uuno}{1.1}
+\newcommand{\Duno}{0.9}
 
-\newcommand{\probescenarioA}{0.5}
-\newcommand{\espflujouno}{\ensuremath{P = E \left(\sum_{i=1}^{n} Flujo_i \right) \cdot{e^{-r \cdot T}}}}
-\newcommand{\espflujodos}{\ensuremath{P =  \left(\sum_{i=1}^{n} \pi_i \cdot Flujo_i \right) \cdot{e^{-r \cdot T}}}}
-\newcommand{\espflujotres}{\ensuremath{P = \left( \pi_1 \cdot Flujo_1 + \left(1-\pi_1\right) \cdot Flujo_2 \right) \cdot{e^{-r \cdot T}}}}
-\pgfmathsetmacro{\FlujobuenoAuno}{\probescenarioA*\FlujobuenoA}
-\pgfmathsetmacro{\FlujomaloAuno}{(1-\probescenarioA)*\FlujomaloA}
-\pgfmathsetmacro{\FlujoA}{\FlujobuenoAuno+\FlujomaloAuno}
-\pgfmathsetmacro{\FlujoAuno}{\PaccionA / \FlujoA}
-\pgfmathsetmacro{\FlujoAdos}{-ln(\FlujoAuno)}
-\pgfmathsetmacro{\FlujobuenoBuno}{\probescenarioA*\FlujobuenoB}
-\pgfmathsetmacro{\FlujomaloBuno}{(1-\probescenarioA)*\FlujomaloB}
-\pgfmathsetmacro{\FlujoB}{\FlujobuenoBuno+\FlujomaloBuno}
-\pgfmathsetmacro{\FlujoBuno}{\PaccionB / \FlujoB}
-\pgfmathsetmacro{\FlujoBdos}{-ln(\FlujoBuno)}
+\pgfmathsetmacro{\uno}{exp(\ochop*\semestre)}
+\pgfmathsetmacro{\dos}{\uno-\Duno}
+\pgfmathsetmacro{\dosa}{\Uuno-\Duno}
+\pgfmathsetmacro{\tres}{\dos/\dosa}
+\pgfmathsetmacro{\scerod}{\Kuno*\Duno}
+\pgfmathsetmacro{\scerodd}{\Kuno*\Duno*\Duno}
+\pgfmathsetmacro{\scerou}{\Kuno*\Uuno}
+\pgfmathsetmacro{\scerouu}{\Kuno*\Uuno*\Uuno}
+\pgfmathsetmacro{\scerodu}{\Kuno*\Uuno*\Duno}
+\pgfmathsetmacro{\fcerodd}{\scerodd-\Kuno}
+\pgfmathsetmacro{\fcerodu}{\scerodu-\Kuno}
+\pgfmathsetmacro{\fcerouu}{\scerouu-\Kuno}
+\pgfmathsetmacro{\fceroputdd}{\Kuno-\scerodd}
+\pgfmathsetmacro{\fceroputdu}{\Kuno-\scerodu}
+\pgfmathsetmacro{\fceroputuu}{\Kuno-\scerouu}
+\pgfmathsetmacro{\cuatrou}{exp(-\ochop*\semestre)*(\tres*\fcerouu)}
+\pgfmathsetmacro{\cuatro}{exp(-\ochop*\semestre)*(\tres*\cuatrou)}
+\pgfmathsetmacro{\cincou}{exp(-\ochop*\semestre)*((1-\tres)*\fceroputdu)}
+\pgfmathsetmacro{\cincod}{exp(-\ochop*\semestre)*(\tres*\fceroputdu+(1-\tres)*\fceroputdd)}
+\pgfmathsetmacro{\cinco}{exp(-\ochop*\semestre)*(\tres*\cincou+(1-\tres)*\cincod)}
+\pgfmathsetmacro{\seis}{\Kuno+\cinco}
+\pgfmathsetmacro{\seisa}{\Kuno * exp(-\ochop)+ \cuatro}
 
 % #endregion 
 
 % Presentacion de preguntas 1
 \begin{frame}
   \frametitle{Pregunta 1}
-    Suponga que la acción A tiene un precio de \dinero{\PaccionA} y sus flujos de caja esperados en el próximo periodo 
-    es de \dinero{\FlujobuenoA} en el escenario bueno y de \dinero{\FlujomaloA} en el escenario malo. La acción B tiene un valor de 
-    \dinero{\PaccionB} y posee flujos esperados de \dinero{\FlujobuenoB} en el escenario bueno y flujos de \dinero{\FlujomaloB} en el escenario malo. 
-    
+  \Preguno 
+
     \vspace{1em}
 
     \begin{enumerate}[label=\textbf{\alph*)}]
-    \item   Asumiendo que no existen oportunidades de arbitraje, calcule cual sería la tasa libre de riesgo.
-    \textbf{HINT}: Asuma que las probabilidades neutrales al riesgo son de $\pi=0,5$ en cada escenario. 
-    
-    \item   Comente intuitivamente qué cambia respecto de lo utilizado en el punto a) cuando hay oportunidades de arbitraje. 
-    
-    \end{enumerate}
+      \item \Pregunoa
+      \item \Pregunob
+      \item \Pregunoc
+  \end{enumerate}
 \end{frame}
 
 %presentacion de preguntas 1 y recopilación de datos
 \subsection{Parte a)}
 
 \begin{frame}{Pregunta 1 parte a)}
-\justify
-
-  Suponga que la acción A tiene un precio de \dinero{\PaccionA} y sus flujos de caja esperados en el próximo periodo 
-  es de \dinero{\FlujobuenoA} en el escenario bueno y de \dinero{\FlujomaloA} en el escenario malo. La acción B tiene un valor de 
-  \dinero{\PaccionB} y posee flujos esperados de \dinero{\FlujobuenoB} en el escenario bueno y flujos de \dinero{\FlujomaloB} en el escenario malo. \\
+  \justify
+  \Preguno
   \vspace{1em}
+  
+  \textbf{a)}  \Pregunoa
+  
+\end{frame}
+  
 
-  \textbf{a)}   Asumiendo que no existen oportunidades de arbitraje, calcule cual sería la tasa libre de riesgo.
-  \textbf{HINT}: Asuma que las probabilidades neutrales al riesgo son de $\pi=\probescenarioA$ en cada escenario.\\
-
+\begin{frame}{Desarrollo Parte A }
+  Valor de la acción\\
+    $S_0=\dinero{\Kuno}$\\
+    \pausa
+    $S_0d=\Kuno \cdot \Duno \pausa = \dinero{\scerod}$\\
+    \pausa
+    $S_0u=\Kuno \cdot \Uuno \pausa = \dinero{\scerou}$\\
+    \pausa
+    $S_0d^2=\Kuno \cdot \Duno \cdot \Duno\pausa = \dinero{\scerodd}$\\
+    \pausa
+    $S_0du=\Kuno \cdot \Duno \cdot \Uuno\pausa = \dinero{\scerodu}$\\
+    \pausa
+    $S_0u^2=\Kuno \cdot \Uuno \cdot \Uuno\pausa = \dinero{\scerouu}$\\
+    \pausa
+  Valor de la opción:\\ 
+    $f_{dd}=\max[\decimal{\scerodd}-\Kuno , 0]\pausa=\max[\decimal{\fcerodd}, 0]$\\\pausa
+    $f_{dd}=0$\\\pausa
+    $f_{du}=\max[\decimal{\scerodu}-\Kuno , 0]\pausa=\max[\decimal{\fcerodu}, 0]$\\\pausa
+    $f_{du}=0$\\\pausa
+    $f_{uu}=\max[\decimal{\scerouu}-\Kuno , 0]\pausa=\max[\decimal{\fcerouu}, 0]$\\\pausa
+    $f_{uu}=\decimal{\fcerouu}$\\
+ 
 \end{frame}
 
-\begin{frame}{Desarrollo Acción A}
-  Datos acción A: Precio = \dinero{\PaccionA}, Escenario 1 = \dinero{\FlujobuenoA}, Escenario 2 = \dinero{\FlujomaloA}, Probabilidad Escenario 1 = \probescenarioA.\\
-  \pausa
-  \textbf{Fórmula :} \textcolor{blue}{\[\espflujouno\]}  \\
-  \pausa
-  Desarrollando la fórmula:
-  \pausa
-  \[\espflujotres\]\\
+\begin{frame}{Desarrollo Parte A}
+  Datos: $u = \Uuno$, $d = \Duno$, $\Delta_t=\semestre$, $r = \ochop$.\\
+    \pausa 
+    \textbf{Fórmula :} \textcolor{blue}{\arbol}  \\
+    \pausa
+    Desarrollando la fórmula:\\
+    $p = \frac{e^{\ochop \cdot \semestre}-\Duno}{\Uuno-\Duno}$
+    \pausa
+    \\
+    $p = \frac{\decimalx{\dos}}{\decimalx{\dosa}}$
+    \\
+    \pausa
+    $p = \decimalx{\tres}$
+    \\
+    \pausa
+  Usamos la fórmula neutral al riesgo\\
+  \textbf{Fórmula :} \textcolor{blue}{\neutral}  \\\pausa
+    $f_u=e^{-\ochop \cdot \semestre}(\decimalx{\tres} \cdot \decimal{\fcerouu}+(1-\decimalx{\tres}) \cdot 0)\pausa = \decimalx{\cuatrou}$
+    $f_d=e^{-\ochop \cdot \semestre}(\decimalx{\tres} \cdot 0+(1-\decimalx{\tres}) \cdot 0)\pausa = 0$
+    $f=e^{-\ochop \cdot \semestre}(\decimalx{\tres} \cdot \decimalx{\cuatrou}+(1-\decimalx{\tres}) \cdot 0)\pausa = \decimalx{\cuatro}$
+
+  \end{frame}
+  
+\subsection{Parte b)}
+
+\begin{frame}{Pregunta 1 parte b)}
+  \justify
+  \Preguno
+  \vspace{1em}
+  
+  \textbf{a)}  \Pregunob
+  
 \end{frame}
 
-\begin{frame}{Desarrollo Acción A (continuación)}
+\begin{frame}{Desarrollo Parte B}
+  Valor de la opción:\\ 
+    $f_{dd}=\max[\Kuno-\decimal{\scerodd} , 0]\pausa=\max[\decimal{\fceroputdd}, 0]$\\\pausa
+    $f_{dd}=\decimal{\fceroputdd}$\\\pausa
+    $f_{du}=\max[\Kuno-\decimal{\scerodu} , 0]\pausa=\max[\decimal{\fceroputdu}, 0]$\\\pausa
+    $f_{du}=\decimal{\fceroputdu}$\\\pausa
+    $f_{uu}=\max[\Kuno-\decimal{\scerouu} , 0]\pausa=\max[\decimal{\fceroputuu}, 0]$\\\pausa
+    $f_{uu}=0$\\
+    Usamos la fórmula neutral al riesgo\\
+    \textbf{Fórmula :} \textcolor{blue}{\neutral}  \\\pausa
+      $f_u=e^{-\ochop \cdot \semestre}(\decimalx{\tres} \cdot 0+(1-\decimalx{\tres}) \cdot \decimal{\fceroputdu})\pausa = \decimalx{\cincou}$
+      $f_d=e^{-\ochop \cdot \semestre}(\decimalx{\tres} \cdot \decimal{\fceroputdu}+(1-\decimalx{\tres}) \cdot \decimal{\fceroputdd})\pausa = \decimalx{\cincod}$
+      $f=e^{-\ochop \cdot \semestre}(\decimalx{\tres} \cdot \decimalx{\cincou}+(1-\decimalx{\tres}) \cdot \decimalx{\cincod})\pausa = \decimalx{\cinco}$
+  
+ 
+\end{frame}
 
-  Se asume T=1\\
-  Reemplazando los datos :\\
-  $\PaccionA=\left(\probescenarioA \cdot \FlujobuenoA + \left(1-\probescenarioA\right) \cdot 
-  \FlujomaloA\right)\cdot{e^{-r \cdot 1}}$\\
-  \pausa
-  $\PaccionA= \left(\FlujobuenoAuno+\decimalx{\FlujomaloAuno}\right) \cdot {e^{-r}}$\\
-  \pausa
-  $\PaccionA= \decimalx{\FlujoA} \cdot {e^{-r}}$\\
-  \pausa
-  $\frac{\PaccionA}{\decimalx{\FlujoA}} = {e^{-r}}$\\
-  \pausa
-  $ln(\frac{\PaccionA}{\decimalx{\FlujoA}}) = -r$\\
-  \pausa
-  $-ln (\decimalx{\FlujoAuno})= r$\\
-  \pausa
-  \fcolorbox{black}{green!10}{
-  $ \decimalx{\FlujoAdos}= r$
+\subsection{Parte c)}
+
+\begin{frame}{Pregunta 1 parte c)}
+  \justify
+  \Preguno
+  \vspace{1em}
+  
+  \textbf{a)}  \Pregunoc
+  
+\end{frame}
+\begin{frame}{Desarrollo Parte C}
+La paridad Put-call se define como:   \\
+ \textcolor{blue}{\putcall}  \\\pausa
+ El valor de la acción más el precio de la put es:\\
+ $\Kuno + \decimalx{\cinco} \pausa = \decimalx{\seis}$\pausa\\
+ El valor presente del strike Price más el precio de la call es:\\
+$\Kuno \cdot e^{-\ochop \cdot 1}+ \decimalx{\cuatro}=\decimalx{\seisa}$\\\pausa
+ \vspace{1em|}
+  \cajaverde{
+  En este caso se puede ver que existe diferencia entre ambos cálculos,
+  sin embargo, esto se debe  al los decimales utilizados, pero, si lo ingresamos directamente en la calculadora, se cumple la paridad. 
   }
-
+  
 \end{frame}
-
-\begin{frame}{Desarrollo Acción b}
-  Datos Acción B: Precio = \dinero{\PaccionB}, Escenario 1 = \dinero{\FlujobuenoB}, Escenario 2 = \dinero{\FlujomaloB}\\
-
-  \textbf{Fórmula :} \textcolor{blue}{\[\espflujouno\]}  \\
-  \pausa
-  Desarrollando la fórmula:
-  \pausa
-  \[\espflujotres\]\\
-\end{frame}
+\begin{comment}
 
 \begin{frame}{Desarrollo Acción B (continuación)}
   
@@ -523,7 +595,6 @@ Reemplazando:\\
 \(f=\Fmontres\)
 }
 \end{frame}
-\begin{comment}
   
 \section{Pregunta 4}
   \begin{frame}{Pregunta 4}
