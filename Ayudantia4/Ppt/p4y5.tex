@@ -1,0 +1,163 @@
+\documentclass{beamer}
+\usetheme{Darmstadt}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+\usetikzlibrary{calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+\usepackage{pgf}
+\usepackage{ragged2e}
+\usepackage{ifthen}
+\newcommand{\pausa}{}
+
+\title{Ayudantía 4 \\ Resolución Pregunta 4 y 5}
+\author{
+  \texorpdfstring{
+    \textbf{Profesor:} Francisco Rantul \\[0.3em]
+    \textbf{Ayudante:} Mateo Canales
+  }{Profesor: Francisco Rantul, Ayudante: Mateo Canales}
+}
+\subject{Instrumentos Derivados}
+\institute{Universidad Diego Portales}
+\date{04 De Junio, 2025}
+
+\begin{document}
+
+% Portada
+\begin{frame}
+    \titlepage
+    \vfill
+    \centering
+    \includegraphics[width=2.3118cm]{../imagenes/logo.png}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pregunta 4.a}
+\begin{frame}{Pregunta 4.a}
+  \justify
+  Los saltos temporales de una opción son de 1 mes ($\Delta_t=\frac{1}{12}$), la tasa de interés libre de riesgo 
+  local es del 5\% continua anual y la tasa libre de riesgo extranjera es del 8\% continua anual. 
+  La volatilidad es del 12\% anual.
+
+  \vspace{1em}
+  \textbf{a)} Calcule $u$, $d$ y $p$ cuando se construye un árbol binomial para divisas.
+\end{frame}
+
+\begin{frame}{Resolución 4.a}
+\justify
+\textbf{Datos:} \\
+$r=5\%$ , $r_f =8\%$, $\sigma=12\%$, $\Delta t = \frac{1}{12}$ \\
+
+\vspace{0.5em}
+\textbf{Fórmulas:}
+$u = e^{\sigma \sqrt{\Delta t}}$;$d = e^{-\sigma \sqrt{\Delta t}}$; $p = \frac{e^{(r-r_f) \Delta t} - d}{u - d}$
+
+\vspace{0.5em}
+\textbf{Cálculos:} \\
+$\sigma\sqrt{\Delta t} = 0.12 \times \sqrt{1/12} \approx 0.03464$ \\
+
+$u = e^{0.03464} \approx 1.0352$ \\
+$d = e^{-0.03464} \approx 0.9659$ \\
+
+$e^{(0.05-0.08)/12} = e^{-0.0025} \approx 0.9975$ \\
+
+$p = \dfrac{0.9975 - 0.9659}{1.0352 - 0.9659} \approx \dfrac{0.0316}{0.0693} \approx 0.456$ \\
+
+\vspace{0.5em}
+\textbf{Respuesta:} \\
+$u \approx 1.0352$ \\
+$d \approx 0.9659$ \\
+$p \approx 0.456$ \\
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pregunta 5.a}
+\begin{frame}{Pregunta 5.a}
+  \justify
+  Considere una opción call Americana de una divisa. El valor de la divisa hoy es de \$700, 
+el strike Price es de \$710, la tasa libre de riesgo local es del 12\% continua anual 
+(la tasa libre de riesgo extranjera es del 4\% continua anual), la volatilidad es del 
+40\% anual y la madurez del derivado es de 6 meses.
+
+\vspace{1em}
+\textbf{a)} Calcule $u$, $d$ y $p$ para un árbol binomial de dos pasos.
+\end{frame}
+
+\begin{frame}{Resolución 5.a}
+\justify
+\textbf{Datos:} \\
+$r=12\%$ , $r_f =4\%$, $\sigma=40\%$, $T=0.5$ años, $N=2$, $\Delta t = 0.25$ \\
+
+\textbf{Fórmulas:} \\
+$u = e^{\sigma \sqrt{\Delta t}}$; $d = e^{-\sigma \sqrt{\Delta t}}$; $p = \dfrac{e^{(r-r_f)\Delta t} - d}{u - d}$
+
+\textbf{Cálculos:} \\
+$\sigma\sqrt{\Delta t} = 0.4 \times \sqrt{0.25} = 0.4 \times 0.5 = 0.2$ \\
+
+$u = e^{0.2} \approx 1.2214$ \\
+$d = e^{-0.2} \approx 0.8187$ \\
+
+$e^{(0.12-0.04)\times 0.25} = e^{0.02} \approx 1.0202$ \\
+
+$p = \dfrac{1.0202 - 0.8187}{1.2214 - 0.8187} \approx \dfrac{0.2015}{0.4027} \approx 0.501$ \\
+
+\textbf{Respuesta:} \\
+$u \approx 1.2214$ \\
+$d \approx 0.8187$ \\
+$p \approx 0.501$ \\
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pregunta 5.b}
+\begin{frame}{Pregunta 5.b}
+  \justify
+  Considere una opción call Americana de una divisa. El valor de la divisa hoy es de \$700, 
+el strike Price es de \$710, la tasa libre de riesgo local es del 12\% continua anual 
+(la tasa libre de riesgo extranjera es del 4\% continua anual), la volatilidad es del 
+40\% anual y la madurez del derivado es de 6 meses.
+
+\vspace{1em}
+\textbf{b)} Calcule el valor de la opción (usando árbol binomial de dos pasos).
+\end{frame}
+
+\begin{frame}{Resolución 5.b (Valores terminales)}
+\justify
+\textbf{Datos:} $S_0 = 700$, $K = 710$, $u \approx 1.2214$, $d \approx 0.8187$, $p \approx 0.501$, $\Delta t = 0.25$, $r = 0.12$.
+
+\vspace{0.5em}
+\textbf{Valores de la divisa en nodos terminales:} \\
+$S_{uu} = 700 \times u \times u \approx 700 \times 1.2214^2 \approx 1044.65$ \\
+$S_{ud} = 700 \times u \times d \approx 700 \times 1.2214 \times 0.8187 \approx 700$ \\
+$S_{dd} = 700 \times d \times d \approx 700 \times 0.8187^2 \approx 468.76$ \\
+
+\vspace{0.5em}
+\textbf{Valor opción call en cada nodo:} \\
+$f_{uu} = \max(1044.65 - 710, 0) = 334.65$ \\
+$f_{ud} = \max(700 - 710, 0) = 0$ \\
+$f_{dd} = \max(468.76 - 710, 0) = 0$
+\end{frame}
+
+\begin{frame}{Resolución 5.b (Nodos intermedios y valor inicial)}
+\justify
+\textbf{Factor de descuento:} $e^{-r\Delta t} = e^{-0.03} \approx 0.9704$ \\
+
+\textbf{Valor en nodo intermedio superior:} \\
+$f_u = 0.9704 \times [0.501 \times 334.65 + 0.499 \times 0] \approx 0.9704 \times 167.65 \approx 162.72$ \\
+
+\textbf{Valor en nodo intermedio inferior:} \\
+$f_d = 0.9704 \times [0.501 \times 0 + 0.499 \times 0] = 0$ \\
+
+\textbf{Valor en el nodo inicial:} \\
+$f_0 = 0.9704 \times [0.501 \times 162.72 + 0.499 \times 0] \approx 0.9704 \times 81.52 \approx 79.11$ \\
+
+\vspace{0.5em}
+\textbf{Respuesta final:} \\
+$f_0 \approx 79.11$
+\end{frame}
+\end{document}
