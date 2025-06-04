@@ -16,8 +16,20 @@
 \usepackage{ragged2e}
 
 \newif\ifpresentacion
-%\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
-\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+\ifdefined\versionpresentacion
+  \edef\tempver{\versionpresentacion}
+  \ifx\tempver\empty
+    \presentacionfalse
+  \else
+    \ifnum\pdfstrcmp{\tempver}{true}=0
+      \presentaciontrue
+    \else
+      \presentacionfalse
+    \fi
+  \fi
+\else
+  \presentacionfalse
+\fi
 
 \usepackage{ifthen}
 \newcommand{\pausa}{\ifpresentacion\pause\fi}
@@ -32,7 +44,7 @@
 }
 \subject{Instrumentos Derivados}
 \institute{Universidad Diego Portales}
-\date{09 De Junio, 2025}
+\date{04 De Junio, 2025}
 % #endregion 
 \begin{document}
 
@@ -650,8 +662,11 @@ Teniendo estos datos, podemos reemplazar enla fórmula neutral al riesgo.\\
 
 \end{frame}
 \begin{frame}{Pregunta 4}
-  
-  \includegraphics[height=20em]{../imagenes/Imagen 1.png}
+
+\centering
+\textbf{Gráfico 1: Simulación de trayectorias de la divisa}
+
+  \includegraphics[height=18em]{../imagenes/Imagen 1.png}
 \end{frame}
 
 \begin{comment}
