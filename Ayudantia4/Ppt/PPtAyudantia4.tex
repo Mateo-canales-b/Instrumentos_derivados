@@ -67,6 +67,9 @@
 \newcommand{\dinero}[1]{%
   \$\,\pgfmathprintnumber[fixed, precision=0]{#1}
   }
+\newcommand{\dineros}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=1]{#1}
+  }
 \newcommand{\Desarrollo}[1]{Desarrollo Parte {#1})}
 % #endregion
 
@@ -80,9 +83,10 @@
 \newcommand{\ochop}{0.08}
 \newcommand{\semestre}{0.5}
 % Fórmulas
-\newcommand{\arbol}{$p = \frac{e^{rT}-d}{u-d}$}
-\newcommand{\neutral}{$f = e^{-r \cdot t}\cdot (p \cdot f_u+(1-p) \cdot f_d)$}
+\newcommand{\arbol}{$p = \frac{e^{r\cdot \Delta t}-d}{u-d}$}
+\newcommand{\neutral}{$f = e^{-r \cdot \Delta t}\cdot (p \cdot f_u+(1-p) \cdot f_d)$}
 \newcommand{\putcall}{$S_0+p = K \cdot e^{-r \cdot T}+c$}
+\newcommand{\ceroud}{$S_0u|d=S_0*(1+(subida|bajada)) $}
 % Preguntas
 \newcommand{\Preguno}{ El precio de una acción es de \dinero{\Kuno}. En 6 meses más se espera que suba o baje un \porcentaje{\diezp}. La tasa libre de riesgo es del \porcentaje{\ochop} anual continua. } 
 \newcommand{\Pregunoa}{¿Cuál es el valor de una opción call europea de 1 año con strike Price $ K = \dinero{\Kuno} $?}
@@ -106,6 +110,7 @@
 \pgfmathsetmacro{\fceroputdd}{\Kuno-\scerodd}
 \pgfmathsetmacro{\fceroputdu}{\Kuno-\scerodu}
 \pgfmathsetmacro{\fceroputuu}{\Kuno-\scerouu}
+
 \pgfmathsetmacro{\cuatrou}{exp(-\ochop*\semestre)*(\tres*\fcerouu)}
 \pgfmathsetmacro{\cuatro}{exp(-\ochop*\semestre)*(\tres*\cuatrou)}
 \pgfmathsetmacro{\cincou}{exp(-\ochop*\semestre)*((1-\tres)*\fceroputdu)}
@@ -146,18 +151,12 @@
 
 \begin{frame}{\Desarrollo{a}}
   Valor de la acción\\
-    $S_0=\dinero{\Kuno}$\\
-    \pausa
-    $S_0d=\Kuno \cdot \Duno \pausa = \dinero{\scerod}$\\
-    \pausa
-    $S_0u=\Kuno \cdot \Uuno \pausa = \dinero{\scerou}$\\
-    \pausa
-    $S_0d^2=\Kuno \cdot \Duno \cdot \Duno\pausa = \dinero{\scerodd}$\\
-    \pausa
-    $S_0du=\Kuno \cdot \Duno \cdot \Uuno\pausa = \dinero{\scerodu}$\\
-    \pausa
-    $S_0u^2=\Kuno \cdot \Uuno \cdot \Uuno\pausa = \dinero{\scerouu}$\\
-    \pausa
+    $S_0=\dinero{\Kuno}$\\  \pausa
+    $S_0d=\Kuno \cdot \Duno \pausa = \dinero{\scerod}$\\  \pausa
+    $S_0u=\Kuno \cdot \Uuno \pausa = \dinero{\scerou}$\\  \pausa
+    $S_0d^2=\Kuno \cdot \Duno \cdot \Duno\pausa = \dinero{\scerodd}$\\  \pausa
+    $S_0du=\Kuno \cdot \Duno \cdot \Uuno\pausa = \dinero{\scerodu}$\\  \pausa
+    $S_0u^2=\Kuno \cdot \Uuno \cdot \Uuno\pausa = \dinero{\scerouu}$\\ \pausa
   Valor de la opción:\\ 
     $f_{dd}=\max[\decimal{\scerodd}-\Kuno , 0]\pausa=\max[\decimal{\fcerodd}, 0]$\\\pausa
     $f_{dd}=0$\\\pausa
@@ -325,6 +324,7 @@ anual continua. Calcule el valor de una opción call europea de 2 meses con stri
 Considere un árbol de un solo paso. }
 \newcommand{\Pregdosa}{Valorice la opción call europea usando argumentos de no arbitraje. }
 \newcommand{\Pregdosb}{Valorice la opción call europea usando probabilidades neutrales al riesgo. }
+
 % Fórmulas
 \newcommand{\neutrali}{$S_0d\cdot \Delta-f_d=S_0u\cdot \Delta-f_u$}
 \newcommand{\portafolio}{$S_0\cdot \Delta-f=(S_0u\cdot \Delta-f_u) \cdot e^{-rT}$}
@@ -332,7 +332,7 @@ Considere un árbol de un solo paso. }
 % #endregion
 
 % Pregunta 2
-\section{Pregunta 2}
+
 \begin{frame}{Pregunta 2}
   \justify
 \Pregdos
@@ -442,12 +442,60 @@ Teniendo estos datos, podemos reemplazar enla fórmula neutral al riesgo.\\
 
   
 % #region Variables Pregunta 3
+\newcommand{\stres}{40}
+\newcommand{\trimestre}{0.25}
+\newcommand{\docep}{0.12}
+\newcommand{\ktres}{42}
+\newcommand{\Dtres}{0.9}
+\newcommand{\Utres}{1.1}
+
+\pgfmathsetmacro{\stresd}{\stres*\Dtres}
+\pgfmathsetmacro{\stresdd}{\stres*\Dtres*\Dtres}
+\pgfmathsetmacro{\stresu}{\stres*\Utres}
+\pgfmathsetmacro{\stresuu}{\stres*\Utres*\Utres}
+\pgfmathsetmacro{\stresdu}{\stres*\Utres*\Dtres}
+
+\pgfmathsetmacro{\ftresuu}{\ktres-\stresuu}
+\pgfmathsetmacro{\ftresdu}{\ktres-\stresdu}
+\pgfmathsetmacro{\ftresdd}{\ktres-\stresdd}
+\pgfmathsetmacro{\ftresuj}{ \ktres-\stresu }  
+\pgfmathsetmacro{\ftresdj}{ \ktres-\stresd }
+\pgfmathsetmacro{\ftresj}{ \ktres-\stres }
+
+
+\pgfmathsetmacro{\ftresuum}{max(\ftresuu,0)}
+\pgfmathsetmacro{\ftresdum}{max(\ftresdu,0)}
+\pgfmathsetmacro{\ftresddm}{max(\ftresdd,0)}
+\pgfmathsetmacro{\ftresum}{ max(\ftresuj,0)}
+\pgfmathsetmacro{\ftresdm}{ max(\ftresdj,0)}
+\pgfmathsetmacro{\ftresm}{ max(\ftresj,0)}
+
+
+
+\pgfmathsetmacro{\tuno}{exp(\docep*\trimestre)}
+\pgfmathsetmacro{\tdos}{\tuno-\Dtres}
+\pgfmathsetmacro{\tdosa}{\Utres-\Dtres}
+\pgfmathsetmacro{\ttres}{\tdos/\tdosa}
+
+\pgfmathsetmacro{\ftresu}{exp(-\docep*\trimestre)*(\ttres*\ftresuum+(1-\ttres)*\ftresdum)}
+\pgfmathsetmacro{\ftresd}{exp(-\docep*\trimestre)*(\ttres*\ftresdum+(1-\ttres)*\ftresddm)}
+\pgfmathsetmacro{\ftres}{exp(-\docep*\trimestre)*(\ttres*\ftresu+(1-\ttres)*\ftresd)}
+
+\pgfmathsetmacro{\ftresdf}{ max({\ftresdm},{\ftresd})}
+\pgfmathsetmacro{\ftresuf}{ max({\ftresum},{\ftresu})}
+\pgfmathsetmacro{\ftresk}{exp(-\docep*\trimestre)*(\ttres*\ftresuf+(1-\ttres)*\ftresdf)}
+\pgfmathsetmacro{\ftresf}{ max({\ftresm},{\ftresk})}
+
+% Preguntas
+
 \newcommand{\Pregtres}{
-  El precio de una acción es de \$40. Cada 3 meses se espera que suba o baje un 10\%.
-  La tasa libre de riesgo es de 12\% anual continua.}
-\newcommand{\Pregtresa}{Calcule el valor de una opción put europea a 6 meses con strike Price $K=42$.}
-\newcommand{\Pregtresb}{Calcule una opción put americana a 6 meses con strike Price $K=42$.}
+  El precio de una acción es de \dinero{\stres}. Cada 3 meses se espera que suba o baje un \porcentaje{\diezp}.
+  La tasa libre de riesgo es de \porcentaje{\docep} anual continua.}
+\newcommand{\Pregtresa}{Calcule el valor de una opción put europea a 6 meses con strike Price $K=\ktres$.}
+\newcommand{\Pregtresb}{Calcule una opción put americana a 6 meses con strike Price $K=\ktres$.}
 \newcommand{\Pregtresc}{Explique la razón en la diferencia del valor respecto a la opción europea.}
+% Fórmulas
+
 % #endregion
 \begin{frame}{Pregunta 3}
   \justify
@@ -461,9 +509,124 @@ Teniendo estos datos, podemos reemplazar enla fórmula neutral al riesgo.\\
 \end{enumerate}
 
 \end{frame}
+
+\subsection{Parte a)}
+
+\begin{frame}{Pregunta 3 Parte a)}
+  \justify
+  
+  \Pregtres\\
+
+  \vspace{1em}
+  \textbf{a)} \Pregtresa
+\end{frame}
+
+\begin{frame}{\Desarrollo{a}}
+  Sabemos que en un periodo, la acción puede bajar o subir \porcentaje{\diezp}.\\
+  Valor de la acción\\
+  $S_0=\dineros{\stres}$\\  \pausa
+  $S_0d=\stres \cdot \Dtres \pausa = \dineros{\stresd}$\\ \pausa
+  $S_0u=\stres \cdot \Utres \pausa = \dineros{\stresu}$\\  \pausa
+  $S_0d^2=\stres \cdot \Dtres \cdot \Dtres\pausa = \dineros{\stresdd}$\\  \pausa
+  $S_0du=\stres \cdot \Dtres \cdot \Utres\pausa = \dineros{\stresdu}$\\  \pausa
+  $S_0u^2=\stres \cdot \Utres \cdot \Utres\pausa = \dineros{\stresuu}$\\  \pausa
+  Valor de la opción:\\ 
+  $f_{dd}=\max[\ktres-\decimal{\stresdd} , 0]\pausa=\max[\decimal{\ftresdd}, 0]$\\\pausa $f_{dd}=\decimal{\ftresddm}$\\\pausa
+  $f_{du}=\max[\ktres-\decimal{\stresdu} , 0]\pausa=\max[\decimal{\ftresdu}, 0]$\\\pausa $f_{du}=\decimal{\ftresdum}$\\\pausa
+  $f_{uu}=\max[\ktres-\decimal{\stresuu} , 0]\pausa=\max[\decimal{\ftresuu}, 0]$\\\pausa $f_{uu}=\decimal{\ftresuum}$\\
+\end{frame}
+
+\begin{frame}{\Desarrollo{a}}
+  Datos: $u = \Utres$, $d = \Dtres$, $\Delta_t=\trimestre$, $r = \docep$.\\ \pausa 
+    \textbf{Fórmula :} \formula{\arbol}  \\ \pausa
+    Desarrollando la fórmula:\\
+    $p = \frac{e^{\docep \cdot \trimestre}-\Dtres}{\Utres-\Dtres}$\\    \pausa
+    $p = \frac{\decimalx{\tdos}}{\decimalx{\tdosa}}$\\    \pausa
+    $p = \decimalx{\ttres}$\\    \pausa
+  Usamos la fórmula neutral al riesgo\\
+  \textbf{Fórmula :} \formula{\neutral}  \\\pausa
+  $f_u=e^{-\docep \cdot \trimestre}(\decimalx{\ttres} \cdot  \decimal{\ftresuum}+(1-\decimalx{\ttres})   \cdot \decimal{\ftresdum})\pausa = \decimalx{\ftresu}$\\\pausa
+    $f_d=e^{-\docep \cdot \trimestre}(\decimalx{\ttres} \cdot \decimal{\ftresdum}+(1-\decimalx{\ttres})  \cdot \decimal{\ftresddm})\pausa = \decimalx{\ftresd}$\\\pausa
+    $f=e^{-\docep \cdot \trimestre}(\decimalx{\ttres} \cdot \decimal{\ftresu}+(1-\decimalx{\ttres})     \cdot \decimal{\ftresd})\pausa = \decimalx{\ftres}$\\\pausa
+  \cajaverde{$f=\decimalx{\ftres}$}
+\end{frame}
+
+  
+\subsection{Parte b)}
+
+\begin{frame}{Pregunta 3 Parte b)}
+  \justify
+  
+  \Pregtres\\
+  
+  \vspace{1em}
+  \textbf{b)} \Pregtresb
+\end{frame}
+
+\begin{frame}{\Desarrollo{b}}
+  Sabemos que la opción put americana permite ejercicio anticipado en cada nodo, por ello, 
+  debemos calcular tambíen el valor esperado de la opción en los nodos intermedios.\\
+  \textbf{Nodos terminales:} \\
+  $f_{dd}=\max[\ktres-\decimal{\stresdd}, 0]\pausa=\decimal{\ftresddm}$\\\pausa
+  $f_{du}=\max[\ktres-\decimal{\stresdu}, 0]\pausa=\decimal{\ftresdum}$\\\pausa
+  $f_{uu}=\max[\ktres-\decimal{\stresuu}, 0]\pausa=\decimal{\ftresuum}$\\\pausa
+\end{frame}
+
+\begin{frame}{\Desarrollo{b}}
+  \textbf{Nodos intermedio:} \\
+  
+  ¿Qué pasaría si ejerzo la opción en el nodo intermedio? \\  \pausa
+  $E_{d} = \max[\ktres-\decimal{\stresd}, 0]\pausa=\max[\decimal{\ftresdj}, 0]\pausa=\decimal{\ftresdm}$\\\pausa
+  $E_{u} = \max[\ktres-\decimal{\stresu}, 0]\pausa=\max[\decimal{\ftresuj}, 0]\pausa=\decimal{\ftresum}$\\\pausa
+  Y, ¿es mejor ejercer o quedarme?, ya calculamos el valor de la opción de manera neutral al riesgo con la fórmula:
+  \formula{\neutral}\\ \pausa
+  $f_{d,seguir} = \decimalx{\ftresd}$,   $f_{u,seguir} = \decimalx{\ftresu}$\\\pausa
+  $f_d=\max[\decimal{\ftresdm},\decimalx{\ftresd}]\pausa=\decimalx{\ftresdf}$\\ \pausa
+  $f_u=\max[\decimal{\ftresum},\decimalx{\ftresu}]\pausa=\decimalx{\ftresuf}$\\ \pausa
+
+\end{frame}
+
+\begin{frame}{\Desarrollo{b}}
+  \textbf{Nodo inicial:} \\
+  ¿Qué pasaría si ejerzo la opción en el nodo inicial? \\  \pausa
+  $E_{0} = \max[\ktres-\decimal{\stres}, 0]\pausa=\max[\entero{\ftresj}, 0]\pausa=\entero{\ftresm}$\\\pausa
+  Dado que ya sé que la acción puedo ejercerla en el nodo intermedio, nodo final, o no ejercerla,
+  debo calcular nuevamente la opción neutral al riesgo, con los nuevos valores.\\ \pausa
+  $f_{seguir}=e^{-\docep \cdot \trimestre} (\decimalx{\ttres} \cdot \decimalx{\ftresuf} + (1-\decimalx{\ttres}) \cdot \decimalx{\ftresdf} = \decimalx{\ftresk}$\\\pausa
+  \textbf{Entonces, ¿ejerzo o espero?} \\  
+  $f=\max[\decimal{\ftresm},\decimalx{\ftresk}]\pausa=\decimalx{\ftresf}$\\ \pausa
+
+
+  \cajaverde{$f =\decimalx{\ftresf}$}
+
+\end{frame}
+
+
+
+\subsection{Parte c)}
+
+\begin{frame}{Pregunta 3 Parte c)}
+  \justify
+  
+  \Pregtres\\
+
+  \vspace{1em}
+  \textbf{c)} \Pregtresc
+\end{frame}
+\begin{frame}{\Desarrollo{c}}
+  \cajaverdeletra{La diferencia de los valores entre la opción americana y europea se debe a la
+   posibilidad de ser ejercida en cualquier momento o nodo, viendose en algunos casos favorecidos 
+   respecto a la opción europea. En el caso anterior, el inversionista debería ejercer en el nodo C, 
+   dónde el valor de la acción es  $S_od=\dinero{\stresd}$ obteniendo una ganancia de $\dinero{\ftresdf} $
+   por cada acción vendida.
+   }
+\end{frame}
+
 \section{Pregunta 4}
+
 % #region Variables Pregunta 4
-    
+
+% Preguntas
 \newcommand{\Pregcuatro}{  Los saltos temporales de una opción son de 1 mes ($\Delta_t=\frac{1}{12}$), la tasa de interés libre de riesgo 
   local es del 5\% continua anual y la tasa libre de riesgo extranjera es del 8\% continua anual. 
   La volatilidad es del 12\% anual.}   
@@ -471,22 +634,66 @@ Teniendo estos datos, podemos reemplazar enla fórmula neutral al riesgo.\\
 \newcommand{\Pregcuatrob}{Replique el \textit{Gráfico 1}. Dónde incluya 1000 posibles trayectorias de la divisa en R o pythom, 
   usando $S_0=1.1$ y 50 saltos de $\Delta_t=1$. {\footnotesize(\textbf{Nota:} Use set.seed(123) o similar)}}
 \newcommand{\Pregcuatroc}{A que distribución tienden los precios si aumentamos la cantidad de saltos a 500. }
-\includegraphics[height=20em]{../imagenes/Imagen 1.png}
+% Fórmulas
+
 % #endregion
 \begin{frame}{Pregunta 4}
-  \justify
+\justify
 \Pregcuatro
 \vspace{1em}
 
 \begin{enumerate}[label=\textbf{\alph*)}]
-  \item \Pregcuatroa
-  \item \Pregcuatrob
-  \item \Pregcuatroc
+\item \Pregcuatroa
+\item \Pregcuatrob
+\item \Pregcuatroc
 \end{enumerate}
 
 \end{frame}
+\begin{frame}{Pregunta 4}
+  
+  \includegraphics[height=20em]{../imagenes/Imagen 1.png}
+\end{frame}
+
+\begin{comment}
+  
+\subsection{Parte a)}
+
+\begin{frame}{Pregunta 4 Parte a)}
+  \justify
+  
+  \Pregcuatro\\
+
+  \vspace{1em}
+  \textbf{a)} \Pregcuatroa
+\end{frame}
+
+\subsection{Parte b)}
+
+\begin{frame}{Pregunta 4 Parte b)}
+  \justify
+  
+  \Pregcuatro\\
+  
+  \vspace{1em}
+  \textbf{b)} \Pregcuatrob
+\end{frame}
+
+\subsection{Parte c)}
+
+\begin{frame}{Pregunta 4 Parte c)}
+  \justify
+  
+  \Pregcuatro\\
+
+  \vspace{1em}
+  \textbf{c} \Pregcuatroc
+\end{frame}
+\end{comment}
+
 \section{Pregunta 5}
 % #region Variables Pregunta 5
+
+% Preguntas
 \newcommand{\Pregcinco}{Considere una opción call Americana de una divisa. El valor de la divisa hoy es de \$700, 
 el strike Price es de \$710, la tasa libre de riesgo local es del 12\% continua anual 
 (la tasa libre de riesgo extranjera es del 4\% continua anual), la volatilidad es del 
@@ -495,6 +702,7 @@ el strike Price es de \$710, la tasa libre de riesgo local es del 12\% continua 
 \newcommand{\Pregcincob}{Calcule el valor de la opción.}
 \newcommand{\Pregcincoc}{Verifique que se obtiene el mismo resultado usando R.}
 \newcommand{\Pregcincod}{Calcule el valor de la opción para 5, 50, 100 y 500 pasos (usando R).}
+% Fórmulas
 
 
 % #endregion
@@ -513,6 +721,50 @@ el strike Price es de \$710, la tasa libre de riesgo local es del 12\% continua 
 \end{frame}
 \begin{comment}
 
+\subsection{Parte a)}
+
+\begin{frame}{Pregunta 5 Parte a)}
+  \justify
+  
+  \Pregcinco\\
+
+  \vspace{1em}
+  \textbf{a)} \Pregcincoa
+\end{frame}
+
+\subsection{Parte b)}
+
+\begin{frame}{Pregunta 5 Parte b)}
+  \justify
+  
+  \Pregcinco\\
+  
+  \vspace{1em}
+  \textbf{b)} \Pregcincob
+\end{frame}
+
+\subsection{Parte c)}
+
+\begin{frame}{Pregunta 5 Parte c)}
+  \justify
+  
+  \Pregcinco\\
+  
+  \vspace{1em}
+  \textbf{c)} \Pregcincoc
+\end{frame}
+
+\subsection{Parte d)}
+
+
+\begin{frame}{Pregunta 5 Parte d)}
+  \justify
+  
+  \Pregcinco\\
+  
+  \vspace{1em}
+  \textbf{d)} \Pregcincod
+\end{frame}
 \end{comment}
 
 \end{document}
