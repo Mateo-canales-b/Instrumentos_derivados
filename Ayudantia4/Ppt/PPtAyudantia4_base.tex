@@ -18,14 +18,10 @@
 \newif\ifpresentacion
 \ifdefined\versionpresentacion
   \edef\tempver{\versionpresentacion}
-  \ifx\tempver\empty
-    \presentacionfalse
+  \ifnum\pdfstrcmp{\tempver}{true}=0
+    \presentaciontrue
   \else
-    \ifnum\pdfstrcmp{\tempver}{true}=0
-      \presentaciontrue
-    \else
-      \presentacionfalse
-    \fi
+    \presentacionfalse
   \fi
 \else
   \presentacionfalse
