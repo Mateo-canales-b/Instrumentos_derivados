@@ -19,6 +19,8 @@
 *.lot
 *.nav
 *.snm
-
+*subir.tex
+*presentar.tex
+*base.pdf
 # NO ignores el PDF (queremos incluirlo en Git)
 # *.pdf ← NO lo pongas
