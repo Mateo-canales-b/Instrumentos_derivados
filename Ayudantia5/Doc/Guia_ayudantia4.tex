@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{float}
+\renewcommand{\figurename}{Gráfico}  
+
+\geometry{letterpaper, margin=1in}
+\fancypagestyle{firststyle}{
+    \fancyhf{}
+    \lhead{\includegraphics[height=5cm]{../imagenes/logo.png}}
+    \renewcommand{\headrulewidth}{0pt}
+    }
+    \pagestyle{plain}
+    
+    \definecolor{rojoudp}{RGB}{210,35,42}
+\newcommand{\subrayadoRojo}[1]{{\color{rojoudp}\underline{\textcolor{black}{#1}}}}
+\renewcommand{\thesection}{Pregunta \arabic{section}}
+\setcounter{section}{1}
+\newcommand{\pregunta}[1]{%
+  \section*{\subrayadoRojo{\thesection, #1}}%
+  \stepcounter{section}%
+}
+\vspace{-3em}
+\begin{document}
+\begin{figure}
+    \vspace{-5em}    
+    \flushright
+    \includegraphics[height=4cm]{../imagenes/logo.png}\\[-3em]
+\end{figure}
+\begin{center}
+    {\LARGE \textbf{Ayudantía Nº4: Opciones}}\\[0.5em]
+    Curso: Instrumentos Derivados\\
+    Profesor: Francisco Rantul\\
+    Ayudante: Mateo Canales\\
+\end{center}
+\vspace{1pt}
+{\color{rojoudp}\hrule height 2pt}
+\vspace{10pt}
+
+ \pregunta{Hull, 15.13}
+Calcule el precio de una opción put europea a 3 meses sobre una acción que no paga dividendos, con un precio de 
+ejercicio de \$50, cuando el precio actual de la acción es \$50, la tasa de interés libre de riesgo es de 10\% 
+anual, y la volatilidad es de 30\% anual.
+
+ \pregunta{Hull, 15.14}
+¿Qué diferencia produce en los cálculos del Problema 15.13 si se espera un dividendo de \$1{,}50 dentro de 2 meses?
+
+% \pregunta{Hull, 15.15}
+%El precio de una acción es actualmente \$40. Suponga que el rendimiento esperado de la acción es de 15\% y su 
+%volatilidad es de 25\%. ¿Cuál es la distribución de probabilidad para la tasa de retorno (con capitalización 
+%continua) obtenida en un periodo de 2 años?
+
+ \pregunta{Hull, 15.16}
+El precio de una acción sigue un movimiento browniano geométrico con un rendimiento esperado de 16\% y una 
+volatilidad de 35\%. El precio actual es de \$38.\\
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item	 ¿Cuál es la probabilidad de que una opción call europea sobre la acción con un precio de ejercicio 
+    de \$40 y vencimiento en 6 meses sea ejercida?
+    \item    ¿Cuál es la probabilidad de que una opción put europea sobre la acción con el mismo precio de 
+    ejercicio y vencimiento sea ejercida?
+\end{enumerate}
+
+ \pregunta{Hull, 15.21}
+¿Cuál es el precio de una opción call europea sobre una acción que no paga dividendos, cuando el precio de la 
+acción es de \$52, el precio de ejercicio es de \$50, la tasa de interés libre de riesgo es de 12\% anual, la 
+volatilidad es de 30\% anual, y el tiempo hasta el vencimiento es de 3 meses?
+
+ \pregunta{Hull, 15.26}
+Demuestre que las fórmulas de Black–Scholes–Merton para opciones call y put satisfacen la paridad put–call.
+
+ \pregunta{Hull, 15.35}
+El precio de una acción es actualmente \$50. Suponga que el rendimiento esperado de la acción es de 18\% y su 
+volatilidad es de 30\%. ¿Cuál es la distribución de probabilidad para el precio de la acción en 2 años? Calcule 
+la media y desviación estándar de la distribución. Determine el intervalo de confianza del 95\%.
+
+\pregunta{Hull, 14.20}
+
+Suponga que \( x \) es el rendimiento al vencimiento (yield to maturity) con capitalización continua de un bono
+cupón cero que paga \$1 en el tiempo \( T \). Se asume que \( x \) sigue el siguiente proceso estocástico:
+
+\begin{equation}
+dx = (a_1 x_0 - x^2) \, dt + s x \, dz
+\end{equation}
+
+donde \( a \), \( x_0 \) y \( s \) son constantes positivas, y \( dz \) es un proceso de Wiener. ¿Cuál es el proceso seguido por el precio del bono?
+\end{document}
