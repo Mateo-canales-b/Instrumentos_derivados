@@ -1,0 +1,577 @@
+\documentclass{beamer}
+\usetheme{Darmstadt}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}    % Para escribir acentos y caracteres especiales
+\usepackage{graphicx}          % Para insertar imágenes
+\usepackage{booktabs}          % Para tablas más bonitas
+\usepackage{enumitem}
+\usepackage{amsmath}           % Para escribir ecuaciones
+\usepackage{tikz}              % Para gráficos vectoriales
+\usetikzlibrary{arrows.meta, positioning}
+\usetikzlibrary{calc}          % Para coordenadas calculadas con TikZ
+\usepackage{pgfplots}          % Para gráficos matemáticos
+\pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
+\usepackage{hyperref}
+\usepackage{pgf}
+\usepackage{ragged2e}
+
+
+
+
+\newif\ifpresentacion
+\ifdefined\versionpresentacion
+  \edef\tempver{\versionpresentacion}
+  \ifnum\pdfstrcmp{\tempver}{true}=0
+    \presentaciontrue
+  \else
+    \presentacionfalse
+  \fi
+\else
+  \presentacionfalse
+\fi
+
+\usepackage{ifthen}
+\newcommand{\pausa}{\ifpresentacion\pause\fi}
+% #region Título
+\title{Ayudantía 4 \\  Árboles Binomiales
+\\ \large\textit{Instrumentos Derivados}}
+\author{
+  \texorpdfstring{
+    \textbf{Profesor:} Francisco Rantul \\[0.3em]
+    \textbf{Ayudante:} Mateo Canales
+  }{Profesor: Francisco Rantul, Ayudante: Mateo Canales}
+}
+\subject{Instrumentos Derivados}
+\institute{Universidad Diego Portales}
+\date{04 De Junio, 2025}
+% #endregion 
+\begin{document}
+
+% Portada
+\begin{frame}
+    \titlepage
+    \vfill
+    \centering
+    \includegraphics[width=2.3118cm]{../imagenes/logo.png}
+  \end{frame}
+
+% #region Formateo de números 
+\newcommand{\cajaverde}[1]{%
+  \fcolorbox{blue}{green!20}{%
+    { #1}%
+  }
+}
+\newcommand{\cajaverdeletra}[1]{%
+  \fcolorbox{blue}{green!20}{%
+    \parbox{0.9\linewidth}{\justifying #1}%
+  }
+}
+\newcommand{\formula}[1]{\textcolor{blue}{#1}}
+\newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
+\newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
+\newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
+\newcommand{\decimalxx}[1]{\pgfmathprintnumber[fixed, precision=4]{#1}}
+\newcommand{\porcentaje}[1]{%
+  \pgfmathsetmacro{\temp}{#1*100}%
+  \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
+  }
+\newcommand{\dinero}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=0]{#1}
+  }
+\newcommand{\dineros}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=1]{#1}
+  }
+\newcommand{\dineross}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=2]{#1}
+  }
+\newcommand{\Desarrollo}[1]{Desarrollo Parte {#1})}
+
+% #endregion
+
+
+
+% ----------------------------------------------------------------
+% Pregunta 1 
+% ----------------------------------------------------------------
+
+\section{Pregunta 1}
+
+% #region Variables pregunta 1
+\newcommand{\Suno}{50}
+\newcommand{\Kuno}{50}
+\newcommand{\rdiez}{0.10}
+\newcommand{\sigmaPuno}{0.30}
+\newcommand{\Tuno}{0.25}
+\newcommand{\Divuno}{1.5}
+\newcommand{\Tdos}{\frac{2}{12}} % 2 meses en años
+\pgfmathsetmacro{\tdos}{2/12} 
+
+% Fórmulas
+\newcommand{\callbsm}{$c =  S_0 \cdot N(d_1)- K \cdot e^{-r \cdot (T)} \cdot N(d_2) $}
+\newcommand{\putbsm}{$p = K \cdot e^{-r \cdot (T)} \cdot N(-d_2) - S_0 \cdot N(-d_1)$}
+\newcommand{\Duno }{$  d_1 = \frac{\ln(S_0 / K) + \left( r + \frac{\sigma^2}{2} \right) \cdot T}{\sigma \cdot \sqrt{T}}$}
+\newcommand{\Ddos}{$d_2 = d_1 - \sigma \cdot \sqrt{T}$}
+\newcommand{\dividendo}{$S_1 = S_0 - e^{-r \cdot t} \cdot div $}
+\newcommand{\vp}{$vp =e^{-r \cdot t} \cdot valor futuro $}
+
+% Cálculos
+\pgfmathsetmacro{\auno}{ln(\Suno/\Kuno)}
+\pgfmathsetmacro{\ados}{\sigmaPuno^2/2}
+\pgfmathsetmacro{\atres}{sqrt(\Tuno)*\sigmaPuno}
+\pgfmathsetmacro{\acuatro}{(\rdiez+ \ados)*\Tuno}
+\pgfmathsetmacro{\acinco}{\auno+\acuatro }
+\pgfmathsetmacro{\aseis}{\acinco /\atres }
+\pgfmathsetmacro{\asiete}{\aseis - \atres}
+\pgfmathsetmacro{\aocho}{exp(-\rdiez*\Tuno)}
+
+\newcommand{\deuno}{\decimalx{\aseis}}
+\newcommand{\dedos}{\decimalx{\asiete}}
+\pgfmathsetmacro{\phimenosduno}{0.4633}
+\pgfmathsetmacro{\phimenosddos}{0.4040}
+
+\pgfmathsetmacro{\anueve}{\Kuno*\aocho*\phimenosddos}
+\pgfmathsetmacro{\adiez}{\Suno*\phimenosduno}
+\pgfmathsetmacro{\aonce}{\anueve - \adiez}
+
+\pgfmathsetmacro{\adoce}{exp(-\rdiez*\tdos)}
+\pgfmathsetmacro{\atrece}{exp(-\rdiez*\tdos)*\Divuno}
+\pgfmathsetmacro{\acatorce}{\Suno-\atrece}
+\newcommand{\Sdos}{\decimalx{\acatorce}}
+\pgfmathsetmacro{\aquince}{ln(\acatorce/\Kuno)}
+\pgfmathsetmacro{\adieciseis}{\aquince+\acinco}
+\pgfmathsetmacro{\adiecisiete}{\adieciseis/\atres}
+\pgfmathsetmacro{\adieciocho}{\adiecisiete-\atres}
+\pgfmathsetmacro{\adiecinueve}{-\adieciocho}
+
+\pgfmathsetmacro{\phidunonuevo}{0.3632}
+\pgfmathsetmacro{\phiddosnuevo}{0.4338}
+\pgfmathsetmacro{\aveinte}{\Kuno*\aocho*\phiddosnuevo}
+\pgfmathsetmacro{\aveintiuno}{\acatorce*\phidunonuevo}
+\pgfmathsetmacro{\aveintidos}{\aveinte-\aveintiuno}
+
+
+
+
+% Peguntas
+\newcommand{\Preguno}{Calcule el precio de una opción put europea a 3 meses sobre una acción que no paga dividendos, 
+con un precio de ejercicio de $\dinero{\Kuno}$, cuando el precio actual de la acción es $\dinero{\Suno}$, la tasa 
+de interés libre de riesgo es de $\porcentaje{\rdiez}$ anual, y la volatilidad es de $\porcentaje{\sigmaPuno}$ anual.
+}
+\newcommand{\Pregunoa}{Calcule el valor de d1}
+\newcommand{\Pregunob}{Calcule el valor de d2}
+\newcommand{\Pregunoc}{Calcule el valor de la opción put usando la fórmula de Black-Scholes.}
+\newcommand{\Pregunod}{¿Qué diferencia hay si se espera un dividendo de \dinero{\Divuno} en 2 meses}
+
+% #endregion
+
+
+\begin{frame}
+  \frametitle{Pregunta 1}
+  \justify
+  \Preguno
+  \vspace{1em}
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item \Pregunoa
+  \item \Pregunob
+  \item \Pregunoc
+  \item \Pregunod
+\end{enumerate}
+
+\end{frame}
+
+\subsection{Parte a)}
+
+\begin{frame}{Pregunta 1 Parte a)}
+  \justify
+  \Preguno
+  \vspace{1em}
+  
+  \textbf{a)}  \Pregunoa
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{a}}
+\justify
+Datos: $S_0 = \dinero{\Suno}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdiez}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$\\
+\vspace{1em}
+Calculamos d1 usando la fórmula:\\
+\vspace{.3em}
+\textbf{Fórmula:} \formula{\Duno}\\ \pausa
+\vspace{.2em}
+$  d_1 = \frac{\ln(\Suno / \Kuno) + \left( \rdiez + \frac{\sigmaPuno^2}{2} \right) \cdot \Tuno}{\sigmaPuno\cdot \sqrt{\Tuno}}$\\\pausa
+\vspace{.2em}
+$  d_1 = \frac{\decimalxx{\auno} + \left( \rdiez + \ados \right) \cdot \Tuno}{\atres}$\\\pausa
+\vspace{.1em}
+$  d_1 = \frac{ \decimalxx{\acuatro}}{\atres}$\\\pausa
+\vspace{.1em}
+$  d_1 = \frac{\decimalxx{\acinco} }{\atres}$\\\pausa
+\vspace{.1em}
+\cajaverde{$  d_1 = \decimalx{\aseis} $}
+\end{frame}
+
+\subsection{Parte b)}
+
+\begin{frame}{Pregunta 1 Parte b)}
+  \justify
+  \Preguno
+  \vspace{1em}
+  
+  \textbf{b)}  \Pregunob
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{b} }
+  Datos: $S_0 = \dinero{\Suno}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdiez}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \decimalx{\aseis} $ \\
+
+Calculamos d2 usando la fórmula:\\
+\vspace{.3em}
+\textbf{Fórmula:} \formula{\Ddos}\\ \pausa
+
+$d_2 = \decimalx{\aseis}- \sigmaPuno \cdot \sqrt{\Tuno}$\\ \pausa
+$d_2 = \decimalx{\aseis}- \atres$\\ \pausa
+\cajaverde{$d_2 = \decimalx{\asiete}$}\\ \pausa
+\end{frame}
+
+\subsection{Parte c)}
+
+\begin{frame}{Pregunta 1 Parte c)}
+  \justify
+  \Preguno
+  \vspace{1em}
+  
+  \textbf{c)}  \Pregunoc
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{c}}
+    Datos: $S_0 = \dinero{\Suno}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdiez}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \deuno $, $d_2 = \dedos$ \\
+ \vspace{0.2em}
+\textbf{Fórmula:} \formula{\putbsm}\\ \pausa
+$p = \Kuno \cdot e^{-\rdiez \cdot \Tuno} \cdot N(-\dedos) - \Suno \cdot N(-\deuno) $\\ \pausa
+$p = \Kuno \cdot \decimalxx{\aocho} \cdot \phimenosddos - \Suno \cdot \phimenosduno$ \\ \pausa
+$p = \decimalxx{\anueve} - \decimalxx{\adiez}$\\ \pausa
+\cajaverde{$p = \decimalxx{\aonce}$}
+\end{frame}
+
+\subsection{Parte d)}
+
+\begin{frame}{Pregunta 1 Parte d)}
+  \justify
+  \Preguno
+  \vspace{1em}
+  
+  \textbf{d)}  \Pregunod
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{d}}
+  \justify
+    Datos: $S_0 = \dinero{\Suno}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdiez}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \deuno $, $d_2 = \dedos$, $t=\Tdos$ \\
+
+  \vspace{1em}
+Al precio actual de la acción debemos restarle el valor presente de los dividendos.\\
+\textbf{Fórmula:} \formula{\vp}\\ \pausa
+$vp= e^{-\rdiez \cdot \decimalx{\tdos}} \cdot \Divuno$\\ \pausa
+$vp= \decimalx{\adoce}\cdot \Divuno$\\ \pausa
+$vp= \decimalx{\atrece}$\\ \pausa
+Luego, el nuevo valor de la acción está dado por:\\
+$S_1 = \Suno - \decimalx{\atrece} $\\ \pausa
+$S_1 =  \decimalx{\acatorce} $\\ \pausa
+
+  \vspace{1em}
+  Repetimos los cálculos anteriores con el nuevo valor de la acción:
+\end{frame}
+
+\begin{frame}{\Desarrollo{d}}
+  \vspace{0.5em}
+      Datos: $S_0 = \dineross{\acatorce}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdiez}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \deuno $, $d_2 = \dedos$, $t=\Tdos$ \\
+
+  \textbf{Fórmula:} \formula{\Duno}\\ \pausa
+  $  d_1 = \frac{\ln(\Sdos / \Kuno) + \left( \rdiez + \frac{\sigmaPuno^2}{2} \right) \cdot \Tuno}{\sigmaPuno\cdot \sqrt{\Tuno}}\pausa=
+  \frac{\aquince+\decimalx{\acinco}}{\atres}\pausa
+  =\frac{\decimalx{\adieciseis}}{\atres}$\\\pausa
+ $ d_1 = \decimalx{\adiecisiete}$\\ \pausa
+ $d_2 = \decimalx{\adiecisiete} - \sigmaPuno \cdot \sqrt{\Tuno} \pausa
+  = \decimalx{\adiecisiete} - \atres$\\ \pausa
+ $d_2 = \decimalx{\adieciocho}$\\ \pausa
+
+  \vspace{1em}
+  Ahora, calculamos el valor de la opción put con los nuevos valores:
+\end{frame}
+
+\begin{frame}{\Desarrollo{d}}
+    Datos: $S_0 = \dineross{\acatorce}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdiez}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \decimalx{\adiecisiete} $, $d_2 = \decimalx{\adieciocho}$ \\
+ \vspace{0.2em}
+\textbf{Fórmula:} \formula{\putbsm}\\ \pausa
+$P = \Kuno \cdot e^{-\rdiez \cdot \Tuno} \cdot N(-\decimalx{\adiecisiete}) - \Suno \cdot N(\decimalx{\adiecinueve})$\\ \pausa
+$P = \decimalx{\aveinte} - \decimalx{\aveintiuno}$\\ \pausa
+\cajaverde{$p = \decimalx{\aveintidos}$}\\ \pausa
+\vspace{1em}
+\textbf{Comparación:}\\
+Sin dividendo: \cajaverde{\decimalx{\aonce}}\\
+Con dividendo: \cajaverde{\decimalx{\aveintidos}}\\
+
+\textbf{Conclusión:} El precio de la opción put aumenta al considerar el dividendo, 
+ya que reduce el valor actual del activo subyacente.
+\end{frame}
+
+% ----------------------------------------------------------------
+% Pregunta 2
+% ----------------------------------------------------------------
+
+\section{Pregunta 2}
+
+% #region Variables pregunta 2
+\newcommand{\Stres}{52}
+
+\newcommand{\rdoce}{0.12}
+
+
+
+% Fórmulas
+
+% Cálculos
+\pgfmathsetmacro{\buno}{ln(\Stres/\Kuno)}
+\pgfmathsetmacro{\bdos}{\sigmaPuno^2/2}
+\pgfmathsetmacro{\btres}{sqrt(\Tuno)*\sigmaPuno}
+\pgfmathsetmacro{\bcuatro}{(\rdoce+ \bdos)*\Tuno}
+\pgfmathsetmacro{\bcinco}{\buno+\bcuatro }
+\pgfmathsetmacro{\bseis}{\bcinco /\btres }
+\pgfmathsetmacro{\bsiete}{\bseis - \btres}
+\pgfmathsetmacro{\bocho}{exp(-\rdoce*\Tuno)}
+
+\newcommand{\deunob}{\decimalx{\bseis}}
+\newcommand{\dedosb}{\decimalx{\bsiete}}
+\pgfmathsetmacro{\phidunob}{0.7032}
+\pgfmathsetmacro{\phiddosb}{0.6509}
+
+\pgfmathsetmacro{\bnueve}{\Kuno*\bocho*\phiddosb}
+\pgfmathsetmacro{\bdiez}{\Stres*\phidunob}
+\pgfmathsetmacro{\bonce}{ \bdiez- \bnueve}
+
+
+
+% Peguntas
+\newcommand{\Pregdos}{Se sabe que una acción que no paga dividendos, el precio de la 
+acción es de $\dinero{\Stres}$, el precio de ejercicio es de $\dinero{\Kuno}$, la tasa de interés libre de riesgo es de $\porcentaje{\rdoce}$, la 
+volatilidad es de $\porcentaje{\sigmaPuno}$ anual, y el tiempo hasta el vencimiento es de 3 meses?
+  }
+
+% #endregion
+
+
+\begin{frame}
+  \frametitle{Pregunta 2}
+  \justify
+  \Pregdos
+  \vspace{1em}
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item \Pregunoa
+  \item \Pregunob
+  \item \Pregunoc
+\end{enumerate}
+
+\end{frame}
+
+\subsection{Parte a)}
+
+\begin{frame}{Pregunta 2 Parte a)}
+  \justify
+  \Pregdos
+  \vspace{1em}
+  
+  \textbf{a)}  \Pregunoa
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{a}}
+\justify
+Datos: $S_0 = \dinero{\Stres}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdoce}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$\\
+\vspace{1em}
+Calculamos d1 usando la fórmula:\\
+\vspace{.3em}
+\textbf{Fórmula:} \formula{\Duno}\\ \pausa
+\vspace{.2em}
+$  d_1 = \frac{\ln(\Stres / \Kuno) + \left( \rdoce + \frac{\sigmaPuno^2}{2} \right) \cdot \Tuno}{\sigmaPuno\cdot \sqrt{\Tuno}}$\\\pausa
+\vspace{.2em}
+$  d_1 = \frac{\decimalxx{\buno} + \left( \rdoce + \bdos \right) \cdot \Tuno}{\btres}$\\\pausa
+\vspace{.1em}
+$  d_1 = \frac{ \decimalxx{\bcuatro}}{\btres}$\\\pausa
+\vspace{.1em}
+$  d_1 = \frac{\decimalxx{\bcinco} }{\btres}$\\\pausa
+\vspace{.1em}
+\cajaverde{$  d_1 = \decimalx{\bseis} $}
+\end{frame}
+
+\subsection{Parte b)}
+
+\begin{frame}{Pregunta 2 Parte b)}
+  \justify
+  \Pregdos
+  \vspace{1em}
+  
+  \textbf{b)}  \Pregunob
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{b} }
+  Datos: $S_0 = \dinero{\Stres}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdoce}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \decimalx{\bseis} $ \\
+
+Calculamos d2 usando la fórmula:\\
+\vspace{.3em}
+\textbf{Fórmula:} \formula{\Ddos}\\ \pausa
+
+$d_2 = \decimalx{\bseis}- \sigmaPuno \cdot \sqrt{\Tuno}$\\ \pausa
+$d_2 = \decimalx{\bseis}- \btres$\\ \pausa
+\cajaverde{$d_2 = \decimalx{\bsiete}$}\\ \pausa
+\end{frame}
+
+\subsection{Parte c)}
+
+\begin{frame}{Pregunta 2 Parte c)}
+  \justify
+  \Pregdos
+  \vspace{1em}
+  
+  \textbf{c)}  \Pregunoc
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{c}}
+    Datos: $S_0 = \dinero{\Stres}$, $K = \dinero{\Kuno}$, $r = \porcentaje{\rdoce}$, $T = \decimalx{\Tuno}$,
+ $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \deunob $, $d_2 = \dedosb$ \\
+ \vspace{0.2em}
+\textbf{Fórmula:} \formula{\callbsm}\\ \pausa
+$c = \Stres \cdot N(\deunob) -\Kuno \cdot e^{-\rdoce \cdot \Tuno}\cdot N(\dedosb)$\\ \pausa
+$c = \Stres \cdot \phidunob -\Kuno \cdot e^{-\rdoce \cdot \Tuno}\cdot \phiddosb$\\ \pausa
+$c = \decimalxx{\bdiez}-\decimalxx{\bnueve} $\\ \pausa
+\cajaverde{$c = \decimalxx{\bonce}$}
+\end{frame}
+
+
+% ----------------------------------------------------------------
+% Pregunta 3
+% ----------------------------------------------------------------
+
+\section{Pregunta 3}
+
+% #region Variables pregunta 3
+\newcommand{\rendimiento}{0.16}
+\newcommand{\volatilidad}{0.35}
+\newcommand{\Scuatro}{38}
+\newcommand{\Kcuatro}{40}
+\newcommand{\Tcuatro}{0.5} % 6 meses en años
+
+
+% Fórmulas
+\newcommand{\browniano}{$\ln (S_T) \sim \mathcal{N}\left(\ln (S_0) + (\mu - \sigma^2/2)\cdot T,\ \sigma^2 \cdot T\right)$ }
+\newcommand{\standarizar}{$Z = \frac{\ln K - \mathbb{E}[\ln S_T]}{\text{desv. estándar}}$}
+
+% Cálculos
+\pgfmathsetmacro{\cuno}{ln(\Scuatro)}
+\pgfmathsetmacro{\cdos}{\rendimiento-  \volatilidad^2/2} 
+\pgfmathsetmacro{\ctres}{\Tcuatro* \volatilidad^2/2} 
+\pgfmathsetmacro{\ccuatro}{\cdos*\Tcuatro} 
+\pgfmathsetmacro{\ccinco}{\cuno+\ccuatro} 
+\pgfmathsetmacro{\cseis}{ln(\Kcuatro)}
+\pgfmathsetmacro{\csiete}{\cseis-\ccinco}
+\pgfmathsetmacro{\cocho}{\csiete/\ctres}
+\pgfmathsetmacro{\phicuatro}{0.5247}
+\pgfmathsetmacro{\cnueve}{1-\phicuatro} 
+
+% Peguntas
+\newcommand{\Pregtres}{
+  El precio de una acción sigue un movimiento browniano geométrico con un rendimiento esperado de \porcentaje{\rendimiento} y una 
+volatilidad de \porcentaje{\volatilidad}. El precio actual es de \dinero{\Scuatro}.
+  }
+\newcommand{\Pregtresa}{¿Cuál es la probabilidad de que una opción call europea sobre la acción con un precio de ejercicio 
+de \dinero{\Kcuatro} y vencimiento en 6 meses sea ejercida?}
+\newcommand{\Pregtresb}{¿Cuál es la probabilidad de que una opción put europea sobre la acción conun precio de ejercicio de \dinero{\Kcuatro} y vencimiento en 6 meses sea ejercida?}
+
+% #endregion
+
+\begin{frame}{Pregunta 3}
+  \justify
+  \Pregtres
+  \vspace{1em}
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item \Pregtresa
+  \item \Pregtresb
+\end{enumerate}
+
+\end{frame}
+
+\subsection{Parte a)}
+
+\begin{frame}{Pregunta 3 Parte a)}
+  \justify
+  \Pregtres
+  \vspace{1em}
+  
+  \textbf{a)}  \Pregtresa
+  
+\end{frame}
+
+\begin{frame}{\Desarrollo{a}}
+  Datos: $S_0 = \dinero{\Scuatro}$, $K = \dinero{\Kcuatro}$, $\mu =\rendimiento$, $T = \decimalx{\Tcuatro}$,
+ $\sigma = \porcentaje{\volatilidad}$ \\
+ \vspace{0.2em}
+\justify
+Queremos calcular la probabilidad de que la opción call se ejerza, es decir: 
+\[\mathbb{P}(S_T > K)\]
+Aplicamos la fórmula de movimiento browniano geométrico:
+\formula{\browniano} \pausa
+
+Reemplazamos:\\ \pausa
+
+$\ln (S_T) \sim \mathcal{N} \left(\ln (\Scuatro) + (\rendimiento - \volatilidad^2/2) \cdot \Tcuatro,\ \volatilidad^2 \cdot \Tcuatro \right)$\\ \pausa
+$\ln (S_T) \sim \mathcal{N} \left(\decimalx{\cuno} + \decimalx{\cdos} \cdot \Tcuatro,\decimalx{\ctres} \right)$\\ \pausa
+$\ln (S_T) \sim \mathcal{N} \left(\decimalx{\cuno} + \decimalx{\ccuatro},\decimalx{\ctres} \right)$\\ \pausa
+$\ln (S_T) \sim \mathcal{N} \left(\decimalx{\ccinco},\decimalx{\ctres} \right)$\\ \pausa
+
+\end{frame}
+
+\begin{frame}{\Desarrollo{a}}
+  \justify
+
+Dado que \( \ln \Kcuatro = \decimalx{\cseis} \), estandarizamos segun fórmula:\\
+\formula{\standarizar}\\ \pausa
+$\mathbb{P}(\ln S_T > ln(K_0)) = 1 - N\left(Z\right)$ \\ \pausa
+\vspace{.2em}
+$\mathbb{P}(\ln S_T > \decimalx{\cseis}) \pausa= 1 - N\left( \frac{\decimalx{\cseis} - \decimalx{\ccinco}}{\decimalx{\ctres}} \right)$ \\ \pausa
+\vspace{.2em}
+$\mathbb{P}(\ln S_T > \decimalx{\cseis}) = 1 - N\left( \frac{\decimalx{\csiete}}{\decimalx{\ctres}} \right)$ \\ \pausa
+\vspace{.2em}
+$\mathbb{P}(\ln S_T > \decimalx{\cseis}) = 1 - N\left( \decimalx{\cocho} \right)$ \\ \pausa
+$\mathbb{P}(\ln S_T > \decimalx{\cseis}) = 1 - \phicuatro$ \\ \pausa
+\cajaverde{$\mathbb{P}(\ln S_T > \decimalx{\cseis}) = \cnueve$} 
+\end{frame}
+
+\subsection{Parte b)}
+
+
+\begin{frame}{\Desarrollo{b}}
+\justify
+Queremos calcular la probabilidad de que la opción put se ejerza, es decir: 
+$\mathbb{P}(S_T < K)$\\ \pausa
+Esto equivale a:\\
+$\mathbb{P}(\ln S_T < \ln K)$ \\ \pausa
+Buscamos:\\
+$\mathbb{P}(\ln S_T < \ln K) = N(Z)$\\ \pausa
+$\mathbb{P}(\ln S_T < \decimalx{\cseis})= N(\decimalx{\cocho})$\\ \pausa
+\cajaverde{$\mathbb{P}(\ln S_T < \decimalx{\cseis}) = \phicuatro$} 
+
+\end{frame}
+
+\end{document}
