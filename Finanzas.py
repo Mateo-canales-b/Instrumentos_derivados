@@ -194,25 +194,34 @@ class Finanzas:
         def graficar_arbol(S, u, d, n):
             """
             Genera un gráfico del árbol binomial de precios.
-            
+
             Args:
                 S (float): Precio inicial del activo subyacente.
                 u (float): Factor de aumento del precio.
                 d (float): Factor de disminución del precio.
                 n (int): Número de pasos en el árbol.
-
             """
             G = nx.DiGraph()
             pos = {}
+
+            # Crear nodos y sus posiciones
             for i in range(n + 1):
                 for j in range(i + 1):
+                    nombre_nodo = f"{i}-{j}"
                     precio = S * (u ** j) * (d ** (i - j))
-                    G.add_node(f"{i}-{j}", precio=precio)
-                    pos[f"{i}-{j}"] = (i, -j)
-                    if i > 0:
-                        G.add_edge(f"{i-1}-{j}", f"{i}-{j}")
-                        if j > 0:
-                            G.add_edge(f"{i-1}-{j-1}", f"{i}-{j}")
+                    G.add_node(nombre_nodo, precio=precio)
+                    pos[nombre_nodo] = (i, -j)
+
+            # Agregar aristas solo si los nodos destino existen
+            for i in range(n):
+                for j in range(i + 1):
+                    nodo_actual = f"{i}-{j}"
+                    nodo_arriba = f"{i+1}-{j+1}"
+                    nodo_abajo = f"{i+1}-{j}"
+                    if nodo_arriba in G.nodes:
+                        G.add_edge(nodo_actual, nodo_arriba)
+                    if nodo_abajo in G.nodes:
+                        G.add_edge(nodo_actual, nodo_abajo)
 
             plt.figure(figsize=(12, 8))
             nx.draw(G, pos, with_labels=True, node_size=3000, node_color="lightblue", font_size=8, font_weight="bold")
@@ -375,3 +384,14 @@ pasos = np.arange(1, 101)
 binomial_precio = [Finanzas.Binomial.europea("call", S, K, sigma, T, r, n) for n in pasos]
 bs_precio = Finanzas.Binomial.black_scholes("call", S, K, sigma, T, r)
 Finanzas.Graficos.graficar_convergencia(binomial_precio, bs_precio, pasos)
+
+# %% Árbol binomial de precios
+
+S = 100
+u = 1.2
+d = 0.8
+n = 3
+
+Finanzas.Graficos.graficar_arbol(S, u, d, n)
+
+# %%
