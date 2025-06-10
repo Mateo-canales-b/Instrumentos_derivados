@@ -33,7 +33,7 @@
 \usepackage{ifthen}
 \newcommand{\pausa}{\ifpresentacion\pause\fi}
 % #region Título
-\title{Ayudantía 4 \\  Árboles Binomiales
+\title{Ayudantía 5 \\ Opciones
 \\ \large\textit{Instrumentos Derivados}}
 \author{
   \texorpdfstring{
@@ -43,7 +43,7 @@
 }
 \subject{Instrumentos Derivados}
 \institute{Universidad Diego Portales}
-\date{04 De Junio, 2025}
+\date{09 De Junio, 2025}
 % #endregion 
 \begin{document}
 
@@ -126,8 +126,8 @@
 
 \newcommand{\deuno}{\decimalx{\aseis}}
 \newcommand{\dedos}{\decimalx{\asiete}}
-\pgfmathsetmacro{\phimenosduno}{0.4633}
-\pgfmathsetmacro{\phimenosddos}{0.4040}
+\pgfmathsetmacro{\phimenosduno}{0.4040}
+\pgfmathsetmacro{\phimenosddos}{0.4633}
 
 \pgfmathsetmacro{\anueve}{\Kuno*\aocho*\phimenosddos}
 \pgfmathsetmacro{\adiez}{\Suno*\phimenosduno}
@@ -143,10 +143,13 @@
 \pgfmathsetmacro{\adieciocho}{\adiecisiete-\atres}
 \pgfmathsetmacro{\adiecinueve}{-\adieciocho}
 
-\pgfmathsetmacro{\phidunonuevo}{0.3632}
-\pgfmathsetmacro{\phiddosnuevo}{0.4338}
-\pgfmathsetmacro{\aveinte}{\Kuno*\aocho*\phiddosnuevo}
-\pgfmathsetmacro{\aveintiuno}{\acatorce*\phidunonuevo}
+\pgfmathsetmacro{\phidunonuevo}{0.5160}
+\pgfmathsetmacro{\phiddosnuevo}{0.4562}
+
+\pgfmathsetmacro{\aveinticuatro}{1-\phiddosnuevo}
+\pgfmathsetmacro{\aveintitres}{1-\phidunonuevo}
+\pgfmathsetmacro{\aveinte}{\Kuno*\aocho*\aveinticuatro}
+\pgfmathsetmacro{\aveintiuno}{\acatorce*\aveintitres}
 \pgfmathsetmacro{\aveintidos}{\aveinte-\aveintiuno}
 
 
@@ -205,8 +208,6 @@ $  d_1 = \frac{\ln(\Suno / \Kuno) + \left( \rdiez + \frac{\sigmaPuno^2}{2} \righ
 $  d_1 = \frac{\decimalxx{\auno} + \left( \rdiez + \ados \right) \cdot \Tuno}{\atres}$\\\pausa
 \vspace{.1em}
 $  d_1 = \frac{ \decimalxx{\acuatro}}{\atres}$\\\pausa
-\vspace{.1em}
-$  d_1 = \frac{\decimalxx{\acinco} }{\atres}$\\\pausa
 \vspace{.1em}
 \cajaverde{$  d_1 = \decimalx{\aseis} $}
 \end{frame}
@@ -310,7 +311,8 @@ $S_1 =  \decimalx{\acatorce} $\\ \pausa
  $\sigma = \porcentaje{\sigmaPuno}$, $  d_1 = \decimalx{\adiecisiete} $, $d_2 = \decimalx{\adieciocho}$ \\
  \vspace{0.2em}
 \textbf{Fórmula:} \formula{\putbsm}\\ \pausa
-$P = \Kuno \cdot e^{-\rdiez \cdot \Tuno} \cdot N(-\decimalx{\adiecisiete}) - \Suno \cdot N(\decimalx{\adiecinueve})$\\ \pausa
+$P = \Kuno \cdot e^{-\rdiez \cdot \Tuno} \cdot  N(\decimalx{\adiecinueve})- \decimal{\acatorce} \cdot N(-\decimalx{\adiecisiete})$\\ \pausa
+$P = \Kuno \cdot e^{-\rdiez \cdot \Tuno} \cdot  \decimalx{\aveinticuatro}- \decimal{\acatorce} \cdot \aveintitres$\\ \pausa
 $P = \decimalx{\aveinte} - \decimalx{\aveintiuno}$\\ \pausa
 \cajaverde{$p = \decimalx{\aveintidos}$}\\ \pausa
 \vspace{1em}

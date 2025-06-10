@@ -297,16 +297,51 @@ class Finanzas:
         Funcionalidades relacionadas con valoración empresarial utilizando Black-Scholes.
         """
         @staticmethod
-        def calcular_d1_d2(S, K, rf, sigma, T):
+        def calcular_d1(S, K, rf, sigma, T):
+            d1 = (np.log(S / K) + (rf + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
+            #print(f"d1: {d1:.4f}")
+            globals()['d1'] = round(d1, 4)
+            return d1
+
+        @staticmethod
+        def calcular_d2(S, K, rf, sigma, T):
+            d1 = Finanzas.Valoracion.calcular_d1(S, K, rf, sigma, T)
+            d2 = d1 - sigma * np.sqrt(T)
+            print(f"d2: {d2:.4f}")
+            globals()['d2'] = round(d2, 4)
+            return d2
+
+        @staticmethod
+        def obtener_d1_d2(S, K, rf, sigma, T):
+            d1 = Finanzas.Valoracion.calcular_d1(S, K, rf, sigma, T)
+            d2 = d1 - sigma * np.sqrt(T)
+            #print(f"d1: {d1:.4f}, d2: {d2:.4f}")
+            globals()['d1'] = round(d1, 4)
+            globals()['d2'] = round(d2, 4)
+            return d1, d2
+        
+        @staticmethod
+        def calcular_phi(S, K, rf, sigma, T, variable="d1"):
             """
-            Calcula d1 y d2 según el modelo de Black-Scholes.
+            Calcula el valor de N(d1) o N(d2), es decir, la probabilidad acumulada bajo la distribución normal estándar.
+
+            Args:
+                variable (str): "d1" o "d2" para especificar qué valor calcular.
 
             Returns:
-                tuple: Valores de d1 y d2.
+                float: N(d1) o N(d2)
             """
-            d1 = (np.log(S / K) + (rf + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
-            d2 = d1 - sigma * np.sqrt(T)
-            return d1, d2
+            d1 = Finanzas.Valoracion.calcular_d1(S, K, rf, sigma, T)
+            if variable == "d2":
+                valor = d1 - sigma * np.sqrt(T)
+                nombre = "N(d2)"
+            else:
+                valor = d1
+                nombre = "N(d1)"
+            phi = norm.cdf(valor)
+            #print(f"{nombre} o Φ({variable}): {phi:.4f}")
+            globals()[f"phi_{variable}"] = round(phi, 4)
+            return phi
 
         @staticmethod
         def calcular_call_put(S, K, rf, sigma, T):
@@ -320,7 +355,27 @@ class Finanzas:
             call = S * norm.cdf(d1) - K * np.exp(-rf * T) * norm.cdf(d2)
             put = K * np.exp(-rf * T) * norm.cdf(-d2) - S * norm.cdf(-d1)
             return {"Call": call, "Put": put}
+       
+        @staticmethod
+        def calcular_valor_presente_dividendo(div, r, T):
+            """
+            Calcula el valor presente de un dividendo futuro descontado a una tasa dada.
 
+            Fórmula:
+                VP = div / (1 + r)^T
+
+            Args:
+                div (float): Monto del dividendo esperado.
+                r (float): Tasa de descuento.
+                T (float): Tiempo en años hasta recibir el dividendo.
+
+            Returns:
+                float: Valor presente del dividendo.
+            """
+            vp = div / (1 + r) ** T
+            print(f"Valor presente del dividendo: {vp:.4f}")
+            return vp
+        
         @staticmethod
         def convertir_tasa(tasa, from_period, to_period):
             """
@@ -387,11 +442,49 @@ Finanzas.Graficos.graficar_convergencia(binomial_precio, bs_precio, pasos)
 
 # %% Árbol binomial de precios
 
-S = 100
+S = 100 
 u = 1.2
 d = 0.8
 n = 3
 
 Finanzas.Graficos.graficar_arbol(S, u, d, n)
 
-# %%
+# %% Ejercicio 15 .13 Hull
+S=50
+K=50
+r=0.1
+sigma=0.30
+T=3/12
+n=1
+Finanzas.Valoracion.obtener_d1_d2(S, K, r, sigma, T)
+print(d1, d2)
+eup_1513=Finanzas.Binomial.europea("put", S, K, sigma, T, r, n)
+print(f"Precio de la opción europea put 15.13 Hull: {eup_1513:.2f}")
+bsp_1513=Finanzas.Binomial.black_scholes("put", S, K, sigma, T, r)
+print(f"Precio Black-Scholes put 15.13 Hull: {bsp_1513:.2f}")   
+Finanzas.Valoracion.calcular_phi(S, K, r, sigma, T, variable="d1")  # N(d1)
+Finanzas.Valoracion.calcular_phi(S, K, r, sigma, T, variable="d2")  # N(d2)
+print(f"Phid1: {phi_d1}\nPhid2: {phi_d2}")# %%
+phild1 = 1-phi_d1  # N(d1)
+phild2 = 1-phi_d2  # N(d1)
+print(f"1-Phid1: {phild1}\n1-Phid2: {phild2}")# %%
+
+# %% ejercicio 15.14 Hull
+t=2/12
+div =1.5
+div_vp=Finanzas.Valoracion.calcular_valor_presente_dividendo(div,r,t)
+S1=S-div_vp
+print(f"Precio del activo subyacente ajustado por dividendo: {S1:.2f}")
+
+# Recalcular d1 y d2 con S ajustado por dividendo
+Finanzas.Valoracion.obtener_d1_d2(S1, K, r, sigma, T)
+Finanzas.Valoracion.calcular_phi(S1, K, r, sigma, T, variable="d1")
+Finanzas.Valoracion.calcular_phi(S1, K, r, sigma, T, variable="d2")
+print(f"d1: {d1}, d2: {d2}")
+print(f"Phid1: {phi_d1}\nPhid2: {phi_d2}")
+# %% Opción europea put ajustada por dividendo
+eup_1514 = Finanzas.Binomial.europea("put", S1, K, sigma, T, r, n)
+print(f"Precio de la opción europea put ajustada por dividendo: {eup_1514:.2f}")
+# %% Black-Scholes put ajustada por dividendo
+bsp_1514 = Finanzas.Binomial.black_scholes("put", S1, K, sigma, T, r)
+print(f"Precio Black-Scholes put ajustada por dividendo: {bsp_1514:.2f}")
