@@ -1,0 +1,85 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}     % Codificación
+\usepackage{amsmath}            % Matemáticas
+\usepackage{amssymb}            % Símbolos matemáticos
+\usepackage{graphicx}           % Imágenes
+\usepackage{tikz}               % Gráficos vectoriales
+\usetikzlibrary{arrows.meta, positioning, calc}
+\usepackage{pgfplots}           % Gráficos matemáticos
+\pgfplotsset{compat=1.18}
+\usepackage{xcolor}             % Colores
+\usepackage{geometry}           % Márgenes
+\usepackage{enumitem}           % Listas personalizadas
+\usepackage{fancyhdr}           % Encabezados/pies de página
+\usepackage{float}              % Posicionamiento de figuras/tablas
+\usepackage{comment}            % Comentarios múltiples
+\usepackage{booktabs}           % Tablas profesionales
+\usepackage{hyperref}           % Hipervínculos
+\usepackage{ragged2e}           % Alineación de texto
+
+
+\renewcommand{\figurename}{Gráfico}  
+
+\geometry{letterpaper, margin=1in}
+\fancypagestyle{firststyle}{
+    \fancyhf{}
+    \lhead{\includegraphics[height=5cm]{../imagenes/logo.png}}
+    \renewcommand{\headrulewidth}{0pt}
+    }
+    \pagestyle{plain}
+    
+    \definecolor{rojoudp}{RGB}{210,35,42}
+\newcommand{\subrayadoRojo}[1]{{\color{rojoudp}\underline{\textcolor{black}{#1}}}}
+\renewcommand{\thesection}{Pregunta \arabic{section}}
+\setcounter{section}{1}
+\newcommand{\pregunta}[1]{%
+  \section*{\subrayadoRojo{\thesection  #1}}%
+  \stepcounter{section}%
+}
+\vspace{-3em}
+\begin{document}
+%\begin{figure}
+%    \vspace{-5em}    
+%    \flushright
+%    \includegraphics[height=4cm]{../Ayudantia1/imagenes/logo.png}\\[-3em]
+%\end{figure}
+%\begin{center}
+%    {\LARGE \textbf{Formulario opciones}}\\[0.5em]
+%    Curso: Instrumentos Derivados\\
+%    Profesor: Francisco Rantul\\
+%    Ayudante: Mateo Canales\\
+%\end{center}
+%\vspace{1pt}
+%{\color{rojoudp}\hrule height 2pt}
+%\vspace{10pt}
+\newcommand{\arbol}{$p = \frac{e^{r\cdot \Delta t}-d}{u-d}$}
+\newcommand{\neutral}{$f = e^{-r \cdot \Delta t}\cdot (p \cdot f_u+(1-p) \cdot f_d)$}
+\newcommand{\putcall}{$S_0+p = K \cdot e^{-r \cdot T}+c$}
+\newcommand{\ceroud}{$S_0u|d=S_0*(1+(subida|bajada)) $}
+\newcommand{\neutrali}{$S_0d\cdot \Delta-f_d=S_0u\cdot \Delta-f_u$}
+\newcommand{\portafolio}{$S_0\cdot \Delta-f=(S_0u\cdot \Delta-f_u) \cdot e^{-rT}$}
+\newcommand{\calcud}{$u|d=\frac{S_0u|d}{S_0}$}
+\newcommand{\callbsm}{$c =  S_0 \cdot N(d_1)- K \cdot e^{-r \cdot (T)} \cdot N(d_2) $}
+\newcommand{\putbsm}{$p = K \cdot e^{-r \cdot (T)} \cdot N(-d_2) - S_0 \cdot N(-d_1)$}
+\newcommand{\Duno }{$  d_1 = \frac{\ln(S_0 / K) + \left( r + \frac{\sigma^2}{2} \right) \cdot T}{\sigma \cdot \sqrt{T}}$}
+\newcommand{\Ddos}{$d_2 = d_1 - \sigma \cdot \sqrt{T}$}
+\newcommand{\dividendo}{$S_1 = S_0 - e^{-r \cdot t} \cdot div $}
+\newcommand{\vp}{$vp =e^{-r \cdot t} \cdot valor futuro $}
+\newcommand{\browniano}{$\ln (S_T) \sim \mathcal{N}\left(\ln (S_0) + (\mu - \sigma^2/2)\cdot T,\ \sigma^2 \cdot T\right)$ }
+\newcommand{\standarizar}{$Z = \frac{\ln K - \mathbb{E}[\ln S_T]}{\text{desv.\ estándar}}$}
+\arbol\\ \vspace{2em}
+\neutral\\ \vspace{2em}
+\putcall\\ \vspace{2em}
+\ceroud\\ \vspace{2em}
+\neutrali\\ \vspace{2em}
+\portafolio\\ \vspace{2em}
+\calcud\\ \vspace{2em}
+\callbsm\\ \vspace{2em}
+\putbsm\\ \vspace{2em}
+\Duno\\ \vspace{2em}
+\Ddos\\ \vspace{2em}
+\dividendo\\ \vspace{2em}
+\vp\\ \vspace{2em}
+\browniano\\ \vspace{2em}
+\standarizar\\ \vspace{2em}
+\end{document}
