@@ -265,14 +265,13 @@ Calculamos derivadas:
 
 Aplicamos Itô:
 \begin{align*}
-    dB &= \left[ \frac{\partial B}{\partial x} \cdot a(x_0 - x) + \frac{1}{2} \cdot \frac{\partial^2 B}{\partial x^2} \cdot (s x)^2 \right] dt + \frac{\partial B}{\partial x} \cdot s x \, dz \\
-    &= B(t) \left[ - (T - t) a (x_0 - x) + \frac{1}{2} (T - t)^2 s^2 x^2 \right] dt - (T - t) s x B(t) \, dz
+    dB &= \left[ \frac{\partial B}{\partial t} + \frac{\partial B}{\partial x} \cdot a(x_0 - x) + \frac{1}{2} \cdot \frac{\partial^2 B}{\partial x^2} \cdot (s x)^2 \right] dt + \frac{\partial B}{\partial x} \cdot s x \, dz \\
+    &= B(t) \left[ x - (T - t) a (x_0 - x) + \frac{1}{2} (T - t)^2 s^2 x^2 \right] dt - (T - t) s x B(t) \, dz
 \end{align*}
-
 \cajaverdeletra{
 El precio del bono sigue el siguiente proceso estocástico:
 \[
-dB = B(t) \left[ - (T - t) a (x_0 - x) + \frac{1}{2} (T - t)^2 s^2 x^2 \right] dt - (T - t) s x B(t) \, dz
+dB = B(t) \left[ x- (T - t) a (x_0 - x) + \frac{1}{2} (T - t)^2 s^2 x^2 \right] dt - (T - t) s x B(t) \, dz
 \]
 }
 \pregunta{ Hull 15.26}
