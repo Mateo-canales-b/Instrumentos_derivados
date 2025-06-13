@@ -1,0 +1,495 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}     % Codificación
+\usepackage{amsmath}            % Matemáticas
+\usepackage{amssymb}            % Símbolos matemáticos
+\usepackage{graphicx}           % Imágenes
+\usepackage{tikz}               % Gráficos vectoriales
+\usetikzlibrary{arrows.meta, positioning, calc}
+\usepackage{pgfplots}           % Gráficos matemáticos
+\pgfplotsset{compat=1.18}
+\usepackage{xcolor}             % Colores
+\usepackage{geometry}           % Márgenes
+\usepackage{enumitem}           % Listas personalizadas
+\usepackage{fancyhdr}           % Encabezados/pies de página
+\usepackage{float}              % Posicionamiento de figuras/tablas
+\usepackage{comment}            % Comentarios múltiples
+\usepackage{booktabs}           % Tablas profesionales
+\usepackage{hyperref}           % Hipervínculos
+\usepackage{ragged2e}           % Alineación de texto
+\usepackage[most]{tcolorbox}    % Cajas de color 
+
+\renewcommand{\figurename}{Gráfico}  
+% #region
+  \geometry{letterpaper, margin=1in}
+  \definecolor{rojoudp}{RGB}{210,35,42}
+  \definecolor{grene}{RGB}{30,136,61}
+  \newcommand{\subrayadoRojo}[1]{{\color{rojoudp}\underline{\textcolor{black}{#1}}}}
+  \renewcommand{\thesection}{Pregunta \arabic{section}}
+  \setcounter{section}{1} % Iniciar desde la pregunta 
+  % Comando para preguntas principales
+  \newcommand{\pregunta}[2][]{%
+    \section*{\subrayadoRojo{\thesection \ #2 \ifx&#1&\else\ [#1]\fi}}%
+    \stepcounter{section}%
+  }
+  % Comando para mostrar puntajes entre corchetes
+  \newcommand{\pts}[1]{\textbf{[#1 pts]}}
+  % Comando para subpreguntas
+  \newcounter{subpreg}
+  \newcommand{\subpregunta}[1]{%
+    \subsection*{\subrayadoRojo{#1}}%
+  }
+  \newcommand{\Desarrollo}[1]{Desarrollo Parte {#1})}
+% #endregion
+
+% #region Formateo de números 
+  \newcommand{\cajaverde}[1]{%
+    \fcolorbox{blue}{green!20}{%
+      { #1}%
+    }
+  }
+  \newcommand{\cajaverdeletra}[1]{%
+    \fcolorbox{blue}{green!20}{%
+      \parbox{0.9\linewidth}{\justifying #1}%
+    }
+  }
+  \newcommand{\formula}[1]{\textcolor{blue}{#1}}
+  \newcommand{\entero}[1]{\pgfmathprintnumber[fixed, precision=0]{#1}}
+  \newcommand{\decimal}[1]{\pgfmathprintnumber[fixed, precision=2]{#1}}
+  \newcommand{\decimalx}[1]{\pgfmathprintnumber[fixed, precision=3]{#1}}
+  \newcommand{\decimalxx}[1]{\pgfmathprintnumber[fixed, precision=4]{#1}}
+  \newcommand{\porcentaje}[1]{%
+    \pgfmathsetmacro{\temp}{#1*100}%
+    \pgfmathprintnumber[fixed, precision=2]{\temp}\%%
+  }
+  \newcommand{\dinero}[1]{%
+    \$\,\pgfmathprintnumber[fixed, precision=0]{#1}
+    }
+  \newcommand{\dineros}[1]{%
+    \$\,\pgfmathprintnumber[fixed, precision=1]{#1}
+    }
+  \newcommand{\dineross}[1]{%
+    \$\,\pgfmathprintnumber[fixed, precision=2]{#1}
+    }
+
+% #endregion
+
+% #region Fórmulas globales
+  \newcommand{\arbol}{$p = \frac{e^{r\cdot \Delta t}-d}{u-d}$}
+  \newcommand{\fcall}{$f_{call}=\max\left[(S_t-K),0\right] $}
+  \newcommand{\famerc}{$f_{am\ call}=\max\left[(S_t-K),f_{eur}\right] $}
+  \newcommand{\feur}{$feur = e^{-r \cdot \Delta t}\cdot (p \cdot f_u+(1-p) \cdot f_d)$}
+  \newcommand{\putcall}{$S_0+p = K \cdot e^{-r \cdot T}+c$}
+  \newcommand{\ceroud}{$S_0u|d=S_0*(1+(subida|bajada)) $}
+  \newcommand{\neutrali}{$S_0d\cdot \Delta-f_d=S_0u\cdot \Delta-f_u$}
+  \newcommand{\portafolio}{$S_0\cdot \Delta-f=(S_0u\cdot \Delta-f_u) \cdot e^{-rT}$}
+  \newcommand{\calcud}{$u|d=\frac{S_0u|d}{S_0}$}
+  \newcommand{\calcu}{$u=1/d=e^{\sigma\cdot\sqrt{\Delta t} }$}
+  \newcommand{\calcd}{$d=1/u=e^{-\sigma\cdot\sqrt{\Delta t} }$}
+  \newcommand{\callbsm}{$c =  S_0 \cdot \mathcal{N}(d_1)- K \cdot e^{-r \cdot (T)} \cdot \mathcal{N}(d_2) $}
+  \newcommand{\putbsm}{$p = K \cdot e^{-r \cdot (T)} \cdot \mathcal{N}(-d_2) - S_0 \cdot \mathcal{N}(-d_1)$}
+  \newcommand{\enemenosuno}{$\mathcal{N}(-d)=1-\mathcal{N}(d)$}
+  \newcommand{\Duno }{$  d_1 = \frac{\ln(\frac{S_0}{K}) + \left( r + \frac{\sigma^2}{2} \right) \cdot T}{\sigma \cdot \sqrt{T}}$}
+  \newcommand{\Ddos}{$d_2 = d_1 - \sigma \cdot \sqrt{T}$}
+  \newcommand{\dividendo}{$S_1 = S_0 - e^{-r \cdot t} \cdot div $}
+  \newcommand{\vp}{$vp =e^{-r \cdot t} \cdot valor futuro $}
+  \newcommand{\browniano}{$\ln (S_T) \sim \mathcal{N}\left[\ln (S_0) + (\mu - \frac{\sigma^2}{2})\cdot T,\ \sigma^2 \cdot T\right]$ }
+  \newcommand{\media}{$\mathbb{E}(S_T) = S_0 \cdot e^{\mu \cdot T}$}
+  \newcommand{\varianza}{$\mathrm{var}(S_T) = S_0^2 \cdot e^{2\cdot \mu \cdot T} \cdot \left( e^{\sigma^2\cdot T} - 1 \right)$}
+  \newcommand{\standarizar}{$Z = \frac{\ln K - \mathbb{E}[\ln S_T]}{\text{desv.\ estándar}}$}
+  \newcommand{\intervaloconf}{$IC = \left[ \mathbb{E}(S_T) - Z_{\alpha/2} \cdot \mathrm{sd}{S_T},\ \mathbb{E}(S_T) + Z_{\alpha/2} \cdot \mathrm{sd}(S_T)\right]$}
+  \newcommand{\ito}{\[df = \left( \frac{\partial f}{\partial t} + \mu \frac{\partial f}{\partial x} + \frac{1}{2} \sigma^2 \frac{\partial^2 f}{\partial x^2} \right) dt + \sigma \frac{\partial f}{\partial x} dz\]
+  }
+
+
+% #endregion
+
+\begin{document}
+
+% #region Preludio
+  \begin{figure}
+      \vspace{-5em}    
+      \flushright
+      \includegraphics[height=4cm]{../logo.png}\\[-3em]
+  \end{figure}
+  
+  % Inicio
+  \begin{center}
+      {\LARGE \textbf{Prueba N°2}}\\[0.5em]
+      Instrumentos Derivados \\
+      Profesor: Francisco Rantul\\
+      FAEFI003\\
+  \end{center}
+  \vspace{1pt}
+  \textbf{Nombre Y Rut:}\\
+  {\color{rojoudp}\hrule height 1pt}
+  \vspace{1em}
+
+  \textbf{Instrucciones:}
+  \begin{itemize}
+      \item La evaluación será hasta las \textbf{12:50 pm.}
+      \item Escribir nombre en el borde superior de las hojas de respuesta./ Rellenar todos los datos de manera correctaen la hoja de respuestas.
+      \item Escribir el desarrollo completo de cada ejercicio, \textbf{se descontarán puntos a respuestas sin desarrollo.}
+      \item \textbf{No se permiten preguntas sobre la materia.}
+      \item Se sugiere responder de forma concisa (ahorre tiempo respondiendo de forma directa y clara).
+      \item Está prohibido el uso de aparatos electrónicos distintos a la calculadora.
+      \item A quien se detecte copiando será evaluado con la nota mínima y deberá retirarse de la sala enfrentando el debido proceso.
+  \end{itemize}
+  {\color{rojoudp}\hrule height 1pt}
+  \vspace{1em}
+
+% #endregion
+
+% #region Pregunta 1 - Árbol Binomial
+\pregunta{Árbol Binomial \pts{30}}
+\justify
+% #region Variables 
+
+\newcommand{\Sbinom}{105}
+\newcommand{\Kbinom}{103}
+\newcommand{\rbinom}{0.04}
+\newcommand{\sigmabinom}{0.30}
+\newcommand{\Tbinom}{1/12}  % 1 meses expresado en años
+\newcommand{\Tbinoma}{2/12}  % 2 meses expresado en años
+\newcommand{\nperiodos}{2}  % Número de pasos
+
+% #endregion
+
+El precio hoy ($t=0$) de una acción no paga dividendos es de \dinero{\Sbinom} Cada mes se espera que el precio de 
+la acción suba en un factor de \formula{\calcu}  o baje por un factor de \formula{\calcd} . 
+La tasa libre de riesgo es de \porcentaje{\rbinom} anual continua. La volatilidad del activo es $\sigma = \sigmabinom\%$. 
+Use convención 30/360.
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \pts{10} Calcule el valor de una opción put europea que vence en 2 meses con Strike Price $K = \dinero{\Kbinom}$.
+    \item \pts{10} Calcule el valor de una opción put americana que vence en 2 meses con Strike Price $K = \dinero{\Kbinom}$.
+    \item \pts{10} Estime el valor de la call europea usando la Paridad Put-Call.
+\end{enumerate}
+% #endregion
+
+
+% #region Pregunta 2 - BSM
+
+% #region Variables
+\newcommand{\Sdos}{50}
+\newcommand{\Kdos}{60}
+\newcommand{\Tdos}{1}
+\newcommand{\rdos}{0.055}
+\newcommand{\sigmados}{0.40}
+
+% #endregion
+
+\pregunta{Black-Scholes-Merton \pts{20}}
+
+El precio spot de la acción de LAN S.A. hoy es de \dinero{\Sdos}, la volatilidad sobre el precio de la acción es de \porcentaje{\sigmados}, 
+y el rendimiento de los Bonos del Tesoro Norteamericano es de \porcentaje{\rdos} anual continuo.
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \pts{20} Calcule el valor de la Opción call Europea y el valor de la Put Europea del activo
+    subyacente del enunciado (LAN S.A.). En ambos contratos asuma un Strike Price de $K=\dinero{\Kdos}$ y asuma un plazo 
+    de duración de \Tdos año. \textbf{HINT:} Use 4 decimales.
+\end{enumerate}
+\vspace{.5em}
+{\centering    \includegraphics[height=6cm]{imagenes/tabla1.png}\\}
+
+% #endregion
+
+
+% #region Pregunta 3 - Distribución de Acciones y lema de Itô
+
+% region Variables
+\newcommand{\Stres}{25}
+\newcommand{\rtres}{0.1}
+\newcommand{\sigmatres}{0.22}
+\newcommand{\Ttres}{2}
+
+\pgfmathsetmacro{\mediaST}{\Stres * exp(\rtres * \Ttres)}
+\pgfmathsetmacro{\varST}{(\Stres^2) * exp(2 * \rtres * \Ttres) * (exp(\sigmatres^2 * \Ttres) - 1)}
+\pgfmathsetmacro{\desvST}{sqrt(\varST)}
+\pgfmathsetmacro{\margen}{1.96 * \desvST}
+\pgfmathsetmacro{\LI}{\mediaST - \margen}
+\pgfmathsetmacro{\LS}{\mediaST + \margen}
+
+
+% #endregion
+
+\pregunta{Distribución de Acciones y lema de Itô \pts{20}}
+
+Usted observa un activo cuyo precio hoy es de $S_0 = \Stres$, el precio tiene distribución lognormal. 
+Utilizando datos históricos, usted calculó un retorno esperado del $\mu = \rtres$ y un desvío 
+estándar de $\sigma = \sigmatres$.
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \pts{10} Calcule el rango de valores que podría alcanzar $S_T$ en \Ttres años con una 
+    confianza del 95\% de probabilidad. \textbf{HINT:} use valor crítico $\pm 1.96$.
+
+    \item \pts{10} Asuma que $f$ es una función que depende de $S_t$ (el activo subyacente de un 
+    instrumento derivado), donde $f = \ln S$. Desarrolle el lema de Itô:
+
+    \[
+    df = \left( \frac{\partial f}{\partial t} + \frac{\partial f}{\partial S} \mu S + \frac{1}{2} 
+    \frac{\partial^2 f}{\partial S^2} \sigma^2 S^2 \right) dt + \frac{\partial f}{\partial S} \sigma S dz
+    \]
+    
+
+    Señale cuál es la pendiente del proceso $df$. \textbf{HINT:} Recordar que $d\ln(x) = 1/x$, $d^2 
+    \ln(x) = -1/x^2$ y $\partial f/\partial t = 0$.
+\end{enumerate}
+% #endregion
+
+% #region Formulario
+\begin{tcolorbox}[title={\large{Formulario}},colback=white!95!gray,colframe=black!75!black]
+  \small
+    \textbf{Distribución:}\\
+    \begin{center}
+      \browniano\\
+    \end{center}
+
+    \textbf{Binomial:}\\
+    \begin{center}
+      \arbol\\
+      \fcall, \hspace{3em} $t=T$\\
+      \feur, \hspace{3em} $t<T$\\
+      \famerc, \hspace{3em} $t\leq T$\\
+    \end{center}
+    \textbf{Opciones:}\\
+    \begin{center}
+      \callbsm\\
+      \putbsm\\
+      \Duno\\
+      \Ddos\\
+      \putcall\\
+    \end{center}
+\end{tcolorbox}
+% #endregion
+\newpage
+\setcounter{section}{1} % Iniciar desde la pregunta 
+% #region Desarrollo pregunta 1 
+\pregunta{}
+\textbf{Datos:}
+$S_0=\Sbinom$, $K=\Kbinom$, $r=\rbinom$, $\sigma=\sigmabinom$, $\Delta=\Tbinom$, $T=\Tbinoma$, $n=\nperiodos$.
+% #region Desarrollo a
+\subpregunta{\Desarrollo{a}}
+% #endregion
+
+% #region Desarrollo a
+\subpregunta{\Desarrollo{b}}
+% #endregion
+
+% #region Desarrollo a
+\subpregunta{\Desarrollo{c}}
+% #endregion
+% #endregion
+
+% #region Desarrollo pregunta 2
+\pregunta{}
+
+\textbf{Datos:}
+$S_0=\Sdos$, $K=\Kdos$, $r=\rbinom$, $\sigma=\sigmados$,  $T=\Tdos$. 
+% #region Desarrollo a
+\subpregunta{\Desarrollo{a}}
+% #endregion
+
+% #endregion
+
+% #region Desarrollo pregunta 3 
+\pregunta{}
+\textbf{Datos:}
+$S_0=\Stres$, $r=\rtres$, $\sigma=\sigmatres$,  $T=\Ttres$.
+% #region Desarrollo a
+\subpregunta{\Desarrollo{a}}
+% #endregion
+
+% #region Desarrollo b
+\subpregunta{\Desarrollo{b}}
+% #endregion
+
+% #endregion
+
+\begin{comment}
+  % #region Variables 
+
+\newcommand{\rendimiento}{0.18}
+\newcommand{\volatilidad}{0.30}
+\newcommand{\Scuatro}{50}
+\newcommand{\Tcuatro}{2} % 2 años
+% Variables base utilizadas en el ejercicio Hull 15.35
+% Cálculos
+\pgfmathsetmacro{\cuno}{ln(\Scuatro)}
+\pgfmathsetmacro{\cdos}{\rendimiento-  \volatilidad^2/2} 
+\pgfmathsetmacro{\ctres}{\Tcuatro* \volatilidad^2} 
+\pgfmathsetmacro{\ccuatro}{\cdos*\Tcuatro} 
+\pgfmathsetmacro{\ccinco}{\cuno+\ccuatro} 
+\pgfmathsetmacro{\cseis}{\rendimiento *\Tcuatro} 
+\pgfmathsetmacro{\csiete}{exp(\cseis)} 
+\pgfmathsetmacro{\cocho}{\Scuatro*\csiete} 
+\pgfmathsetmacro{\cnueve}{\Scuatro^2} 
+\pgfmathsetmacro{\cdiez}{2*\rendimiento*\Tcuatro} 
+\pgfmathsetmacro{\conce}{\volatilidad^2*\Tcuatro} 
+\pgfmathsetmacro{\cdoce}{exp(\cdiez)} 
+\pgfmathsetmacro{\ctrece}{exp(\conce)} 
+\pgfmathsetmacro{\ccatorce}{\cnueve*\cdoce} 
+\pgfmathsetmacro{\cquince}{\ctrece-1} 
+\pgfmathsetmacro{\cdieciseis}{\cquince*\ccatorce} 
+\pgfmathsetmacro{\cdiecisiete}{sqrt(\cdieciseis)}
+\pgfmathsetmacro{\duno}{1.96*\cdiecisiete} % Z-score para el 95% de confianza
+\pgfmathsetmacro{\ddos}{\cocho+\duno}
+\pgfmathsetmacro{\dtres}{\cocho-\duno}
+
+
+% Fórmulas
+
+\newcommand{\Pregcuatro}{El precio de una acción es actualmente \dinero{\Scuatro}. Suponga que el rendimiento esperado de la acción es de~\porcentaje{\rendimiento} y su volatilidad es de \porcentaje{\volatilidad}.}
+
+\newcommand{\Pregcuatroa}{¿Cuál es la distribución de probabilidad para el precio de la acción en \Tcuatro{} años?}
+\newcommand{\Pregcuatrob}{Calcule la media de la distribución}
+\newcommand{\Pregcuatroc}{Calcule desviación estándar de la distribución}
+\newcommand{\Pregcuatrod}{Determine el intervalo de confianza del 95\%.}
+
+
+% #endregion
+
+\pregunta{ Hull 15.35}
+  \justify
+  \Pregcuatro
+  \vspace{1em}
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+  \item \Pregcuatroa
+  \item \Pregcuatrob
+  \item \Pregcuatroc
+  \item \Pregcuatrod
+\end{enumerate}
+
+
+\subpregunta{Parte a)}
+
+Datos: $S_0 = \dinero{\Scuatro}$, $\mu =\rendimiento$, $T = \decimalx{\Tcuatro}$, $\sigma = \porcentaje{\volatilidad}$ \\
+
+\noindent Aplicamos la fórmula de movimiento browniano geométrico: \\[-1em]
+\begin{flushleft}
+\formula{\browniano} \\[0.5em]
+$\ln (S_T) \sim \mathcal{N} \left(\ln (\Scuatro) + (\rendimiento - \volatilidad^2/2) \cdot \Tcuatro,\ \volatilidad^2 \cdot \Tcuatro \right)$\\[0.3em]
+$\ln (S_T) \sim \mathcal{N} \left(\decimalx{\cuno} + \decimalx{\cdos} \cdot \Tcuatro,\decimalx{\ctres} \right)$\\[0.3em]
+$\ln (S_T) \sim \mathcal{N} \left(\decimalx{\cuno} + \decimalx{\ccuatro},\decimalx{\ctres} \right)$\\[0.3em]
+$\ln (S_T) \sim \mathcal{N} \left(\decimalx{\ccinco},\decimalx{\ctres} \right)$\\[0.3em]
+\cajaverdeletra{La distibución de Probabilidad del Precio de la acción dado los datos es log normal, ya que los precios no pueden tomar valores negativos, quedando establecido como propiedad.
+Con los parámetros de ésta $\mathcal{N} \left(\decimalx{\ccinco},\decimalx{\ctres} \right)$}
+\end{flushleft}
+\newpage
+\subpregunta{Parte b)}
+\noindent Según la ecuación del libro (15.4) la media de la distribución se define por:
+\begin{flushleft}
+\formula{\media}\\[0.5em]
+$\mathbb{E}(S_T) = \Scuatro \cdot e^{\rendimiento \cdot \Tcuatro}$\\[0.3em]
+$\mathbb{E}(S_T) = \Scuatro \cdot e^{\decimalx{\cseis}}$\\[0.3em]
+$\mathbb{E}(S_T) = \Scuatro \cdot e^{\decimalx{\cseis}}$\\[0.3em]
+$\mathbb{E}(S_T) = \Scuatro \cdot \decimalx{\csiete}$\\[0.3em]
+$\mathbb{E}(S_T) = \decimalx{\cocho}$\\[0.3em]
+\cajaverdeletra{Por lo tanto, la media de la distribución es {\dineross{\cocho}}.}
+\end{flushleft}
+
+\subpregunta{Parte c)}
+\noindent Según la ecuación del libro (15.5) la varianza de la distribución se define por:
+\begin{flushleft}
+\formula{\varianza}\\ [0.5em]
+$\mathrm{var}(S_T) = \Scuatro^2 \cdot e^{2\cdot \rendimiento \cdot \Tcuatro} \cdot \left( e^{\volatilidad^2 \cdot \Tcuatro} - 1 \right)$\\[0.3em]
+$\mathrm{var}(S_T) = \entero{\cnueve} \cdot e^{\decimalx{\cdiez}} \cdot \left( e^{\decimalx{\conce}} - 1 \right)$\\[0.3em]
+$\mathrm{var}(S_T) = \entero{\cnueve} \cdot \decimalx{\cdoce} \cdot \left( \decimalx{\ctrece} - 1 \right)$\\[0.3em]
+$\mathrm{var}(S_T) = \decimal{\ccatorce} \cdot \left( \decimalx{\cquince}  \right)$\\[0.3em]
+$\mathrm{var}(S_T) = \decimal{\cdieciseis}$\\[0.3em]
+$\mathrm{sd}(S_T)^2 = \mathrm{var}(S_T)$\\[0.3em]
+$\mathrm{sd}(S_T) = \sqrt{\mathrm{var}(S_T)}$\\[0.3em]
+$\mathrm{sd}(S_T) = \sqrt{\decimal{\cdieciseis}}$\\[0.3em]
+$\mathrm{sd}(S_T) = \decimal{\cdiecisiete}$\\[0.3em]
+\cajaverdeletra{Por lo tanto, la desviación estandard de la distribución es \decimal{\cdiecisiete}.}
+\end{flushleft}
+
+\subpregunta{Parte d)}
+\noindent Para determinar el intervalo de confianza del 95\% utilizamos la fórmula:
+\begin{flushleft}
+\formula{\intervaloconf}\\[0.5em]
+
+$IC = \mathbb{E}(S_T) \pm Z_{\alpha/2} \mathrm{sd}(S_T))$\\[0.3em]
+$IC = \decimal{\cocho} \pm 1.96 \cdot \decimal{\cdiecisiete}$\\[0.3em]
+$IC = \decimal{\cocho} \pm \decimal{\duno}$\\[0.3em]
+$IC = \left[\decimal{\dtres},\decimal{\ddos}\right]$\\[0.3em]
+\cajaverdeletra{Se puede decir con un 95\% de confianza que el precio de la acción estará entre \dineross{\dtres} y \dineross{\ddos}
+como precio final a los {\Tcuatro} años}
+\end{flushleft}
+
+\pregunta{ Hull 14.20}
+\justify
+Suponga que \( x \) es el rendimiento al vencimiento (yield to maturity) con capitalización continua de un bono cupón cero que paga \$1 en el tiempo \( T \). Se asume que \( x \) sigue el siguiente proceso estocástico:
+\begin{equation} 
+    dx = a\cdot( x_0 - x^2) \, dt + s x \, dz 
+\end{equation}
+
+Dónde \( a \), \( x_0 \) y \( s \) son constantes positivas, y \( dz \) es un proceso de Wiener. ¿Cuál es el proceso seguido por el precio del bono?
+
+\subpregunta{Respuesta}
+
+\ El precio del bono cupón cero que paga 1 en \( T \) está dado por:
+\[
+B(t) = e^{-x(T - t)}
+\]
+
+\noindent
+El Lema de Itô dice que, si una variable \( x \) sigue un proceso estocástico \( dx = \mu dt + \sigma dz \), y \( f(x,t) \) es una función suficientemente suave, entonces:\\
+\formula{\ito}\\
+
+Aplicamos el Lema de Itô al proceso \( B(t) \), que depende de \( x \). Como:
+\[
+dx = a(x_0 - x)\,dt + s x\,dz
+\]
+
+Calculamos derivadas:
+\begin{align*}
+    \frac{\partial B}{\partial t} &= x e^{-x(T - t)} = x B(t) \\
+    \frac{\partial B}{\partial x} &= - (T - t) B(t) \\
+    \frac{\partial^2 B}{\partial x^2} &= (T - t)^2 B(t)
+\end{align*}
+
+Aplicamos Itô:
+\begin{align*}
+    dB &= \left[ \frac{\partial B}{\partial t} + \frac{\partial B}{\partial x} \cdot a(x_0 - x) + \frac{1}{2} \cdot \frac{\partial^2 B}{\partial x^2} \cdot (s x)^2 \right] dt + \frac{\partial B}{\partial x} \cdot s x \, dz \\
+    &= B(t) \left[ x - (T - t) a (x_0 - x) + \frac{1}{2} (T - t)^2 s^2 x^2 \right] dt - (T - t) s x B(t) \, dz
+\end{align*}
+\cajaverdeletra{
+El precio del bono sigue el siguiente proceso estocástico:
+\[
+dB = B(t) \left[ x- (T - t) a (x_0 - x) + \frac{1}{2} (T - t)^2 s^2 x^2 \right] dt - (T - t) s x B(t) \, dz
+\]
+}
+\pregunta{ Hull 15.26}
+
+Demuestre que las fórmulas de Black-Scholes-Merton para opciones call y put satisfacen la paridad put-call.
+
+\subpregunta{Respuesta}
+\noindent La fórmula de paridad put-call establece:\\
+\formula{\putcall}\\[0.5em]
+
+\noindent Utilizamos las fórmulas de Black-Scholes-Merton para call y put:
+\begin{flushleft}
+    
+    \formula{\callbsm}\\[0.5em]
+    \formula{\putbsm}\\[0.5em]
+    Reemplazamos la call:\\[0.5em]
+    $ S_0 + p = K e^{-rT} +S_0 \cdot \mathcal{N}(d_1)- K \cdot e^{-r \cdot (T)} \cdot \mathcal{N}(d_2)$\\ [0.3em]
+    $ S_0 + p =S_0 \cdot \mathcal{N}(d_1)+ K e^{-rT} - K \cdot e^{-r \cdot (T)} \cdot \mathcal{N}(d_2)$\\ [0.3em]
+    $ S_0 + p =S_0 \cdot \mathcal{N}(d_1)+ K e^{-rT} \cdot \left(1-\mathcal{N}(d_2)\right) $\\ [0.3em]
+    Sabemos que \formula{\enemenosuno}, por lo tanto, podemos reemplazar:
+    $ S_0 + p =S_0 \cdot \textcolor{purple}{\mathcal{N}(d_1)}+ K e^{-rT} \cdot \textcolor{red}{\left(1-\mathcal{N}(d_2)\right)} $\\ [0.3em]
+    $ S_0 + p =S_0 \cdot \textcolor{purple}{\left(1-\mathcal{N}(-d_1)\right)}+ K e^{-rT} \cdot \textcolor{red}{\left(\mathcal{N}(-d_2)\right)} $\\ [0.3em]
+    $ S_0 + p =S_0-S_0 \cdot \mathcal{N}(-d_1)+ K e^{-rT} \cdot \mathcal{N}(-d_2) $\\ [0.3em]
+    $ S_0 + p =S_0+ \textcolor{grene}{K e^{-rT} \cdot \mathcal{N}(-d_2) -S_0 \cdot \mathcal{N}(-d_1)}$\\ [0.3em]
+    $ S_0 + p =S_0+ \textcolor{grene}{p}$\\ [0.3em]
+
+\end{flushleft}
+
+
+\cajaverdeletra{Se verifica que \( c + K e^{-rT} = p + S_0 \), por lo tanto, se cumple la paridad put-call para las fórmulas de Black-Scholes-Merton.}
+
+
+\end{comment}
+
+\end{document}
