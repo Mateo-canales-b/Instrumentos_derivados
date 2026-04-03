@@ -3,11 +3,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{xcolor}
 \usepackage{geometry}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage{titling}
+
+
 \geometry{letterpaper, margin=1in}
 \fancypagestyle{firststyle}{
     \fancyhf{}
@@ -30,12 +33,6 @@
     \end{center}
     \vspace{1em}
 }
-\title{Ayudantía Nº1: Curva Cero}
-\author{Curso: Instrumentos Derivados\\
-Profesor: Francisco Rantul\\
-Ayudante: Camila Luardo}
-\date{31/03/2025}
-
 \setlength{\droptitle}{-3em}
 \begin{document}
 \begin{figure}
@@ -47,12 +44,12 @@ Ayudante: Camila Luardo}
     {\LARGE \textbf{Ayudantía Nº1: Curva Cero}}\\[0.5em]
     Curso: Instrumentos Derivados\\
     Profesor: Francisco Rantul\\
-    Ayudante: Mateo Canales\\
-    \date{31/03/2025}
+    Ayudante: Mateo Canales
 \end{center}
 \vspace{1pt}
 {\color{rojoudp}\hrule height 2pt}
 \vspace{10pt}
+\section*{\subrayadoRojo{Caso 1}}
 
 Los precios de los pagarés descontables del Banco Central de Chile (PDBC)
  a 6 meses y a 1 año son de \$94 y \$89 respectivamente los cuales pagan \$100. 
@@ -84,13 +81,51 @@ Los precios de los pagarés descontables del Banco Central de Chile (PDBC)
     \item ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, 
     ¿Qué rol juega la condición de no arbitraje?
     
-    \item Calcule el punto a) utilizando matrices en Excel/R/Phyton.
+    \item Realice el punto a) y b)  utilizando matrices en Excel/R/Phyton.
+    
+\end{enumerate}
+\section*{\subrayadoRojo{Caso 2}}
+
+A continuación, se presenta la información de la curva de bonos del Banco 
+Central de Chile (BCCh) en CLP de Refinitiv, donde \textit{Bid} indica el 
+precio del instrumento, \textit{Coupon} la tasa cupón anual y \textit{Name} 
+el vencimiento.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=4cm]{../imagenes/Imagen 1.png}
+    \includegraphics[height=4cm]{../imagenes/Imagen 2.png}
+\end{figure}
+
+Asuma que CL1YT es un bono cero cupón que paga un principal de \$106 al 
+vencimiento. Los demás bonos pagan cupones anuales y tienen principal 
+igual a \$100.
+
+\section*{\subrayadoRojo{Preguntas}}
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    
+    \item Calcule la curva cero de 1 a 5 años.
+    \item Grafique la curva cero.
+    \item Comente la probabilidad de default aproximada usando el \textit{spread} BCP5$-$BCP1 y la tabla de Estrella \& Mishkin (1996).
 
 \end{enumerate}
+    
+\begin{figure}[H]
+   \begin{center}
+
+    \includegraphics[height=10cm]{../imagenes/Imagen 3.png}
+   \end{center} 
+\end{figure}
+\begin{quote}
+\small{
+    \textbf{HINT:} Estrella, A., \& Mishkin, F. S. (1996). \textit{The yield curve as a predictor of US recessions}. Current Issues in Economics and Finance, 2(7).
+}
+\end{quote}
 
 \newpage
 
-\section*{\subrayadoRojo{Respuestas}}
+\section*{\subrayadoRojo{Respuestas Caso 1}}
 
 \subsection*{a) Cálculo de la Curva Cero (capitalización continua)}
 
@@ -143,8 +178,6 @@ e^{-r \cdot 2} &= \frac{83.76}{105} = 0.7977 \\
 r &= -\frac{\ln(0.7977)}{2} = 0.113 = 11{,}3\%
 \end{align*}
 
-\newpage
-
 \subsection*{b) Gráfico y comentario de la pendiente}
 
 \begin{quote}
@@ -178,5 +211,16 @@ En una economía con probabilidades neutrales al riesgo, el retorno esperado de 
 \begin{quote}
 Replicar los cálculos del punto a) utilizando matrices en Excel, R o en Phyton.
 \end{quote}
+\newpage
+\section*{\subrayadoRojo{Respuestas Caso 2}}
+
+\subsection*{g) Calcule la curva cero de 1 a 5 años.}
+
+\subsection*{h) Grafique la curva cero.}
+
+\subsection*{i) 
+Comente la probabilidad de default aproximada usando el spread de la tabla}
+
+
 
 \end{document}
