@@ -12,13 +12,23 @@
 \pgfplotsset{compat=1.18}      % Evita errores por compatibilidad
 \usepackage{hyperref}
 \usepackage{pgf}
+\usepackage{ragged2e}
 
 \newif\ifpresentacion
-\presentaciontrue  % Cambiar a \presentacionfalse para PDF sin animaciones
-%\presentacionfalse % Cambiar a \presentaciontrue para PDF con  animaciones
+\ifdefined\versionpresentacion
+  \edef\tempver{\versionpresentacion}
+  \ifnum\pdfstrcmp{\tempver}{true}=0
+    \presentaciontrue
+  \else
+    \presentacionfalse
+  \fi
+\else
+  \presentacionfalse
+\fi
 
 \usepackage{ifthen}
 \newcommand{\pausa}{\ifpresentacion\pause\fi}
+
 % #region Título
 \title{Ayudantía 1 \\ Bonos \\ \large\textit{Instrumentos Derivados}}
 \author{
@@ -29,7 +39,7 @@
 }
 \subject{Instrumentos Derivados}
 \institute{Universidad Diego Portales}
-\date{02 De Abril, 2025}
+\date{02 De Abril, 2026}
 % #endregion 
 \begin{document}
 
@@ -58,6 +68,9 @@
 \newcommand{\Tuno}{1.0}
 \newcommand{\TunoCinco}{1.5}
 \newcommand{\Tdos}{2.0}
+\newcommand{\Ttres}{3.0}
+\newcommand{\Tcuatro}{4.0}
+\newcommand{\Tcinco}{5.0}
 
 % Flujo final común en bonos con cupón
 \newcommand{\Ffinal}{104}
@@ -74,11 +87,47 @@
   }
 
 % #endregion
+% #region Formato 
+\newcommand{\cajaverde}[1]{%
+  \fcolorbox{blue}{green!20}{%
+    { #1}%
+  }
+}
+\newcommand{\cajaverdeletra}[1]{%
+  \fcolorbox{blue}{green!20}{%
+    \parbox{0.9\linewidth}{\justifying #1}%
+  }
+}
+\newcommand{\formula}[1]{\textcolor{blue}{#1}}
+\newcommand{\dinero}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=0]{#1}
+  }
+\newcommand{\dineros}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=1]{#1}
+  }
+\newcommand{\dineross}[1]{%
+  \$\,\pgfmathprintnumber[fixed, precision=2]{#1}
+  }
+\newcommand{\Desarrollo}[1]{Desarrollo Parte {#1})}
+% #endregion
+% Contenido
+\begin{frame}
+    \frametitle{Contenido}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \tableofcontents[sections={1-6}]
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \tableofcontents[sections={7-12}]
+        \end{column}
+    \end{columns}
+\end{frame}
+
 % Caso
-\section{Caso}
-  \begin{frame}
+\section{Caso 1}
+\begin{frame}
     
-  \frametitle{Caso}
+  \frametitle{Caso 1}
 
   Los precios de los pagarés descontables del Banco Central de Chile (PDBC)\footnote{\textit{Para 
   más información sobre el PDBC, consulte la página 21 del documento del Banco Central de Chile:}}
@@ -95,11 +144,6 @@
   cupón de \$\Cdos\ cada 6 meses tiene un precio de \$\Pdos.
 
   \end{frame}
-  % Contenido
-\begin{frame}
-    \frametitle{Contenido}
-    \tableofcontents
-\end{frame}
 
   % Pregunta a)
 
@@ -120,7 +164,7 @@
       \vspace{3pt}
       \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
       \vspace{3pt}
-      \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+      \item {\textcolor{white}{f) Realice el punto a) y b)  utilizando matrices en Excel/R/Python.}}
       \vspace{3pt}
     \end{itemize}
   \end{frame}
@@ -137,24 +181,24 @@
 
 \begin{frame}
   \frametitle{Pregunta \text{a)} parte 1}
+  \justify
   \LARGE \underbar{Calcule la curva cero de 6 meses} \\[1em]
   \footnotesize
   \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio actual (F) = \$\Fseis, Tiempo final (T)=\Tseis. \\
   \pausa 
-  \textbf{Fórmula capitalización continua:}
-  \[\capcontinua\]
+  \textbf{Fórmula capitalización continua:}  \formula{$\capcontinua$}\\
   \pausa
   Dado C=0
-  \[\capcontinuacero\]
+  \formula{\[\capcontinuacero\]}
   \pausa
   Reemplazamos con los datos:
   \[\Fseis = \Nominal \cdot e^{-r \cdot \Tseis}\] \pausa
   \textbf{Despejando $r$:}
   \[r = -\frac{1}{\Tseis} \cdot \ln\left(\frac{\Fseis}{\Nominal}\right) \pausa \approx \decimalx{\pai}  \]
   \pausa
-  \textbf{Resultado:} La tasa cero a 6 meses es aproximadamente \porcentaje{\pai}
+  \textbf{Resultado:} \cajaverde{La tasa cero a 6 meses es aproximadamente \porcentaje{\pai}}
 \end{frame}
-
+  
 \subsection{Parte 2}
 \pgfmathsetmacro{\paii}{-(1/\Tuno)*ln(\Funo/\Nominal)}
 % Pregunta a parte 2
@@ -162,20 +206,19 @@
     \frametitle{Pregunta \text{a)} parte 2}
     \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
     \footnotesize
-    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Funo,Tiempo final (T)=\Tuno.\\
+    \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio actual (F) = \$\Funo,Tiempo final (T)=\Tuno.\\
     \pausa
-    \textbf{Fórmula capitalización continua:}
-    \[\capcontinua\]
+    \textbf{Fórmula capitalización continua:}  \formula{$\capcontinua$}\\
     \pausa
     Dado C=0
-    \[\capcontinuacero\]
+    \formula{\[\capcontinuacero\]}
     \pausa
     Reemplazamos con los datos:
     \pausa
     \textbf{Despejando $r$:}
    \[r = -\ln\left(\frac{\Funo}{\Nominal}\right) \pausa \approx \decimalx{\paii}\]
     \pausa
-   \textbf{Resultado:} La tasa cero a 1 año es aproximadamente \porcentaje{\paii}
+   \textbf{Resultado:} \cajaverde{La tasa cero a 1 año es aproximadamente \porcentaje{\paii}}
   \end{frame}
 
 \subsection{Parte 3}
@@ -197,7 +240,7 @@
   Tiempo Final = \TunoCinco.\\
   \pausa
   \textbf{Fórmula capitalización continua:}
-  \[\capcontinua\]
+  \[\formula{\capcontinua}\]
   \pausa
   \textbf{Cálculo:}
   \[ \PunoCinco = \CunoCinco \cdot e^{\decimalx{-\pai} \cdot \Tseis} + \CunoCinco \cdot e^{\decimalx{-\paii} \cdot \Tuno} + \Ffinal \cdot e^{-r \cdot \TunoCinco}\]
@@ -225,7 +268,7 @@
    \pausa \approx \decimalxx{\paiii}
    \]
    
-  \textbf{Resultado:} La tasa cero a 1.5 años es aproximadamente \porcentaje{\paiii}
+  \textbf{Resultado:} \cajaverde{La tasa cero a 1.5 años es aproximadamente \porcentaje{\paiii}}
 \end{frame}
 
 \subsection{Parte 4}
@@ -246,10 +289,10 @@
 
   \footnotesize
   \textbf{Datos:}  Valor nominal (P) = \$\Nominal, Precio del BCP a 2 años = \$\Pdos, 
-  con cupón de \$\Cdos\ cada 6 meses, Tiempo Final (T) = \Tdos.
+  con cupón de \$\Cdos\ cada 6 meses, Tiempo Final (T) = \Tdos.\\
   \pausa
   \textbf{Fórmula capitalización continua:}
-  \[\capcontinua\]
+  \[\formula{\capcontinua}\]
   \pausa
   \textbf{Cálculo:}
   \[
@@ -283,7 +326,7 @@
   r = -\frac{1}{\Tdos} \cdot \ln\left( \frac{\decimalx{\flimenos}}{\FfinalDos} \right)
   \pausa \approx \decimalx{\paiv}
   \]
-  \textbf{Resultado:} La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}
+  \textbf{Resultado:} \cajaverde{La tasa cero a 2 años es aproximadamente \porcentaje{\paiv}}
 \end{frame}
 
 \section{Pregunta \text{b)}}
@@ -306,7 +349,7 @@
     \vspace{3pt}
     \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \item {\textcolor{white}{f) Realice el punto a) y b)  utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
@@ -421,7 +464,7 @@
     \vspace{3pt}
     \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \item {\textcolor{white}{f) Realice el punto a) y b)  utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
@@ -459,7 +502,7 @@
     \vspace{3pt}
     \item {\textcolor{white}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \item {\textcolor{white}{f) Realice el punto a) y b)  utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
@@ -492,7 +535,7 @@
     \vspace{3pt}
     \item {\Large\textcolor{blue}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\textcolor{white}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \item {\textcolor{white}{f) Realice el punto a) y b)  utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
@@ -532,20 +575,458 @@
     \vspace{3pt}
     \item {\textcolor{black}{e) ¿Cuál es el rol de las probabilidades neutrales al riesgo en d)?, ¿Qué rol juega la condición de no arbitraje?}}
     \vspace{3pt}
-    \item {\Large\textcolor{blue}{f) Calcule el punto a) utilizando matrices en Excel/R/Python.}}
+    \item {\Large\textcolor{blue}{f) Realice el punto a) y b)  utilizando matrices en Excel/R/Python.}}
     \vspace{3pt}
   \end{itemize}
 \end{frame}
+
+
+% Caso 
+
+\section{Caso 2}
+
+\begin{frame}
+    
+  \frametitle{Caso 2}
+  A continuación, se presenta la información de la curva de bonos del Banco 
+  Central de Chile (BCCh) en CLP de Refinitiv, donde \textit{Bid} indica el 
+  precio del instrumento, \textit{Coupon} la tasa cupón anual y \textit{Name} 
+  el vencimiento.
+
+  \begin{figure}[H]
+      \centering
+      \includegraphics[height=3cm]{../imagenes/Imagen 1.png}
+      \includegraphics[height=3cm]{../imagenes/Imagen 2.png}
+  \end{figure}
+
+  Asuma que CL1YT es un bono cero cupón que paga un principal de \$106 al 
+  vencimiento. Los demás bonos pagan cupones anuales y tienen principal 
+  igual a \$100.
+
+\end{frame}
+
+% Pregunta a)
+
+\section{Pregunta \text{a)}}
+
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \item {\LARGE\textcolor{blue}{a) Calcule la curva cero de 1 a 5 años.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{b) Grafique la curva cero.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{c) Comente la probabilidad de default aproximada usando el 
+    \textit{spread} BCP5$-$BCP1 y la tabla de Estrella \& Mishkin (1996).}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
+\subsection{Parte 1}
+% #region variable caso 2
+\newcommand{\Fc}{101.098}
+\newcommand{\CCuno}{0.06}
+
+\pgfmathsetmacro{\FCuno}{\Nominal* (1+\CCuno)}
+\pgfmathsetmacro{\Runo}{-ln(\Fc/\FCuno)}
+
+% #endregion
+
+% Pregunta a parte 1
+
+\begin{frame}
+  \frametitle{Pregunta \text{a)} parte 1}
+  \justify
+  \LARGE \underbar{Calcule la curva cero de 1 año} \\[1em]
+  \footnotesize
+  \textbf{Datos:} Valor nominal (P) = \$\Nominal, Precio actual (F) = \$\Fc, Tiempo final (T)=\Tuno, (C)=\CCuno. \\
+  \pausa 
+  \textbf{Fórmula capitalización continua:}  \formula{$\capcontinua$}\\
+  \pausa
+  Reemplazamos con los datos:
+  \[\Fc = \Nominal \cdot \CCuno \cdot e^{-r \cdot \Tuno}  + \Nominal \cdot e^{-r \cdot \Tuno}\] \pausa
+  \[\Fc = \left(\Nominal \cdot ( 1+\CCuno )\right) \cdot e^{-r \cdot \Tuno}\] \pausa
+  \textbf{Despejando $r$:}
+  \[r = -\ln\left(\frac{\Fc}{\decimal{\FCuno}}\right) \pausa \approx \decimalxx{\Runo}  \]
+  \pausa
+  \textbf{Resultado:} \cajaverde{La tasa cero a un año  aproximadamente \porcentaje{\Runo}}
+\end{frame}
+  
+\subsection{Parte 2}
+% #region Variables parte 2
+
+\newcommand{\Fcdos}{98.724}
+\newcommand{\CCdos}{0.058}
+\pgfmathsetmacro{\Icero}{\Nominal*\CCdos}
+\pgfmathsetmacro{\Idos}{\Icero*exp(-\Runo)}
+\pgfmathsetmacro{\Itres}{\Nominal*(1+\CCdos)}
+\pgfmathsetmacro{\Icuatro}{\Fcdos-\Idos}
+\pgfmathsetmacro{\Icinco}{ln(\Icuatro/\Itres)}
+\pgfmathsetmacro{\Rdos}{\Icinco/-2}
+
+% #endregion
+
+% Pregunta a parte 2
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 2}
+    \LARGE \underbar{Calcule la curva cero del año 2} \\[1em]
+    \footnotesize
+    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Fcdos,
+    Tiempo final (T)=\Tdos, tasa cupón (C)=\CCdos.\\
+    \pausa
+    \textbf{Fórmula capitalización continua:}  \formula{$\capcontinua$}\\
+    \pausa
+    Reemplazamos con los datos:
+    \[\Fcdos = \Nominal \cdot \CCdos \cdot e^{-\decimalx{\Runo} \cdot \Tuno}  + 
+    \left(\Nominal \cdot (1+\CCdos)\right)\cdot e^{-r \cdot \Tdos}\] 
+    \pausa
+    \[\Fcdos = \decimal{\Idos}  + \decimal{\Itres}\cdot e^{-r \cdot \Tdos}\] 
+    \pausa
+    \[\decimal{\Icuatro} =  \decimal{\Itres}\cdot e^{-r \cdot \Tdos}\] 
+    \pausa
+    \textbf{Despejando $r$:}
+    \[\ln\left(\frac{\decimal{\Icuatro}}{\decimal{\Itres}}\right) = r \cdot -\Tdos\] 
+    \pausa
+    \[\left(\frac{\decimalx{\Icinco}}{\decimal{-\Tdos}}\right) = r \] 
+    \pausa
+    \[\decimalx{\Rdos} = r \] 
+    \textbf{Resultado:} \cajaverde{La tasa cero al año 2 es aproximadamente \porcentaje{\Rdos}}
+  \end{frame}
+  
+\subsection{Parte 3}
+  
+  % #region Variables pa3
+  
+  \newcommand{\Fctres}{98.498}
+  \newcommand{\CCtres}{0.045}
+  \pgfmathsetmacro{\Jcero}{\Nominal*\CCtres}
+  \pgfmathsetmacro{\Juno}{\Jcero*exp(-\Runo)}
+  \pgfmathsetmacro{\Jdos}{\Jcero*exp(-\Rdos*\Tdos)}
+  \pgfmathsetmacro{\Jtres}{\Nominal*(1+\CCtres)}
+  \pgfmathsetmacro{\Jcuatro}{\Juno+\Jdos}
+  \pgfmathsetmacro{\Jcinco}{\Fctres-\Jcuatro}
+  \pgfmathsetmacro{\Jseis}{ln(\Jcinco/\Jtres)}
+  \pgfmathsetmacro{\Rtres}{\Jseis/-\Ttres}
+
+  
+  
+  
+  % #endregion
+  
+  % Pregunta a parte 3
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 3}
+    \LARGE \underbar{Calcule la curva cero del año 3} \\[1em]
+    \footnotesize
+    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Fctres,
+    Tiempo final (T)=\Ttres, tasa cupón (C)=\CCtres.\\
+    \pausa
+    \textbf{Fórmula capitalización continua:}  \formula{$\capcontinua$}\\
+    \pausa
+    Reemplazamos con los datos:
+    \[\Fctres = 
+    \Nominal \cdot \CCtres \cdot e^{-\decimalx{\Runo} \cdot \Tuno}  + 
+    \Nominal \cdot \CCtres \cdot e^{-\decimalx{\Rdos} \cdot \Tdos}  + 
+    \left(\Nominal \cdot (1+\CCtres)\right)\cdot e^{-r \cdot \Ttres}\] 
+    \pausa
+    \[\Fctres = 
+    \decimal{\Jcero}\cdot e^{-\decimalx{\Runo} \cdot \Tuno}  + 
+    \decimal{\Jcero}\cdot e^{-\decimalx{\Rdos} \cdot \Tdos}  + 
+    \left(\Nominal \cdot (1+\CCtres)\right)\cdot e^{-r \cdot \Ttres}\] 
+    \pausa
+    \[\Fctres = \decimal{\Juno}+
+    \decimal{\Jdos}+  
+    + \decimal{\Jtres}\cdot e^{-r \cdot \Ttres}\] 
+    \pausa
+    \[\Fctres = \decimalx{\Jcuatro}
+    + \decimal{\Jtres}\cdot e^{-r \cdot \Ttres}\] 
+    \pausa
+    \[\decimalx{\Jcinco} =  \decimal{\Jtres}\cdot e^{-r \cdot \Ttres}\] 
+    \pausa
+    \textbf{Despejando $r$:}
+    \[\ln\left(\frac{\decimal{\Jcinco}}{\decimal{\Jtres}}\right) = r \cdot -\Ttres\] 
+  \end{frame}
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 3 (continuación)}
+    \[\ln\left(\frac{\decimal{\Jcinco}}{\decimal{\Jtres}}\right) = r \cdot -\Ttres\] 
+    \pausa
+    \[\decimalx{\Jseis}= r \cdot -\Ttres\] 
+    \pausa
+    \[\frac{\decimalx{\Jseis}}{-\Ttres}= r \] 
+    \pausa
+    \[\decimalxx{\Rtres}= r \] 
+    \pausa
+
+    \textbf{Resultado:} \cajaverde{La tasa cero al año 3 es aproximadamente \porcentaje{\Rtres}}
+  \end{frame}
+  
+\subsection{Parte 4}
+  
+  % #region Variables pa4
+  \newcommand{\Fccuatro}{86.56}
+  \newcommand{\CCcuatro}{0.023}
+  \pgfmathsetmacro{\Kcero}{\Nominal*\CCcuatro}
+  \pgfmathsetmacro{\Kuno}{\Kcero*exp(-\Runo)}
+  \pgfmathsetmacro{\Kdos}{\Kcero*exp(-\Rdos*\Tdos)}
+  \pgfmathsetmacro{\Ktres}{\Kcero*exp(-\Rtres*\Ttres)}
+  \pgfmathsetmacro{\Kcuatro}{\Nominal*(1+\CCcuatro)}
+  \pgfmathsetmacro{\Kcinco}{\Kuno+\Kdos+\Ktres}
+  \pgfmathsetmacro{\Kseis}{(\Fccuatro-\Kcinco)}
+  \pgfmathsetmacro{\Ksiete}{ln(\Kseis/\Kcuatro)}
+  \pgfmathsetmacro{\Rcuatro}{\Ksiete/-\Tcuatro}
+  % #endregion
+  
+  % Pregunta a parte 4
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 4}
+    \LARGE \underbar{Calcule la curva cero del año 4} \\[1em]
+    \footnotesize
+    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Fccuatro,
+    Tiempo final (T)=\Tcuatro, tasa cupón (C)=\CCcuatro.\\
+    \pausa
+    \textbf{Fórmula capitalización continua:}  \formula{$\capcontinua$}\\
+    \pausa
+    Reemplazamos con los datos:
+    \[\Fccuatro = 
+    \decimalx{\Kcero} \cdot e^{-\decimalx{\Runo} \cdot \Tuno}  + 
+    \decimalx{\Kcero} \cdot e^{-\decimalx{\Rdos} \cdot \Tdos}  + 
+    \decimalx{\Kcero} \cdot e^{-\decimalx{\Rtres} \cdot \Ttres}  + 
+    \left(\Nominal \cdot (1+\CCcuatro)\right)\cdot e^{-r \cdot \Tcuatro}\] 
+    \pausa
+    \[\Fccuatro =
+    \decimal{\Kuno}+
+    \decimal{\Kdos}+  
+    \decimal{\Ktres}+  
+    + \decimal{\Kcuatro}\cdot e^{-r \cdot \Tcuatro}\] 
+    \pausa
+    \[\Fccuatro = 
+    \decimal{\Kcinco}+
+    \decimal{\Kcuatro}\cdot e^{-r \cdot \Tcuatro}\] 
+    \pausa
+    \[\decimalx{\Kseis} =  
+    \decimal{\Kcuatro}
+    \cdot e^{-r \cdot \Tcuatro}\] 
+    \pausa
+    \[\left(\frac{\decimal{\Kseis}}
+    {\decimal{\Kcuatro}}\right) = 
+    e^{-r \cdot \Tcuatro}\] 
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 4 (continuación)}
+    \[\left(\frac{\decimal{\Kseis}}
+    {\decimal{\Kcuatro}}\right) = 
+    e^{-r \cdot \Tcuatro}\] 
+    \pausa
+    \textbf{Despejando $r$:}
+    \[\ln\left(\frac{\decimal{\Kseis}}
+    {\decimal{\Kcuatro}}\right) = 
+    r \cdot -\Tcuatro\] 
+    \pausa
+    \[\decimalx{\Ksiete}= r \cdot -\Tcuatro\] 
+    \pausa
+    \[\frac{\decimalx{\Ksiete}}{-\Tcuatro}= r \] 
+    \pausa
+    \[\decimalxx{\Rcuatro}= r \] 
+    \pausa
+
+    \textbf{Resultado:} \cajaverde{La tasa cero al año 4 es aproximadamente \porcentaje{\Rcuatro}}
+  \end{frame}
+  
+\subsection{Parte 5}
+  
+  % #region Variables pa5
+  \newcommand{\Fccinco}{99.851}
+  \newcommand{\CCcinco}{0.05}
+  \pgfmathsetmacro{\Lcero}{\Nominal*\CCcinco}
+  \pgfmathsetmacro{\Luno}{\Lcero*exp(-\Runo)}
+  \pgfmathsetmacro{\Ldos}{\Lcero*exp(-\Rdos*\Tdos)}
+  \pgfmathsetmacro{\Ltres}{\Lcero*exp(-\Rtres*\Ttres)}
+  \pgfmathsetmacro{\Lcuatro}{\Lcero*exp(-\Rcuatro*\Tcuatro)}
+  \pgfmathsetmacro{\Lcinco}{\Nominal*(1+\CCcinco)}
+  \pgfmathsetmacro{\Lseis}{\Luno+\Ldos+\Ltres+\Lcuatro}
+  \pgfmathsetmacro{\Lsiete}{(\Fccinco-\Lseis)}
+  \pgfmathsetmacro{\Locho}{ln(\Lsiete/\Lcinco)}
+  \pgfmathsetmacro{\Rcinco}{\Locho/-\Tcinco}
+  % #endregion
+  
+  % Pregunta a parte 5
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 5}
+    \LARGE \underbar{Calcule la curva cero del año 5} \\[1em]
+    \footnotesize
+    \textbf{Datos:} Valor nominal (F) = \$\Nominal, Precio actual (P) = \$\Fccinco,
+    Tiempo final (T)=\Tcinco, tasa cupón (C)=\CCcinco.\\
+    \pausa
+    \textbf{Fórmula capitalización continua:}  \formula{$\capcontinua$}\\
+    \pausa
+    Reemplazamos con los datos:
+    \[\Fccinco = 
+    \decimalx{\Lcero} \cdot e^{-\decimalx{\Runo} \cdot \Tuno}  + 
+    \decimalx{\Lcero} \cdot e^{-\decimalx{\Rdos} \cdot \Tdos}  + 
+    \decimalx{\Lcero} \cdot e^{-\decimalx{\Rtres} \cdot \Ttres}  + 
+    \decimalx{\Lcero} \cdot e^{-\decimalx{\Rcuatro} \cdot \Tcuatro}  + 
+    \left(\Nominal \cdot (1+\CCcinco)\right)\cdot e^{-r \cdot \Tcinco}\] 
+    \pausa
+    \[\Fccinco =
+    \decimal{\Luno}+
+    \decimal{\Ldos}+  
+    \decimal{\Ltres}+  
+    \decimal{\Lcuatro}+  
+    + \decimal{\Lcinco}\cdot e^{-r \cdot \Tcinco}\] 
+    \pausa
+    \[\Fccinco = 
+    \decimal{\Lseis}+
+    \decimal{\Lcinco}\cdot e^{-r \cdot \Tcinco}\] 
+    \pausa
+    \[\decimalx{\Lsiete} =  
+    \decimal{\Lcinco}
+    \cdot e^{-r \cdot \Tcinco}\] 
+    \pausa
+    \[\left(\frac{\decimal{\Lsiete}}
+    {\decimal{\Lcinco}}\right) = 
+    e^{-r \cdot \Tcinco}\] 
+  \end{frame}
+  
+  \begin{frame}
+    \frametitle{Pregunta \text{a)} parte 5 (continuación)}
+    \[\left(\frac{\decimal{\Lsiete}}
+    {\decimal{\Lcinco}}\right) = 
+    e^{-r \cdot \Tcinco}\] 
+    \pausa
+    \textbf{Despejando $r$:}
+    \[\ln\left(\frac{\decimal{\Lsiete}}
+    {\decimal{\Lcinco}}\right) = 
+    r \cdot -\Tcinco\] 
+    \pausa
+    \[\decimalx{\Locho}= r \cdot -\Tcinco\] 
+    \pausa
+    \[\frac{\decimalx{\Locho}}{-\Tcinco}= r \] 
+    \pausa
+    \[\decimalxx{\Rcinco}= r \] 
+    \pausa
+
+    \textbf{Resultado:} \cajaverde{La tasa cero al año 5 es aproximadamente \porcentaje{\Rcinco}}
+  \end{frame}
+
+\section{Pregunta \text{b)}}
+
+% Pregunta b)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \item {\textcolor{black}{a) Calcule la curva cero de 1 a 5 años.}}
+    \vspace{3pt}
+    \item {\LARGE\textcolor{blue}{b) Grafique la curva cero.}}
+    \vspace{3pt}
+    \item {\textcolor{white}{c) Comente la probabilidad de default aproximada usando el 
+    \textit{spread} BCP5$-$BCP1 y la tabla de Estrella \& Mishkin (1996).}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
+
+% Gráfico
+\begin{frame}
+  \frametitle{Gráfico Caso 2}
+  \begin{columns}[T]
+    \begin{column}{0.60\textwidth}
+      \begin{center}
+        \begin{tikzpicture}
+          \begin{axis}[
+            width=7cm,
+            height=5cm,
+            xlabel={Tiempo (años)},
+            ylabel={Tasa},
+            grid=both,
+            xmin=0,
+            ymin=0.03, ymax=0.07,
+            scaled y ticks=false,
+            yticklabel style={
+                at={(yticklabel* cs:1.03,-0.3em)},
+                /pgf/number format/fixed,
+                /pgf/number format/fixed zerofill,
+                /pgf/number format/precision=2
+            },
+            xtick={0,1,2,3,4,5,6},
+            ytick={0.03,0.04,...,0.07},
+            legend style={at={(0,-0.155)}, anchor=north, legend columns=1, font=\tiny},
+        ]
+            \addplot+[mark=,solid, red ] coordinates {
+              (0,\Runo)
+              (\Tuno, \Runo)
+              (\Tdos, \Rdos)
+              (\Ttres, \Rtres)
+              (\Tcuatro, \Rcuatro)
+              (\Tcinco, \Rcinco)
+              (6,\Rcinco)
+            };
+            \addlegendentry{Tasa cero }
+          \end{axis}
+        \end{tikzpicture}
+      \end{center}
+    \end{column}
+
+    \begin{column}{0.36\textwidth}
+      \footnotesize
+      \centering
+      \begin{tabular}{cc}
+        \toprule
+        \textbf{Año} & \textbf{Tasa} \\
+        \midrule
+        \Tuno & \porcentaje{\Runo} \\
+        \Tdos & \porcentaje{\Rdos} \\
+        \Ttres & \porcentaje{\Rtres} \\
+        \Tcuatro & \porcentaje{\Rcuatro} \\
+        \Tcinco & \porcentaje{\Rcinco} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Pregunta \text{c)}}
+
+% Pregunta c)
+\begin{frame}
+  \frametitle{Preguntas}
+  \begin{itemize}
+    \item {\textcolor{black}{a) Calcule la curva cero de 1 a 5 años.}}
+    \vspace{3pt}
+    \item {\textcolor{black}{b) Grafique la curva cero.}}
+    \vspace{3pt}
+    \item {\LARGE\textcolor{blue}{c) Comente la probabilidad de default aproximada usando el 
+    \textit{spread} BCP5$-$BCP1 y la tabla de Estrella \& Mishkin (1996).}}
+    \vspace{3pt}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tabla}
+
+ \begin{figure}[H]
+      \centering
+      \includegraphics[height=6.5cm]{../imagenes/Imagen 3.png}
+
+  \end{figure}
+\end{frame}
+
 \begin{frame}
   \frametitle{Cálculo utilizando matrices}
   \Huge
   \centering
-  Tarea con décimas para la prueba.\\
-
-
+  Tarea con décimas para la prueba.\\[1em]
+  \normalsize
+    \begin{itemize}
+      \item Caso 1 Pregunta f)
+      \item Caso 2 Pregunta c)
+    \end{itemize}
   Fecha límite : \\
-  07/04/2025 \\
-  \textbf{ 21:00}
+  08/04/2025 \\
+  \huge
+  \textbf{ 08:00}
 
 \end{frame}
+
+
 \end{document}
