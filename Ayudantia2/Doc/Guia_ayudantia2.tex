@@ -1,10 +1,13 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{geometry}
 \usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=4pt}
+\setlist[enumerate]{itemsep=4pt, topsep=4pt}
 \usepackage{fancyhdr}
 \usepackage{titling}
 \geometry{letterpaper, margin=1in}
@@ -37,16 +40,18 @@
     \includegraphics[height=4cm]{../imagenes/logo.png}\\[-3em]
 \end{figure}
 \begin{center}
-    {\LARGE \textbf{Ayudantía Nº2: Valoración de Futuros y Forwards}}\\[0.5em]
-    Curso: Instrumentos Derivados\\
-    Profesor: Francisco Rantul\\
-    Ayudante: Mateo Canales\\
-    \date{31/03/2025}
+    {\LARGE \textbf{Ayudantía Nº2}}\\[0.3em]
+    {\large Valoración de Futuros y Forwards}\\[0.8em]
+    \textbf{Curso:} Instrumentos Derivados\\
+    \textbf{Profesor:} Francisco Rantul\\
+    \textbf{Ayudante:} Mateo Canales\\
+    \textbf{Fecha:} 08/04/2026
 \end{center}
-\vspace{1pt}
+\vspace{0.5em}
 {\color{rojoudp}\hrule height 2pt}
-\vspace{10pt}
+\vspace{1em}
 
+\vspace{1em}
 \section*{\subrayadoRojo{Pregunta 1}}
 Suponga que la acción A tiene un precio de \$28 y sus flujos de caja esperados en el próximo periodo 
 es de \$35,448 en el escenario bueno y de \$24,511 en el escenario malo. La acción B tiene un valor de 
@@ -60,6 +65,7 @@ es de \$35,448 en el escenario bueno y de \$24,511 en el escenario malo. La acci
 
 \end{enumerate}
 
+\vspace{1em}
 \section*{\subrayadoRojo{Pregunta 2}}
 Se espera que una acción pague dividendos equivalentes a \$1 por acción en 4 meses y en 10 meses.
 El precio de la acción hoy es de \$28, y la tasa cero libre de riesgo es de 0,07 anual (compuesta continua).
@@ -74,6 +80,7 @@ debido a las pocas oportunidades de inversión en nuevos proyectos. ¿Como influ
 forward acciones? ¿en base a lo anterior, de qué forma usted anticiparía una recuperación de la economía?
 \end{enumerate}
 
+\vspace{1em}
 \section*{\subrayadoRojo{Pregunta 3}}
 Una firma importadora el día 25 de Agosto 2022 necesitaba realizar una cobertura de tipo de cambio 
 para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/360 y que la empresa debe comprar dólares.
@@ -83,14 +90,14 @@ para un año, el tipo de cambio se encontraba en \$683,2. Asuma convención 30/3
 \begin{table}[h!]
     \centering
     \caption{Curvas cero cupón al 25-08-2022}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
-    \hline
+    \begin{tabular}{c c c c c c c c}
+    \toprule
     \textbf{Curva} & \textbf{1 Día} & \textbf{30 Días} & \textbf{60 Días} & \textbf{90 Días} & \textbf{180 Días} & \textbf{1 Año} & \textbf{2 Años} \\
-    \hline
+    \midrule
     CLP & 2{,}81\% & 3{,}01\% & 3{,}11\% & 3{,}16\% & 3{,}25\% & 3{,}56\% & 4{,}18\% \\
     UF  & 2{,}93\% & 3{,}10\% & 1{,}99\% & 1{,}18\% & 0{,}42\% & 0{,}89\% & 1{,}26\% \\
     USD & 2{,}66\% & 2{,}75\% & 2{,}84\% & 2{,}95\% & 3{,}26\% & 3{,}96\% & 5{,}35\% \\
-    \hline
+    \bottomrule
     \end{tabular}
 \end{table}
 \item	Suponga que 10 meses después el tipo de cambio se encuentra en \$708 y la firma quiere ver
@@ -98,20 +105,21 @@ la posibilidad de vender el contrato, ¿cuál sería el precio justo de venta de
 \begin{table}[h!]
     \centering
     \caption{Curvas cero cupón al 25-08-2023}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
-    \hline
+    \begin{tabular}{c c c c c c c c}
+    \toprule
     \textbf{Curva} & \textbf{1 Día} & \textbf{30 Días} & \textbf{60 Días} & \textbf{90 Días} & \textbf{180 Días} & \textbf{1 Año} & \textbf{2 Años} \\
-    \hline
+    \midrule
     CLP & 1{,}64\% & 2{,}09\% & 2{,}64\% & 2{,}90\% & 3{,}01\% & 3{,}15\% & 3{,}77\% \\
     UF  & 1{,}20\% & 1{,}71\% & 1{,}80\% & 1{,}95\% & 2{,}05\% & 1{,}98\% & 1{,}79\% \\
     USD & 0{,}50\% & 0{,}88\% & 1{,}00\% & 1{,}32\% & 1{,}50\% & 2{,}00\% & 3{,}55\% \\
-    \hline
+    \bottomrule
     \end{tabular}
 \end{table}
-\item Calcule las ganancias o pérdidas(contable) 10 meses despuésde firmado el contrato en el 
+\item Calcule las ganancias o pérdidas(contable) 10 meses después de firmado el contrato en el 
     punto a). \textbf{HINT}: use las tasas de la tabla b.
 \end{enumerate}
 
+\vspace{1em}
 \section*{\subrayadoRojo{Pregunta 4}}
 Suponga que el precio spot del commodity de plata es actualmente igual a \$18,8 dólares  
 la onza. Los costos de almacenamiento son iguales a \$0,4 por año la onza, pagaderos por
@@ -121,12 +129,13 @@ de riesgo del 4\% anual compuesto continuo.
     \item   Se le pide calcular cual debería ser el precio de futuros de plata, con entrega a 9 meses plazo.
     \item 	Explique que ocurre si el precio de futuros de plata con entrega a 9 meses,
     efectivamente observado en el mercado es de \$19,8 dólares la onza.
-    \item suma que existe una baja demanda por el commodity de plata, por lo tanto,
+    \item Suponga que existe una baja demanda por el commodity de plata, por lo tanto,
     las empresas están almacenando altos niveles de inventarios. 
     Explique qué ocurre con el rendimiento de conveniencia.
     
 \end{enumerate}
 
+\vspace{1em}
 \section*{\subrayadoRojo{Pregunta 5}}
     Suponga que LAN está preocupada por las variaciones del precio del petróleo durante los siguientes meses,
     específicamente los siguientes 6 meses, ya que el combustible que ocupa la flota de aviones ocupa un importante 
@@ -147,6 +156,7 @@ de riesgo del 4\% anual compuesto continuo.
         \item Cuál sería el resultado de la estrategia de LAN si en 6 meses más el precio del petróleo fuera de USD 41,5 el barril y el litro de combustible de USD 58,1.
 \end{enumerate}
 
+\vspace{1em}
 \section*{\subrayadoRojo{Pregunta 6}}
 El gerente de un fondo de inversión en acciones nacionales mantiene una cartera valorada en 18 millones de US\$ con un Beta de 
 1,25 en septiembre del 2022; el gerente está preocupado sobre el comportamiento del mercado durante los próximos once meses y 
